@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 13: Modeling Mode — UnrealAkademi</title>
+  <meta name="description" content="UE5 editör içi 3D modelleme — primitive, polymodel, boolean.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 13: Modeling Mode — UnrealAkademi">
+  <meta property="og:description" content="UE5 editör içi 3D modelleme — primitive, polymodel, boolean.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 13: Modeling Mode — UnrealAkademi">
+  <meta name="twitter:description" content="UE5 editör içi 3D modelleme — primitive, polymodel, boolean.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link active" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Modeling Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 13</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 80 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Modeling Mode — UE5'in İçinde 3D Modelleme</h1>
+      <p class="page-lead">
+        Eskiden bir küpün köşesini yontmak için Blender'ı açmak gerekirdi. UE5 5.0'dan itibaren bunu
+        editörün içinde, sahneyi terk etmeden yapabiliyorsun. Modeling Mode; primitive üretme, mesh düzenleme,
+        boolean operasyonları, UV açma ve LOD oluşturmaya kadar şaşırtıcı bir araç seti sunar.
+      </p>
+    </header>
+
+    <!-- 13.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.1</div>
+        <h2 class="topic-title">Modeling Mode nedir, neden var?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir level tasarlarken çoğu zaman küçük düzeltmelere ihtiyaç duyarsın: bir duvarın köşesini almak, iki
+          kayayı birleştirmek, bir küpten oda yaratmak, eksik bir kapı boşluğu açmak... Eskiden bunu yapmak için
+          mesh'i FBX'e export edip Blender'da açıp yeniden import etmen gerekirdi. Modeling Mode bu zinciri kırar.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-tool"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Modeling Mode, evdeki <strong>cep alet seti</strong> gibidir. Ne profesyonel tornavida takımı kadar
+              eksiksizdir (Blender, Maya gibi DCC araçları), ne de tamamen yetersiz. Küçük-orta işler için yeter,
+              elinin altındadır. Ciddi modelleme için yine de DCC kullanırsın — ama level düzenlerken Modeling
+              Mode'la ne kadar çok iş halledebileceğine şaşırırsın.
+            </p>
+          </div>
+        </div>
+
+        <h4>Neler yapabilir?</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-shape"></i></div>
+            <h4>Primitive üretme</h4>
+            <p>Küp, küre, silindir, kapsül, kemer, merdiven gibi parametrik şekilleri sahneye doğrudan ekle.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-arrow-up-square"></i></div>
+            <h4>Mesh düzenleme</h4>
+            <p>Vertex, edge, face seçip Extrude, Bevel, Inset, Loop Cut — DCC araçlarındaki temel komutlar.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-shape-3"></i></div>
+            <h4>Boolean</h4>
+            <p>İki mesh'i birleştir (Union), birinden diğerini çıkar (Subtract), kesişimi al (Intersect).</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-photo"></i></div>
+            <h4>UV ve Materyal</h4>
+            <p>UV unwrap, UV görüntüleme, materyal slot yönetimi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-stack"></i></div>
+            <h4>LOD ve Optimizasyon</h4>
+            <p>Otomatik LOD üretimi, mesh basitleştirme (Simplify), Remesh.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(192,132,252,.12);color:#c084fc;"><i class="ti ti-box"></i></div>
+            <h4>Collision</h4>
+            <p>Karmaşık mesh'ler için otomatik veya manuel collision üretme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13.2 ARAYÜZ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.2</div>
+        <h2 class="topic-title">Modeling Mode'a giriş ve arayüz</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Sol üst köşedeki <strong>Selection Mode</strong> dropdown'undan <strong>Modeling</strong>'i seç. Veya
+          klavyeden <kbd>Shift</kbd>+<kbd>5</kbd>. Sol panel komple değişir — yerini bir sürü kategoriye bırakır:
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Shapes</div><div class="info-item-value">Primitive ekleme (küp, küre...)</div></div>
+          <div class="info-item"><div class="info-item-label">Create</div><div class="info-item-value">Mesh duplicate, mesh-to-volume</div></div>
+          <div class="info-item"><div class="info-item-label">PolyModel</div><div class="info-item-value">Vertex/edge/face seviyesinde düzenleme</div></div>
+          <div class="info-item"><div class="info-item-label">TriModel</div><div class="info-item-value">Üçgen seviyesinde düzenleme</div></div>
+          <div class="info-item"><div class="info-item-label">Deform</div><div class="info-item-value">Bend, Twist, Lattice gibi deformasyonlar</div></div>
+          <div class="info-item"><div class="info-item-label">MeshOps</div><div class="info-item-value">Boolean, Mirror, Simplify, Remesh</div></div>
+          <div class="info-item"><div class="info-item-label">Attributes</div><div class="info-item-value">Materyal slot, normaller, vertex colors</div></div>
+          <div class="info-item"><div class="info-item-label">UV</div><div class="info-item-value">UV görüntüleme, otomatik unwrap</div></div>
+          <div class="info-item"><div class="info-item-label">Bake</div><div class="info-item-value">Yüksek mesh'i alçaka pişir (normal map)</div></div>
+          <div class="info-item"><div class="info-item-label">LOD</div><div class="info-item-value">Manuel/otomatik LOD üretimi</div></div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İki çalışma türü: Single Asset vs Per-Instance</div>
+            <p>
+              Modeling Mode'da yaptığın değişiklik <strong>asset'in kendisine</strong> mi (her instance etkilenir),
+              yoksa <strong>sahnedeki o örneğe</strong> mi (sadece bu) işlesin — tool'un "Accept" panelinde seçebilirsin.
+              Yanlış seçim diğer instance'ları da bozar. Dikkat ettiğinden emin ol.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13.3 PRIMITIVE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.3</div>
+        <h2 class="topic-title">Primitive ekleme — Parametrik şekiller</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Modeling Mode'un belki en faydalı kısmı: parametrik primitive üretme. Sahneye küp/silindir/küre eklerken
+          boyutlarını ve segment sayılarını sayısal olarak girersin. Sonradan Details'ten değiştirebilirsin.
+        </p>
+
+        <h4>Sık kullanılan şekiller</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Box</div><div class="info-item-value">Küp/dikdörtgen — duvar, sandık</div></div>
+          <div class="info-item"><div class="info-item-label">Sphere</div><div class="info-item-value">Küre — top, gezegen</div></div>
+          <div class="info-item"><div class="info-item-label">Cylinder</div><div class="info-item-value">Silindir — direk, varil</div></div>
+          <div class="info-item"><div class="info-item-label">Cone</div><div class="info-item-value">Koni — çadır, oklar</div></div>
+          <div class="info-item"><div class="info-item-label">Torus</div><div class="info-item-value">Halka — simit, tekerlek</div></div>
+          <div class="info-item"><div class="info-item-label">Stairs</div><div class="info-item-value">Merdiven — basamak sayısı, eğim</div></div>
+          <div class="info-item"><div class="info-item-label">Arch</div><div class="info-item-value">Kemer — köprü, kapı çerçevesi</div></div>
+          <div class="info-item"><div class="info-item-label">Disc</div><div class="info-item-value">Disk — tabak, levha</div></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Shapes paneline tıkla</div>
+              <p>Sol panelden <strong>Shapes</strong> bölümünü aç. İstediğin şekle (Box) tıkla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sahnede yerleştir</div>
+              <p>Mouse'u viewport'a getir, tıkla — küp orada belirir. Bazı şekillerde <strong>click-drag</strong> ile yerleştirme + boyut belirleme yaparsın (merdivenler vb.).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sağ paneldeki parametreleri ayarla</div>
+              <p>Width/Height/Depth (boyutlar), subdivisions (segment sayıları), pivot konumu. Değiştir → anında önizleme.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Accept ile commit et</div>
+              <p>Sol altta <strong>Accept</strong> (yeşil tik) butonuna bas. Yeni bir Static Mesh asset oluşturulur ve sahnedeki Actor o asset'i kullanır.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Accept etmeyi unutma!</div>
+            <p>
+              Aracı bıraktığında veya tool değiştirdiğinde Accept etmeden çıkış yaparsan değişiklik kaybolur. Yeşil
+              tik (Accept) veya kırmızı çarpı (Cancel) — net karar verene kadar tool aktiftir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13.4 POLYMODEL -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.4</div>
+        <h2 class="topic-title">PolyModel — Vertex / Edge / Face düzenleme</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Klasik 3D modelleme: bir mesh'in noktalarını (vertex), kenarlarını (edge) veya yüzlerini (face) seçip
+          hareket ettirir, deforme eder, eklersin. Modeling Mode'un PolyModel kategorisi tam bunu sunar.
+        </p>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-3d-cube-sphere"></i> Vertex / Edge / Face — Görsel</span>
+            <span>Mesh'in üç temel öğesi</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vertex edge face şeması">
+              <rect x="0" y="0" width="700" height="280" rx="8" fill="#0d0d1a"/>
+
+              <!-- VERTEX küpü -->
+              <g transform="translate(60, 60)">
+                <path d="M 30 30 L 90 30 L 120 60 L 60 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <path d="M 30 30 L 30 90 L 60 120 L 60 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <path d="M 60 60 L 60 120 L 120 120 L 120 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <circle cx="30" cy="30" r="5" fill="#f87171"/>
+                <circle cx="90" cy="30" r="5" fill="#f87171"/>
+                <circle cx="120" cy="60" r="5" fill="#f87171"/>
+                <circle cx="60" cy="60" r="5" fill="#f87171"/>
+                <circle cx="30" cy="90" r="5" fill="#f87171"/>
+                <circle cx="60" cy="120" r="5" fill="#f87171"/>
+                <circle cx="120" cy="120" r="5" fill="#f87171"/>
+              </g>
+              <text x="120" y="220" fill="#f87171" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">VERTEX</text>
+              <text x="120" y="240" fill="#9898b0" font-family="monospace" font-size="10" text-anchor="middle">Nokta · köşe</text>
+
+              <!-- EDGE küpü -->
+              <g transform="translate(280, 60)">
+                <path d="M 30 30 L 90 30 L 120 60 L 60 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <path d="M 30 30 L 30 90 L 60 120 L 60 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <path d="M 60 60 L 60 120 L 120 120 L 120 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <line x1="30" y1="30" x2="90" y2="30" stroke="#a78bfa" stroke-width="3"/>
+                <line x1="60" y1="60" x2="120" y2="60" stroke="#a78bfa" stroke-width="3"/>
+                <line x1="60" y1="60" x2="60" y2="120" stroke="#a78bfa" stroke-width="3"/>
+              </g>
+              <text x="340" y="220" fill="#a78bfa" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">EDGE</text>
+              <text x="340" y="240" fill="#9898b0" font-family="monospace" font-size="10" text-anchor="middle">İki vertex arası · kenar</text>
+
+              <!-- FACE küpü -->
+              <g transform="translate(500, 60)">
+                <path d="M 30 30 L 90 30 L 120 60 L 60 60 Z" fill="#34d39955" stroke="#34d399" stroke-width="2"/>
+                <path d="M 30 30 L 30 90 L 60 120 L 60 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+                <path d="M 60 60 L 60 120 L 120 120 L 120 60 Z" fill="#1a1a28" stroke="#3a3a5a" stroke-width="1"/>
+              </g>
+              <text x="560" y="220" fill="#34d399" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">FACE</text>
+              <text x="560" y="240" fill="#9898b0" font-family="monospace" font-size="10" text-anchor="middle">Kenarların çevirdiği yüzey</text>
+            </svg>
+          </div>
+        </div>
+
+        <h4>En çok kullanacağın PolyModel komutları</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-arrow-up-square"></i></div>
+            <h4>Extrude (Uzat)</h4>
+            <p>Seçili face'i normalinin yönünde dışa/içe uzatır. Duvar yaratmanın, kutu çıkarmanın temeli.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-corner-down-right"></i></div>
+            <h4>Inset (İçeri çek)</h4>
+            <p>Seçili face'in içine küçük bir face daha ekler. Pencere çerçeveleri, deliklerin başlangıcı için.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-bevel"></i></div>
+            <h4>Bevel (Pah)</h4>
+            <p>Keskin köşeleri yumuşatır — gerçekçilik için kritik. Hiçbir gerçek nesne %100 keskin değildir.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-line-dashed"></i></div>
+            <h4>Loop Cut</h4>
+            <p>Mesh'i bir kenara paralel kesip yeni edge eklemek. Daha fazla detay/segment için.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-trash"></i></div>
+            <h4>Delete Face</h4>
+            <p>Bir yüzü tamamen sil — açık delik bırakır. Cam çerçeve, kapı boşluğu için.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(192,132,252,.12);color:#c084fc;"><i class="ti ti-vector-spline"></i></div>
+            <h4>Merge / Weld</h4>
+            <p>Birden fazla vertex'i tek bir noktada birleştirir. Çatladığında tamir, modellemede kapatma.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Extrude + Inset birleşimi</div>
+            <p>
+              Bir duvarda pencere boşluğu açmak için klasik kalıp: face seç → <strong>Inset</strong> ile içine
+              küçük dikdörtgen oluştur → o iç face'i seç → <strong>Extrude (negatif)</strong> ile duvarı del. Bu
+              "Inset then Push" tekniği low-poly modellemenin temel kalıbıdır. Aynı yöntemle kapı, pencere, hava
+              deliği, oyuk yatak — yüzlerce şey üretirsin.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13.5 BOOLEAN -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.5</div>
+        <h2 class="topic-title">Boolean — İki mesh'i birleştir veya çıkar</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          İki mesh'i matematiksel olarak bileştiren operasyonlardır. Mimari geometride özellikle çok değerlidir:
+          bir duvar küpünden silindir çıkararak pencere boşluğu açmak, iki şekli yapıştırmak vb.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-plus"></i></div>
+            <h4>Union (Birleştir)</h4>
+            <p>İki mesh'i tek bir mesh'e dönüştürür. Üst üste bindikleri yerde içeri girer kısımlar silinir.</p>
+            <span class="tag-small">A + B</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(239,68,68,.12);color:#f87171;"><i class="ti ti-minus"></i></div>
+            <h4>Subtract (Çıkar)</h4>
+            <p>A mesh'inden B mesh'ini siler. Duvardan silindir çıkar = silindir şeklinde delik.</p>
+            <span class="tag-small">A − B</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-x"></i></div>
+            <h4>Intersect (Kesişim)</h4>
+            <p>Sadece iki mesh'in çakıştığı bölge kalır, geri kalanı silinir. Özel şekiller için.</p>
+            <span class="tag-small">A ∩ B</span>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İki mesh'i üst üste bindir</div>
+              <p>Sahneye bir duvar (Box) ve iç içe bir silindir (Cylinder) koy. Silindir, duvarı tam delecek şekilde içine geçsin.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İkisini de seç</div>
+              <p>İki mesh'i de Outliner'dan veya viewport'tan Ctrl+tık ile seç. Birinin "ana" (sürekli kalan), diğerinin "kesici" olduğunu unutma.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">MeshOps → Boolean</div>
+              <p>Sol panelde <strong>MeshOps → Boolean</strong>. Operasyon tipini seç: Subtract. Hangi mesh'in ana, hangisinin kesici olduğunu sıralamadan ayarla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Accept</div>
+              <p>Önizlemeyi gör, beğendiysen Accept. Duvarın ortasında silindir şeklinde delik!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Boolean'ın limitleri</div>
+            <p>
+              Boolean operasyonları <strong>karmaşık topoloji</strong> üretir. Çoğunlukla sonuçtaki mesh'in vertex
+              akışı düzenli değildir, bu da animasyon veya zarif subdivision için sorun çıkarır. Statik level
+              geometrisi için sorun değil ama karakter veya animasyonlu nesne için Boolean'dan kaçın — yerine
+              manuel modellemeyi tercih et.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13.6 DİĞER FAYDALI ARAÇLAR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">13.6</div>
+        <h2 class="topic-title">Diğer faydalı araçlar</h2>
+      </div>
+      <div class="topic-body">
+        <div class="tips-list">
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-flip-horizontal"></i></div>
+            <p><strong>Mirror:</strong> Mesh'i bir eksene göre yansıtır. Sadece yarısını modelleyip diğer yarıyı otomatik üretmek için. MeshOps → Mirror.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-stack-2"></i></div>
+            <p><strong>Simplify:</strong> Vertex sayısını azaltır — performansa katkı, LOD üretmek için. MeshOps → Simplify. Polycount hedefi gir.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-grid-pattern"></i></div>
+            <p><strong>Remesh:</strong> Mesh'i tamamen yeniden topolojiye sokar — düzgün dağılım. Boolean sonrası kötü topolojiyi düzeltmek için ideal.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-unlink"></i></div>
+            <p><strong>UV Unwrap (Auto):</strong> Otomatik UV açma — UV → Auto UV → Atlas/Patches yöntemleri.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-bowl"></i></div>
+            <p><strong>Bake Normals:</strong> Yüksek mesh'ten alçak mesh'e Normal map basar — performans optimizasyonu. Bake kategorisinde.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-box"></i></div>
+            <p><strong>Collision Generation:</strong> Karmaşık mesh'e otomatik basit collision üretir (Convex Hull, Box, Sphere). MeshOps → Collision veya doğrudan Mesh menüsünden.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Shift+5</strong> ile Modeling Mode'a hızlıca geç.</li>
+        <li><strong>Modeling Mode = cep alet seti.</strong> DCC'nin yerini tutmaz ama %80 işi çözer.</li>
+        <li><strong>Accept (yeşil tik)</strong> commit eder, etmezsen değişiklik kaybolur.</li>
+        <li><strong>Single Asset vs Per-Instance</strong> seçimine dikkat — yanlış seçim diğer örnekleri etkiler.</li>
+        <li><strong>Vertex/Edge/Face</strong> mesh'in 3 temel öğesidir.</li>
+        <li><strong>Extrude + Inset</strong> kombosu = low-poly modellemenin omurgası.</li>
+        <li><strong>Bevel = gerçekçilik.</strong> Hiçbir gerçek köşe %100 keskin değil.</li>
+        <li><strong>Boolean (Subtract)</strong> ile pencere/kapı boşluğu açılır, ama topoloji karışır.</li>
+        <li><strong>Karakter için Boolean kullanma</strong> — animasyon bozulur.</li>
+        <li><strong>Simplify + LOD</strong> ile performans kazanırsın.</li>
+        <li><strong>Remesh</strong>, Boolean sonrası dağılan topolojiyi düzeltir.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Editörü terk etmeden modelle</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Parametrik mobilya parçası</div>
+            <p class="project-desc">Shapes → Box ile bir masa tablası, 4 silindir ile masa ayakları ekle. Boyutlarını parametre olarak ayarla. Sonra Box → Stairs ile 5 basamaklı bir merdiven yarat (genişlik 200, basamak yüksekliği 20).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>1 masa + 4 silindir ayak oluşturuldu</li><li>Parametreler sayısal olarak ayarlandı</li><li>Stairs ile merdiven üretildi</li><li>Tüm modeller Accept ile commit edildi</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Parametrik primitive üretmeyi öğrenmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Extrude + Inset ile pencereli oda</div>
+            <p class="project-desc">Bir Box (oda büyüklüğünde) yap. Yüzlerinden birini seç. PolyModel → <strong>Inset</strong> ile içine küçük bir dikdörtgen face oluştur (pencere konumu). O face'i seç → <strong>Extrude (negatif)</strong> ile içeri it = pencere boşluğu. Sonra alt face'i seçip benzer şekilde kapı boşluğu aç. Tek duvar küpünden tam bir oda.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Oda Box olarak başladı</li><li>Face seçim modu kullanıldı</li><li>Inset ile pencere face'i oluşturuldu</li><li>Negatif Extrude ile delik açıldı</li><li>Kapı boşluğu da eklendi</li><li>Sonuç içine girilebilir gerçek bir oda</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Inset+Extrude kombosuyla mimari geometri üretmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: Boolean ile delikli mimari + LOD + Collision</div>
+            <p class="project-desc">Bir kalın duvar Box ekle. Bir Sphere ve bir Cylinder ekle, duvardan geçsin. İkisi için ayrı Boolean Subtract uygula = bir yuvarlak ve bir silindir delik. Sonra <strong>Remesh</strong> ile topolojiyi düzelt. <strong>Simplify</strong> ile vertex sayısını ~%50 azalt. <strong>LOD Generation</strong> ile 3 LOD seviyesi üret. Son olarak <strong>Convex Decomposition</strong> ile collision oluştur. Bonus: UV → Auto UV → Atlas ile UV unwrap.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>İki ayrı Boolean uygulandı (sphere + cylinder)</li><li>Remesh ile topoloji düzenlendi</li><li>Simplify çalıştırıldı</li><li>3 LOD üretildi</li><li>Collision Convex Decomposition ile oluştu</li><li>Bonus: UV Atlas başarılı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Tam üretim hattını deneyimlemek: model → düzelt → optimize → collision → UV.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q13-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Modeling Mode'a hızlıca geçmek için kullanılan klavye kısayolu hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q13-1')"><span class="quiz-option-key">A</span><span>Ctrl+M</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q13-1')"><span class="quiz-option-key">B</span><span>Shift+5</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-1')"><span class="quiz-option-key">C</span><span>Alt+1</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-1')"><span class="quiz-option-key">D</span><span>F5</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q13-1-ok">✓ Doğru! Shift+1..7 ile mod (Selection/Landscape/Foliage/Brush/Modeling...) arası geçişler yapılır.</div>
+        <div class="quiz-feedback fail" id="q13-1-fail">✗ Yanlış. Doğru cevap Shift+5. Shift+1..7 farklı modlara atlatır.</div>
+      </div>
+
+      <div class="quiz-question" id="q13-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Bir duvarın yüzeyinde pencere boşluğu açmak için en uygun PolyModel kalıbı nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q13-2')"><span class="quiz-option-key">A</span><span>Sadece Loop Cut</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q13-2')"><span class="quiz-option-key">B</span><span>Face seç → Inset → o face'i seç → negatif Extrude</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-2')"><span class="quiz-option-key">C</span><span>Vertex'leri uzaklaştır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-2')"><span class="quiz-option-key">D</span><span>Mirror</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q13-2-ok">✓ Doğru! Inset + negatif Extrude, low-poly modellemenin standart pencere/kapı kalıbıdır.</div>
+        <div class="quiz-feedback fail" id="q13-2-fail">✗ Yanlış. Inset ile iç dikdörtgen yarat, sonra o yüzü negatif Extrude ile içeri it = boşluk açılır.</div>
+      </div>
+
+      <div class="quiz-question" id="q13-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>A küpünden B silindirini matematiksel olarak çıkararak delik açmak için hangi operasyon kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q13-3')"><span class="quiz-option-key">A</span><span>Boolean Union</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q13-3')"><span class="quiz-option-key">B</span><span>Boolean Subtract</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-3')"><span class="quiz-option-key">C</span><span>Boolean Intersect</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-3')"><span class="quiz-option-key">D</span><span>Mirror</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q13-3-ok">✓ Doğru! Subtract = A − B, B'nin çakıştığı bölge A'dan silinir.</div>
+        <div class="quiz-feedback fail" id="q13-3-fail">✗ Yanlış. Çıkarma = Subtract (A − B). Union birleştirir, Intersect ise sadece kesişimi tutar.</div>
+      </div>
+
+      <div class="quiz-question" id="q13-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir animasyonlu karakter modeli için Boolean kullanmamalısın, çünkü…</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q13-4')"><span class="quiz-option-key">A</span><span>UE5 izin vermez</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q13-4')"><span class="quiz-option-key">B</span><span>Karmaşık ve düzensiz topoloji üretir, animasyon deforme olur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-4')"><span class="quiz-option-key">C</span><span>Çok yavaştır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-4')"><span class="quiz-option-key">D</span><span>Karakterler Boolean'ı yansıtır</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q13-4-ok">✓ Doğru! Boolean topoloji akışını bozar; bu da animasyon ve subdivision için kötüdür. Statik geometri için sorun değil.</div>
+        <div class="quiz-feedback fail" id="q13-4-fail">✗ Yanlış. Boolean teknik olarak çalışır ama çıktı topoloji animasyon için uygunsuzdur — bu yüzden karakter ve animasyonlu mesh için manuel modelleme tercih edilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q13-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Modeling Mode'da bir aracı kullandın ama Accept etmedin ve başka tool'a geçtin. Sonuç ne olur?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q13-5')"><span class="quiz-option-key">A</span><span>Değişiklik otomatik kaydedilir</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q13-5')"><span class="quiz-option-key">B</span><span>Değişiklik kaybolur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-5')"><span class="quiz-option-key">C</span><span>UE5 çöker</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q13-5')"><span class="quiz-option-key">D</span><span>Sahnede gizli kalır</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q13-5-ok">✓ Doğru! Accept etmediğin değişiklik commit olmaz; tool bırakılınca önizleme silinir.</div>
+        <div class="quiz-feedback fail" id="q13-5-fail">✗ Yanlış. Accept etmediğin sürece değişiklik geçicidir; tool'u bıraktığında kaybolur.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s13"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="12-animasyon.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 12</div><div class="page-nav-title">Animasyon</div></div>
+      </a>
+      <a href="14-animation-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 14</div><div class="page-nav-title">Animation Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

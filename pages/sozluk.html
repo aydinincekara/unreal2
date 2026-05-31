@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sözlük — UnrealAkademi</title>
+  <meta name="description" content="UE5 ve oyun geliştirme terimleri Türkçe sözlüğü — 80+ terim, İngilizce karşılıklı.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Sözlük — UnrealAkademi">
+  <meta property="og:description" content="UE5 ve oyun geliştirme terimleri Türkçe sözlüğü — 80+ terim, İngilizce karşılıklı.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sözlük — UnrealAkademi">
+  <meta name="twitter:description" content="UE5 ve oyun geliştirme terimleri Türkçe sözlüğü — 80+ terim, İngilizce karşılıklı.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra active" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Sözlük</span>
+    </nav>
+
+    <header class="helper-page-header">
+      <h1><i class="ti ti-book-2"></i> Sözlük</h1>
+      <p>UE5 ve oyun geliştirme terimlerinin Türkçe açıklamaları + İngilizce karşılıkları. 80+ terim, alfabetik sıralı.</p>
+    </header>
+
+    <div class="glossary-search">
+      <input type="search" id="glossary-search" placeholder="🔍 Terim ara... (örn. material, animation, blueprint)">
+    </div>
+
+    <div class="glossary-letters" id="glossary-letters"></div>
+
+    <div id="glossary-content">
+
+      <div class="glossary-section" data-letter="A">
+        <h2 class="glossary-section-title" id="letter-A">A</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Actor</span><span class="glossary-term-en">Actor</span></div>
+          <p class="glossary-term-def">Sahnede yer alabilen her şey. Statik bir kaya da Actor'dur, oyuncu karakter de. Tüm sahne nesnelerinin ortak atasıdır.</p>
+          <a href="pages/05-actor-event-function.html" class="glossary-term-link">→ Bölüm 05</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Animation Blueprint (ABP)</span><span class="glossary-term-en">Animation Blueprint</span></div>
+          <p class="glossary-term-def">Karakterin "hangi animasyon ne zaman oynamalı?" sorusunu yöneten özel Blueprint. State Machine ve Blend Space'leri içerir.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Animation Montage</span><span class="glossary-term-en">Animation Montage</span></div>
+          <p class="glossary-term-def">Tek seferlik aksiyon animasyonları (saldırı, reload) için kullanılan asset türü. Slot üzerinden mevcut animasyonun üstüne oynatılır.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Animation Sequence</span><span class="glossary-term-en">Animation Sequence</span></div>
+          <p class="glossary-term-def">Tek bir hareket kaydını içeren asset (örn. AS_Run, AS_Jump). Skeleton'a bağlıdır.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Asset</span><span class="glossary-term-en">Asset</span></div>
+          <p class="glossary-term-def">UE5 projesindeki herhangi bir dosya — mesh, texture, ses, material, Blueprint. Hepsi <code>.uasset</code> uzantısıyla saklanır.</p>
+          <a href="pages/11-icerik-yukleme.html" class="glossary-term-link">→ Bölüm 11</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="B">
+        <h2 class="glossary-section-title" id="letter-B">B</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Bake (Pişirme)</span><span class="glossary-term-en">Bake / Baking</span></div>
+          <p class="glossary-term-def">Hesaplama sonucunu önceden hazırlayıp saklama. Lightmap baking, animasyon baking gibi. UE5 Lumen ile light baking ihtiyacını ortadan kaldırdı.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Behavior Tree</span><span class="glossary-term-en">Behavior Tree</span></div>
+          <p class="glossary-term-def">AI'nın karar verme mekanizması. Selector, Sequence, Task gibi düğümlerle düşmanların davranışı kurulur.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Blend Space</span><span class="glossary-term-en">Blend Space</span></div>
+          <p class="glossary-term-def">Birden fazla animasyonu bir/iki eksende karıştıran asset. Hıza göre Idle→Walk→Run geçişi için kullanılır.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Blueprint (BP)</span><span class="glossary-term-en">Blueprint</span></div>
+          <p class="glossary-term-def">UE5'in görsel programlama sistemi. Node ve pin'lerle "kod yazmadan" oyun mantığı kurulur.</p>
+          <a href="pages/04-blueprint-temelleri.html" class="glossary-term-link">→ Bölüm 04</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Bone (Kemik)</span><span class="glossary-term-en">Bone</span></div>
+          <p class="glossary-term-def">Skeleton'un her bir parçası. Kemikler hareket ettikçe deri (mesh) de onunla birlikte deforme olur.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Brush</span><span class="glossary-term-en">Brush / BSP</span></div>
+          <p class="glossary-term-def">Geometrik şekillerle (kutu, silindir...) sahne içi hızlı modelleme aracı. Prototipleme için ideal.</p>
+          <a href="pages/15-brush-mode.html" class="glossary-term-link">→ Bölüm 15</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="C">
+        <h2 class="glossary-section-title" id="letter-C">C</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Cast</span><span class="glossary-term-en">Cast To</span></div>
+          <p class="glossary-term-def">Bir nesneyi belirli bir sınıf olarak yorumlama. Cast başarısız olursa false dönen branch'tan çıkış olur. Performans için aşırı kullanımı önerilmez.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Character</span><span class="glossary-term-en">Character</span></div>
+          <p class="glossary-term-def">Pawn'ın özel bir alt sınıfı. Capsule Component + Mesh + Movement Component ile gelir — insan benzeri hareketler için optimize.</p>
+          <a href="pages/03-gamemode.html" class="glossary-term-link">→ Bölüm 03</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Collision</span><span class="glossary-term-en">Collision</span></div>
+          <p class="glossary-term-def">Çarpışma — bir nesnenin başka bir nesneyle fiziksel temasını algılama sistemi.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Component</span><span class="glossary-term-en">Component</span></div>
+          <p class="glossary-term-def">Bir Actor'a takılan parça — Mesh, Sound, Light, Collision gibi. Actor'lar Component'lerden oluşur.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Content Browser</span><span class="glossary-term-en">Content Browser</span></div>
+          <p class="glossary-term-def">UE5 editörünün asset listesi paneli. Tüm dosyalara buradan erişilir, organize edilir.</p>
+          <a href="pages/02-arayuz.html" class="glossary-term-link">→ Bölüm 02</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Control Rig</span><span class="glossary-term-en">Control Rig</span></div>
+          <p class="glossary-term-def">Karakter manipülasyonu için "kontrolör" sistemi. Pose oluşturma, sahne içi animasyon düzenleme için kullanılır.</p>
+          <a href="pages/14-animation-mode.html" class="glossary-term-link">→ Bölüm 14</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Cooking</span><span class="glossary-term-en">Cooking</span></div>
+          <p class="glossary-term-def">Paketleme sürecinde asset'lerin hedef platform için optimize edilmesi. Editör formatları platform-spesifik formatlara çevrilir.</p>
+          <a href="pages/24-yayinlama.html" class="glossary-term-link">→ Bölüm 24</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">C++</span><span class="glossary-term-en">C++</span></div>
+          <p class="glossary-term-def">UE5'in çekirdek programlama dili. Blueprint görsel; C++ yazılı. İkisi birlikte çalışır.</p>
+          <a href="pages/26-cpp-giris.html" class="glossary-term-link">→ Bölüm 26</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="D">
+        <h2 class="glossary-section-title" id="letter-D">D</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Details Panel</span><span class="glossary-term-en">Details Panel</span></div>
+          <p class="glossary-term-def">Seçili nesnenin tüm parametrelerini gösteren ve düzenleten panel. Genelde sağda yer alır.</p>
+          <a href="pages/02-arayuz.html" class="glossary-term-link">→ Bölüm 02</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Directional Light</span><span class="glossary-term-en">Directional Light</span></div>
+          <p class="glossary-term-def">Yön ışığı — güneş veya ay benzeri, sahnenin tamamını paralel ışınlarla aydınlatan ışık kaynağı.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Draw Call</span><span class="glossary-term-en">Draw Call</span></div>
+          <p class="glossary-term-def">GPU'ya gönderilen tek bir "şunu çiz" emri. Çok sayıda draw call performansı düşürür; Nanite ve instancing bunu azaltır.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Dynamic Material Instance (DMI)</span><span class="glossary-term-en">Dynamic Material Instance</span></div>
+          <p class="glossary-term-def">Çalışma anında parametreleri değiştirilebilen material instance. Hasar alınca yüzey kızarması gibi runtime efektler için.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="E">
+        <h2 class="glossary-section-title" id="letter-E">E</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Emissive</span><span class="glossary-term-en">Emissive</span></div>
+          <p class="glossary-term-def">Yüzeyin kendi ışık yayması özelliği. Lavalar, neon tabelalar, ekranlar için kullanılır. Lumen'de gerçek ışık kaynağı olur.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Enhanced Input</span><span class="glossary-term-en">Enhanced Input System</span></div>
+          <p class="glossary-term-def">UE5'in modern input sistemi. Input Action, Mapping Context, Modifier ve Trigger kavramlarıyla esnek tuş atamaları sağlar.</p>
+          <a href="pages/22-enhanced-input.html" class="glossary-term-link">→ Bölüm 22</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Event</span><span class="glossary-term-en">Event</span></div>
+          <p class="glossary-term-def">"Şu olduğunda şu çalış" mantığı. BeginPlay, Tick, OverlapBegin gibi standart event'ler ve Custom Event'ler.</p>
+          <a href="pages/05-actor-event-function.html" class="glossary-term-link">→ Bölüm 05</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Event Dispatcher</span><span class="glossary-term-en">Event Dispatcher</span></div>
+          <p class="glossary-term-def">Birden fazla dinleyiciye sinyal gönderme mekanizması. Bir buton birden fazla yere haber verebilir.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="F">
+        <h2 class="glossary-section-title" id="letter-F">F</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">FBX</span><span class="glossary-term-en">FBX (.fbx)</span></div>
+          <p class="glossary-term-def">3D model değişim formatı. UE5'in mesh + skeleton + animasyon import'unun standardı. Blender, Maya, 3ds Max destekler.</p>
+          <a href="pages/11-icerik-yukleme.html" class="glossary-term-link">→ Bölüm 11</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Foliage</span><span class="glossary-term-en">Foliage</span></div>
+          <p class="glossary-term-def">Ağaç, çim, çiçek gibi doğa varlıkları. UE5'in Foliage Mode'unda binlerce kopyayı performanslı yerleştirebilirsin.</p>
+          <a href="pages/19-foliage-mode.html" class="glossary-term-link">→ Bölüm 19</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Fracture</span><span class="glossary-term-en">Fracture / Chaos Destruction</span></div>
+          <p class="glossary-term-def">Mesh'i parçalara bölüp fiziksel yıkım sağlayan sistem. Voronoi gibi algoritmalarla cam, beton, ahşap kırılması üretilir.</p>
+          <a href="pages/16-fracture-mode.html" class="glossary-term-link">→ Bölüm 16</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Function</span><span class="glossary-term-en">Function</span></div>
+          <p class="glossary-term-def">Belirli bir işi yapan node grubu. Input/output pin'lerle parametre alır, sonuç döndürür. Tekrar eden kodu sade tutar.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="G">
+        <h2 class="glossary-section-title" id="letter-G">G</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Game Instance</span><span class="glossary-term-en">Game Instance</span></div>
+          <p class="glossary-term-def">Oyun boyunca tek bir kopyası yaşayan ve level değiştiğinde silinmeyen Blueprint. Level'lar arası kalıcı veri için kullanılır.</p>
+          <a href="pages/23-save-menu.html" class="glossary-term-link">→ Bölüm 23</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Game Mode</span><span class="glossary-term-en">Game Mode</span></div>
+          <p class="glossary-term-def">Oyunun "kuralları"nı belirleyen Blueprint. Hangi karakter, hangi HUD, hangi player controller — hepsi GameMode tanımlar.</p>
+          <a href="pages/03-gamemode.html" class="glossary-term-link">→ Bölüm 03</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Global Illumination (GI)</span><span class="glossary-term-en">Global Illumination</span></div>
+          <p class="glossary-term-def">Dolaylı ışıklandırma — ışığın yüzeylerden yansıyıp ortamı dolaylı olarak aydınlatması. Lumen UE5'in GI çözümü.</p>
+          <a href="pages/21-lumen-nanite.html" class="glossary-term-link">→ Bölüm 21</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="H">
+        <h2 class="glossary-section-title" id="letter-H">H</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Heightmap</span><span class="glossary-term-en">Heightmap</span></div>
+          <p class="glossary-term-def">Yükseklik haritası — Landscape sculpting için kullanılan gri tonlu görüntü dosyası. Beyaz tepe, siyah çukur.</p>
+          <a href="pages/18-landscape-mode.html" class="glossary-term-link">→ Bölüm 18</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">HUD</span><span class="glossary-term-en">HUD (Heads-Up Display)</span></div>
+          <p class="glossary-term-def">Oyun ekranında üst üste görünen arayüz öğeleri — can barı, skor, mini harita.</p>
+          <a href="pages/09-hud-arayuz.html" class="glossary-term-link">→ Bölüm 09</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="I">
+        <h2 class="glossary-section-title" id="letter-I">I</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Inheritance</span><span class="glossary-term-en">Inheritance / Parent-Child</span></div>
+          <p class="glossary-term-def">Bir Blueprint'in başka bir Blueprint'ten türemesi. Parent'ın özelliklerini Child miras alır, üzerine ekleyebilir.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Input Action (IA)</span><span class="glossary-term-en">Input Action</span></div>
+          <p class="glossary-term-def">Enhanced Input'ta tek bir "eylem"i tanımlayan asset (Jump, Fire, Move). Tuşa bağımsız anlam taşır.</p>
+          <a href="pages/22-enhanced-input.html" class="glossary-term-link">→ Bölüm 22</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Input Mapping Context (IMC)</span><span class="glossary-term-en">Input Mapping Context</span></div>
+          <p class="glossary-term-def">Action'ları somut tuşlara bağlayan asset. Birden fazla IMC kullanılabilir (oyun modu vs menü modu).</p>
+          <a href="pages/22-enhanced-input.html" class="glossary-term-link">→ Bölüm 22</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Instanced Static Mesh (ISM)</span><span class="glossary-term-en">Instanced Static Mesh</span></div>
+          <p class="glossary-term-def">Aynı mesh'in çok sayıda kopyasını tek bir draw call ile çizen sistem. Foliage'ın temeli budur.</p>
+          <a href="pages/19-foliage-mode.html" class="glossary-term-link">→ Bölüm 19</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Interface</span><span class="glossary-term-en">Blueprint Interface</span></div>
+          <p class="glossary-term-def">Farklı sınıfların ortak konuşma protokolü. Cast'siz, gevşek bağlı iletişim için kullanılır.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="L">
+        <h2 class="glossary-section-title" id="letter-L">L</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Landscape</span><span class="glossary-term-en">Landscape</span></div>
+          <p class="glossary-term-def">Geniş açık dünya arazileri için optimize edilmiş özel mesh türü. Sculpt + layer blend ile şekillendirilir.</p>
+          <a href="pages/18-landscape-mode.html" class="glossary-term-link">→ Bölüm 18</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Level</span><span class="glossary-term-en">Level / Map</span></div>
+          <p class="glossary-term-def">Bir oyun sahnesi. Bir oyunda birden fazla level olabilir (ana menü level, ilk bölüm, son boss).</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">LOD (Level of Detail)</span><span class="glossary-term-en">Level of Detail</span></div>
+          <p class="glossary-term-def">Mesh'in farklı detay seviyelerinde versiyonları. Uzakta basit hâli, yakında detaylı hâli. Nanite bunu otomatik halleder.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Loop (Döngü)</span><span class="glossary-term-en">Loop</span></div>
+          <p class="glossary-term-def">Bir işlemin tekrarlanması. For Each, While, For döngü tipleri. Programlamanın 3 temel yapısından biri.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Lumen</span><span class="glossary-term-en">Lumen</span></div>
+          <p class="glossary-term-def">UE5'in gerçek zamanlı global illumination ve yansıma sistemi. Light baking ihtiyacını ortadan kaldırır.</p>
+          <a href="pages/21-lumen-nanite.html" class="glossary-term-link">→ Bölüm 21</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="M">
+        <h2 class="glossary-section-title" id="letter-M">M</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Material</span><span class="glossary-term-en">Material</span></div>
+          <p class="glossary-term-def">Bir mesh'in yüzeyine "böyle görün" diyen reçete. Renk, parlaklık, pürüzlülük gibi PBR girdileri içerir.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Material Instance (MI)</span><span class="glossary-term-en">Material Instance</span></div>
+          <p class="glossary-term-def">Bir ana materyalden türetilmiş varyant. Parametre değerleri farklıdır ama graph paylaşılır — performans avantajı.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Megascans</span><span class="glossary-term-en">Megascans / Quixel</span></div>
+          <p class="glossary-term-def">Epic'in 3D tarama kütüphanesi. Yüksek kaliteli mesh + texture'lar — UE5 projelerinde ücretsiz kullanılır.</p>
+          <a href="pages/11-icerik-yukleme.html" class="glossary-term-link">→ Bölüm 11</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Mesh</span><span class="glossary-term-en">Mesh</span></div>
+          <p class="glossary-term-def">3D model. Vertex (köşe) + Edge (kenar) + Face (yüzey)'lerden oluşur. Static Mesh ve Skeletal Mesh ikiye ayrılır.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Metallic</span><span class="glossary-term-en">Metallic</span></div>
+          <p class="glossary-term-def">PBR girdisi — yüzey metal mi (1) yoksa metal değil mi (0). Arası değer fizikte anlamlı değil.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">MetaHuman</span><span class="glossary-term-en">MetaHuman</span></div>
+          <p class="glossary-term-def">Epic'in gerçekçi insan karakter yaratım aracı. Tarayıcıda kişiselleştirilir, UE5'e import edilir.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="N">
+        <h2 class="glossary-section-title" id="letter-N">N</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Nanite</span><span class="glossary-term-en">Nanite</span></div>
+          <p class="glossary-term-def">UE5'in sanal geometri sistemi. Yüz milyonlarca poligonu LOD gerektirmeden akıcı render eder.</p>
+          <a href="pages/21-lumen-nanite.html" class="glossary-term-link">→ Bölüm 21</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">NavMesh</span><span class="glossary-term-en">Navigation Mesh</span></div>
+          <p class="glossary-term-def">AI'ların yürüyebileceği yüzeyleri tanımlayan görünmez katman. NavMesh Bounds Volume ile oluşturulur.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Niagara</span><span class="glossary-term-en">Niagara</span></div>
+          <p class="glossary-term-def">UE5'in partikül sistemi. Ateş, duman, patlama, büyü efektleri için kullanılır.</p>
+          <a href="pages/08-ses-vfx.html" class="glossary-term-link">→ Bölüm 08</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Node</span><span class="glossary-term-en">Node</span></div>
+          <p class="glossary-term-def">Blueprint'in temel yapıtaşı. Function/Event/Variable kutuları. Pin'lerle birbirine bağlanırlar.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Normal Map</span><span class="glossary-term-en">Normal Map</span></div>
+          <p class="glossary-term-def">Mesh düz olsa da pürüzlü görünmesini sağlayan özel texture. Mor-mavi tonlu olur. sRGB OFF + Compression: Normalmap.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="O">
+        <h2 class="glossary-section-title" id="letter-O">O</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Outliner</span><span class="glossary-term-en">World Outliner</span></div>
+          <p class="glossary-term-def">Sahnedeki tüm actor'ların listelendiği panel. Folder'larla organize edilebilir.</p>
+          <a href="pages/02-arayuz.html" class="glossary-term-link">→ Bölüm 02</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Overlap</span><span class="glossary-term-en">Overlap</span></div>
+          <p class="glossary-term-def">İki collision hacminin geçişmesi. Bir trigger box'a girince event tetikleme yöntemi.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="P">
+        <h2 class="glossary-section-title" id="letter-P">P</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Packaging</span><span class="glossary-term-en">Packaging</span></div>
+          <p class="glossary-term-def">Oyunu editör dışında çalışabilecek standalone .exe haline getirme süreci.</p>
+          <a href="pages/24-yayinlama.html" class="glossary-term-link">→ Bölüm 24</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Pak File</span><span class="glossary-term-en">.pak</span></div>
+          <p class="glossary-term-def">Paketlenmiş oyunda asset'lerin toplandığı tek dosya. İçinde tüm mesh/texture/blueprint kompres halde.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Pawn</span><span class="glossary-term-en">Pawn</span></div>
+          <p class="glossary-term-def">Oyuncu veya AI tarafından kontrol edilebilen Actor. Character'ın atasıdır.</p>
+          <a href="pages/03-gamemode.html" class="glossary-term-link">→ Bölüm 03</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">PBR (Physically Based Rendering)</span><span class="glossary-term-en">PBR</span></div>
+          <p class="glossary-term-def">Fiziksel temelli renderlama — yüzeylerin gerçek dünya kurallarına uygun ışık yansıtması.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Pin</span><span class="glossary-term-en">Pin</span></div>
+          <p class="glossary-term-def">Node'un giriş/çıkış noktaları. Renkler tip belirtir (beyaz exec, sarı vector, yeşil float...).</p>
+          <a href="pages/04-blueprint-temelleri.html" class="glossary-term-link">→ Bölüm 04</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Player Controller</span><span class="glossary-term-en">Player Controller</span></div>
+          <p class="glossary-term-def">Oyuncu girdisini alıp Pawn'ı yönlendiren ara katman. UI ile etkileşim de buradan yönetilir.</p>
+          <a href="pages/03-gamemode.html" class="glossary-term-link">→ Bölüm 03</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Post Process Volume</span><span class="glossary-term-en">Post Process Volume</span></div>
+          <p class="glossary-term-def">Sahneye eklenen ve içine girildiğinde renk/exposure/bloom/Lumen ayarlarını değiştiren hacim.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="R">
+        <h2 class="glossary-section-title" id="letter-R">R</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Ray Tracing</span><span class="glossary-term-en">Ray Tracing</span></div>
+          <p class="glossary-term-def">Işın izleme — gerçek dünyadaki ışık ışınlarını simüle ederek render. Hardware (RTX) ve Software ray tracing.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Replication</span><span class="glossary-term-en">Replication</span></div>
+          <p class="glossary-term-def">Çok oyunculu oyunlarda variable veya event'in server'dan client'lara senkronize edilmesi.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Retargeting</span><span class="glossary-term-en">IK Retargeter</span></div>
+          <p class="glossary-term-def">Bir skeleton için yapılmış animasyonu başka bir skeleton'a (farklı oranlı karaktere) uyarlama.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Root Motion</span><span class="glossary-term-en">Root Motion</span></div>
+          <p class="glossary-term-def">Karakteri kod yerine animasyonun hareket ettirmesi. Foot sliding'i ortadan kaldırır.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Roughness</span><span class="glossary-term-en">Roughness</span></div>
+          <p class="glossary-term-def">PBR girdisi — yüzeyin pürüzlülüğü. 0 = ayna gibi parlak, 1 = tamamen mat.</p>
+          <a href="pages/10-materyal.html" class="glossary-term-link">→ Bölüm 10</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="S">
+        <h2 class="glossary-section-title" id="letter-S">S</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">SaveGame</span><span class="glossary-term-en">SaveGame</span></div>
+          <p class="glossary-term-def">Oyun verilerini diske yazıp tekrar yüklemek için kullanılan asset türü.</p>
+          <a href="pages/23-save-menu.html" class="glossary-term-link">→ Bölüm 23</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Sequencer</span><span class="glossary-term-en">Sequencer</span></div>
+          <p class="glossary-term-def">UE5'in cinematic editörü. Kamera, karakter, ışık, ses — hepsini zaman çizelgesinde animasyonlar.</p>
+          <a href="pages/14-animation-mode.html" class="glossary-term-link">→ Bölüm 14</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Shipping</span><span class="glossary-term-en">Shipping (Build)</span></div>
+          <p class="glossary-term-def">Yayına gönderilecek son, en optimize build modu. Debug bilgileri çıkarılmış, en küçük boyut.</p>
+          <a href="pages/24-yayinlama.html" class="glossary-term-link">→ Bölüm 24</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Skeletal Mesh</span><span class="glossary-term-en">Skeletal Mesh</span></div>
+          <p class="glossary-term-def">Skeleton'a bağlı deformable mesh. Karakter, hayvan, animasyonlu varlıklar için.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Skeleton</span><span class="glossary-term-en">Skeleton</span></div>
+          <p class="glossary-term-def">Kemiklerden (bone) oluşan animasyon iskeleti. Aynı skeleton, animasyonları paylaşabilir.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Soft Reference</span><span class="glossary-term-en">Soft Object Reference</span></div>
+          <p class="glossary-term-def">Gerektiğinde yüklenen referans türü. Hard reference'tan bellek/yükleme avantajı.</p>
+          <a href="pages/25-blueprint-ileri.html" class="glossary-term-link">→ Bölüm 25</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">State Machine</span><span class="glossary-term-en">State Machine</span></div>
+          <p class="glossary-term-def">Animation Blueprint'in durum diyagramı. Idle ↔ Run ↔ Jump arası geçişleri yönetir.</p>
+          <a href="pages/12-animasyon.html" class="glossary-term-link">→ Bölüm 12</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Static Mesh</span><span class="glossary-term-en">Static Mesh</span></div>
+          <p class="glossary-term-def">İskeleti olmayan sabit mesh. Bina, sandalye, taş gibi nesneler için.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="T">
+        <h2 class="glossary-section-title" id="letter-T">T</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Texture</span><span class="glossary-term-en">Texture</span></div>
+          <p class="glossary-term-def">Mesh'in yüzeyine giyilen görüntü dosyası. Base Color, Normal, Roughness gibi farklı türleri var.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Tick</span><span class="glossary-term-en">Event Tick</span></div>
+          <p class="glossary-term-def">Her kare çalışan event. Yüksek frekans olduğundan ağır iş yapılmamalı. Mümkünse Timer kullan.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Tiling</span><span class="glossary-term-en">Tiling</span></div>
+          <p class="glossary-term-def">Bir texture'ın yüzeyde tekrarlatılması. TexCoord × N ile material içinde yapılır.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Transform</span><span class="glossary-term-en">Transform</span></div>
+          <p class="glossary-term-def">Bir actor'ın konum (Location) + dönüş (Rotation) + ölçek (Scale) bilgilerinin tamamı.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="U">
+        <h2 class="glossary-section-title" id="letter-U">U</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">UCLASS</span><span class="glossary-term-en">UCLASS()</span></div>
+          <p class="glossary-term-def">UE5 C++ makrosu. Bir sınıfı UE5 sistemine kayıt eder — Blueprint'ten görünür, garbage collected olur.</p>
+          <a href="pages/26-cpp-giris.html" class="glossary-term-link">→ Bölüm 26</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">UFUNCTION</span><span class="glossary-term-en">UFUNCTION()</span></div>
+          <p class="glossary-term-def">C++ fonksiyonunu Blueprint'e açan, replicate eden veya server/client türü çağrı yapan makro.</p>
+          <a href="pages/26-cpp-giris.html" class="glossary-term-link">→ Bölüm 26</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">UPROPERTY</span><span class="glossary-term-en">UPROPERTY()</span></div>
+          <p class="glossary-term-def">C++ değişkenini editör/Blueprint'e açan makro. EditAnywhere, BlueprintReadWrite, Category gibi parametreler alır.</p>
+          <a href="pages/26-cpp-giris.html" class="glossary-term-link">→ Bölüm 26</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">UMG</span><span class="glossary-term-en">Unreal Motion Graphics</span></div>
+          <p class="glossary-term-def">UE5'in UI/Widget sistemi. Tarayıcıdaki HTML benzeri arayüz tasarım aracı.</p>
+          <a href="pages/09-hud-arayuz.html" class="glossary-term-link">→ Bölüm 09</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">UV</span><span class="glossary-term-en">UV Coordinates</span></div>
+          <p class="glossary-term-def">Texture'ın mesh'e nasıl saracağını belirten 2D koordinatlar. UV haritası mesh'in "açılmış kağıdı"dır.</p>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="V">
+        <h2 class="glossary-section-title" id="letter-V">V</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Variable</span><span class="glossary-term-en">Variable</span></div>
+          <p class="glossary-term-def">Değer saklayan kutu. Int, Float, Bool, String, Vector, Object gibi türler.</p>
+          <a href="pages/06-variable-turleri.html" class="glossary-term-link">→ Bölüm 06</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Vector</span><span class="glossary-term-en">Vector / FVector</span></div>
+          <p class="glossary-term-def">3 boyutlu sayı (X, Y, Z). Konum, hız, yön için kullanılır.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Vertex (Köşe)</span><span class="glossary-term-en">Vertex</span></div>
+          <p class="glossary-term-def">3D mesh'in bir köşe noktası. Vertex'ler edge'lerle birleşip face'leri oluşturur.</p>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Viewport</span><span class="glossary-term-en">Viewport</span></div>
+          <p class="glossary-term-def">Sahneyi 3D olarak gördüğün ana ekran. Kameranı sağ tık+WASD ile gezdirebilirsin.</p>
+          <a href="pages/02-arayuz.html" class="glossary-term-link">→ Bölüm 02</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">VFX</span><span class="glossary-term-en">Visual Effects</span></div>
+          <p class="glossary-term-def">Görsel efektler — patlama, duman, büyü, mermi izi. UE5'te genelde Niagara ile yapılır.</p>
+          <a href="pages/08-ses-vfx.html" class="glossary-term-link">→ Bölüm 08</a>
+        </div>
+      </div>
+
+      <div class="glossary-section" data-letter="W">
+        <h2 class="glossary-section-title" id="letter-W">W</h2>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">Widget</span><span class="glossary-term-en">Widget Blueprint</span></div>
+          <p class="glossary-term-def">UMG'de bir UI parçası — buton, panel, görüntü. Widget'lar diğer widget'ların içinde nest edilebilir.</p>
+          <a href="pages/09-hud-arayuz.html" class="glossary-term-link">→ Bölüm 09</a>
+        </div>
+        <div class="glossary-term">
+          <div class="glossary-term-head"><span class="glossary-term-name">World</span><span class="glossary-term-en">World</span></div>
+          <p class="glossary-term-def">Aktif oyun dünyası. Tüm Actor'lar World'de yaşar. Get World node'u ile erişilir.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <script>
+    // Harfler oluştur
+    (function() {
+      const letters = ['A','B','C','D','E','F','G','H','I','L','M','N','O','P','R','S','T','U','V','W'];
+      const container = document.getElementById('glossary-letters');
+      letters.forEach(L => {
+        const a = document.createElement('a');
+        a.className = 'glossary-letter';
+        a.href = '#letter-' + L;
+        a.textContent = L;
+        container.appendChild(a);
+      });
+
+      // Arama
+      const search = document.getElementById('glossary-search');
+      search.addEventListener('input', function() {
+        const q = this.value.trim().toLowerCase();
+        document.querySelectorAll('.glossary-term').forEach(t => {
+          const text = t.textContent.toLowerCase();
+          t.style.display = (q === '' || text.includes(q)) ? '' : 'none';
+        });
+        // Boş sectionları gizle
+        document.querySelectorAll('.glossary-section').forEach(sec => {
+          const visible = sec.querySelectorAll('.glossary-term:not([style*="display: none"])').length;
+          sec.style.display = visible > 0 ? '' : 'none';
+        });
+      });
+    })();
+    </script>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

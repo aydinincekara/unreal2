@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 20: Selection Mode — UnrealAkademi</title>
+  <meta name="description" content="Outliner folder, Select Matching, Volume Selection, Layers.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 20: Selection Mode — UnrealAkademi">
+  <meta property="og:description" content="Outliner folder, Select Matching, Volume Selection, Layers.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 20: Selection Mode — UnrealAkademi">
+  <meta name="twitter:description" content="Outliner folder, Select Matching, Volume Selection, Layers.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link active" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Selection Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 20</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 45 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">Selection Mode — Profesyonel Seçim</h1>
+      <p class="page-lead">
+        Bir sahnede 500 actor var, sadece "tüm ağaçlardan 5 metreden büyük olanları seç" diyorsun. Bir bir tıklamak imkânsız. <strong>Selection Mode</strong>, gelişmiş filtreleme ve toplu işlem araçlarıyla bu işleri saniyelere indirir. UE5'in en az bilinen ama en güçlü modlarından biridir.
+      </p>
+    </header>
+
+    <!-- 20.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.1</div>
+        <h2 class="topic-title">Selection Mode nedir, neden var?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Varsayılan moddaki seçim basittir: tıkla, Ctrl+tıkla, çerçeveyle seç. Bu, küçük sahneler için yeterli. Ama profesyonel sahnelerde binlerce nesne olur ve <em>"şu özelliği taşıyan</em> hepsini seç" türü işlere ihtiyaç duyarsın.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-zoom-filter"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Sıradan seçim, mağazada eşyaları <strong>tek tek raf raf gezerek</strong> almaktır. Selection Mode ise <strong>"tüm kırmızı, 50 TL altı, organik tişörtleri getir"</strong> diye kasiyere söylemektir. Filtre = zaman. 100 nesneyi tek tek tıklamak yerine bir kez kural koy, hepsi seçilsin. Sonra hepsine birden işlem uygula: taşı, kopyala, sil, materyali değiştir.
+            </p>
+          </div>
+        </div>
+
+        <h4>Sıradan seçim kısayolları (önce bunları öğren)</h4>
+        <div class="shortcut-grid">
+          <div class="shortcut"><div class="keys"><kbd>Sol Tık</kbd></div><span>Tek seç</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>Sol Tık</kbd></div><span>Çoklu seç</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Shift</kbd><span>+</span><kbd>Sol Tık</kbd></div><span>Aralık seç (Outliner)</span></div>
+          <div class="shortcut"><div class="keys">Çerçeve sürükle</div><span>Marquee seçim</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>A</kbd></div><span>Tümünü seç</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Esc</kbd></div><span>Seçimi temizle</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20.2 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.2</div>
+        <h2 class="topic-title">Outliner — Seçimin merkezi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Selection Mode'a girmeden önce, <strong>World Outliner</strong>'ı (sağ üst) iyi bilmen gerekir. Çoğu profesyonel seçim Outliner üzerinden yapılır.
+        </p>
+
+        <h4>Outliner arama ve filtreleme</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Arama kutusu</div><div class="info-item-value">İsme göre filtre (örn. "tree")</div></div>
+          <div class="info-item"><div class="info-item-label">Type filter</div><div class="info-item-value">Sınıfa göre (Light, Static Mesh vb.)</div></div>
+          <div class="info-item"><div class="info-item-label">Folder yapısı</div><div class="info-item-value">Sahneyi klasörlere ayır</div></div>
+          <div class="info-item"><div class="info-item-label">Sütun ekle</div><div class="info-item-value">Mobility, Layer, Type kolonları</div></div>
+        </div>
+
+        <h4>Sahneyi klasörle</h4>
+        <p>
+          Outliner'da boş alana sağ tık → <strong>Create Folder</strong>. "Lights", "Props", "Characters", "Terrain" gibi klasörler oluştur. Outliner'da nesneleri sürükleyerek bu klasörlere ayır. Bu adımı atlamak büyük sahnede ölümcüldür — 500 nesne arasında karışırsın.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Folder seçimi</div>
+            <p>
+              Bir folder'a tıklayınca içindeki <strong>tüm</strong> actor'lar seçilir. "Tüm ışıkları kapat" istiyorsan: Lights folder → tek tık → tümü seçili → Details'ten birlikte ayarla.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20.3 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.3</div>
+        <h2 class="topic-title">Selection Mode'a giriş</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Mod dropdown'unda <strong>Selection</strong>'ı seç. Sol panelde gelişmiş seçim araçları açılır. Birkaç güçlü özellik öne çıkar.
+        </p>
+
+        <h4>Selection Mode araçları</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-filter"></i></div>
+            <h4>Select by Class</h4>
+            <p>"Sahnedeki tüm Static Mesh Actor'larını seç" gibi sınıf bazlı toplu seçim.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-photo"></i></div>
+            <h4>Select Matching</h4>
+            <p>Bir actor'ı seçip "buna benzer olanların hepsini" seç (aynı mesh, aynı materyal vb.).</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-square-rotated"></i></div>
+            <h4>Volume Selection</h4>
+            <p>3D bir bölge çiz, içindeki tüm aktörleri seç. Sahneyi parçalara böl.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-bracket-right"></i></div>
+            <h4>Pattern Selection</h4>
+            <p>İsim deseni, tag veya custom kurala göre seç.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20.4 SELECT BY -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.4</div>
+        <h2 class="topic-title">"Select Matching" — En çok kullanacağın</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bu özellik tek başına Selection Mode'u öğrenmeye değer kılar. Bir nesneyi seçer ve "<strong>buna benzer olanların hepsini ekle</strong>" dersin.
+        </p>
+
+        <h4>Eşleştirme türleri</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Select All by Class</div><div class="info-item-value">Aynı sınıfın tümünü seç</div></div>
+          <div class="info-item"><div class="info-item-label">Select Matching Static Mesh</div><div class="info-item-value">Aynı mesh'i kullananlar</div></div>
+          <div class="info-item"><div class="info-item-label">Select Matching Material</div><div class="info-item-value">Aynı materyali kullananlar</div></div>
+          <div class="info-item"><div class="info-item-label">Select All in Same Folder</div><div class="info-item-value">Aynı Outliner klasörü</div></div>
+          <div class="info-item"><div class="info-item-label">Select Owned Actors</div><div class="info-item-value">Bu Blueprint'ten doğan tümü</div></div>
+          <div class="info-item"><div class="info-item-label">Invert Selection</div><div class="info-item-value">Seçimi tersine çevir</div></div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Sağ tık menüsünden hızlı erişim</div>
+            <p>
+              Bir nesneye sağ tıkla → <strong>"Select"</strong> menüsü → "Select Matching Selected Class", "Select Same Material", "Select All". Selection Mode'a girmeden de bu işlemleri yapabilirsin — günlük iş akışında daha hızlıdır.
+            </p>
+          </div>
+        </div>
+
+        <h4>Örnek senaryo</h4>
+        <p>
+          Sahnede 200 ağaç var, hepsi SM_Tree_Oak. Sen meşe ağaçlarının tümünü çam yapmak istiyorsun. Adımlar:
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Bir meşe seç</div>
+              <p>Tek bir meşeye tıkla. Şu an 1 nesne seçili.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sağ tık → Select Matching Static Mesh</div>
+              <p>200 meşe birden seçili oldu.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Details'ten mesh'i değiştir</div>
+              <p>Details panelinde <strong>Static Mesh</strong> alanını SM_Tree_Pine yap. 200'ü birden çam oldu.</p>
+            </div>
+          </div>
+        </div>
+
+        <p>Tek nesneyi tıklayıp manuel değiştirsen 200 işlem; Select Matching ile 3 işlem.</p>
+      </div>
+    </section>
+
+    <!-- 20.5 VOLUME SELECTION -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.5</div>
+        <h2 class="topic-title">Volume Selection — Bölgeye göre seçim</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          "Şu kutu içindeki her şeyi seç" türünde mekânsal seçim için kullanılır. Tipik örnek: "haritanın kuzey yarısındaki tüm nesneleri sil" veya "binanın içindeki ışıkları yeşil yap".
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Selection Mode'a gir</div>
+              <p>Sol panelde Volume Tool seç.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sahnede bir kutu çiz</div>
+              <p>Sürükleyerek bir bounding box belirle. Bu kutunun içinde kalanlar seçilir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Filtre uygula</div>
+              <p>Sadece belli sınıftakileri istiyorsan filtre ekle (örn. "Lights only" → sadece ışıklar).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Confirm → seçim oldu</div>
+              <p>Onayla — o kutunun içindeki tüm uyumlu nesneler seçili. Şimdi taşı, sil, değiştir.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20.6 TOPLU İŞLEMLER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.6</div>
+        <h2 class="topic-title">Toplu işlem — Birden çok nesneyi birlikte düzenle</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Birden çok nesne seçiliyken Details panelinde ortak özellikleri değiştirebilirsin. Sadece ortak olan ayarlar gösterilir.
+        </p>
+
+        <div class="tips-list">
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-color-swatch"></i></div>
+            <p><strong>Materyali topluca değiştir:</strong> 50 duvar seçili → Details → Material → yeni materyal. 50'sinin birden değişir.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-resize"></i></div>
+            <p><strong>Ölçeği topluca değiştir:</strong> 100 ağaç seçili → R tuşu → ölçeği büyüt. Hepsi birden büyür (kendi pivotlarına göre).</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-folder-plus"></i></div>
+            <p><strong>Klasöre taşı:</strong> Çoklu seçim → sürükle → Outliner'da bir folder'ın üstüne bırak. Hepsi o folder'a girer.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-trash"></i></div>
+            <p><strong>Birlikte sil:</strong> Çoklu seçim → Delete tuşu. Tek bir işlemde hepsi silinir.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-copy"></i></div>
+            <p><strong>Çoklu kopyalama:</strong> Ctrl+D ile çoğalt, Alt+sürükle ile kopyalayarak taşı. Toplu seçimde her bir kopyalanır.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Pivot davranışı</div>
+            <p>
+              Birden çok nesne seçiliyken transform aracı <strong>tüm seçimin merkezini</strong> pivot alır (varsayılan). Eğer her nesnenin kendi pivotuna göre döndürmek/ölçeklemek istersen, viewport üst toolbar'ında <strong>"Individual Pivots"</strong> seçeneğini aktif et. 100 ağacın hepsi kendi yerinde dönsün, hepsi birden ortak merkezden değil.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20.7 LAYERS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">20.7</div>
+        <h2 class="topic-title">Layers — Photoshop benzeri katmanlama</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'in <strong>Layers</strong> sistemi (Window → Layers) Photoshop'taki katmanlara benzer. Sahne nesnelerini layer'lara koyar, hepsini birden gizler/gösterir/kilitlersin.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Yeni layer</div><div class="info-item-value">Layers panel → + butonu</div></div>
+          <div class="info-item"><div class="info-item-label">Layer'a ekle</div><div class="info-item-value">Actor'ları seç → layer'a sürükle</div></div>
+          <div class="info-item"><div class="info-item-label">Layer gizle</div><div class="info-item-value">Göz ikonuna tıkla</div></div>
+          <div class="info-item"><div class="info-item-label">Layer'ı seç</div><div class="info-item-value">Layer adına sağ tık → Select Actors</div></div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Folder vs Layer farkı</div>
+            <p>
+              <strong>Folder</strong> (Outliner'da) hiyerarşik organizasyondur — bir actor tek bir folder'da olabilir. <strong>Layer</strong> ise overlay'dir — bir actor birden çok layer'a aitse, hepsinden de etkilenir. Üretimde folder'lar fiziksel düzen, layer'lar mantıksal grup (örn. "Tüm Cinematic Aktörler" katmanı, içine farklı folder'lardan nesneler girer).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Outliner'ı folder'la organize et</strong> — büyük sahnenin sigortası.</li>
+        <li><strong>Folder'a tıkla = içindeki tüm actor'lar seçili.</strong></li>
+        <li><strong>Select Matching = aynı mesh/materyal/sınıfı toplu seç.</strong></li>
+        <li><strong>Sağ tık → Select menüsü</strong> Selection Mode'a girmeden hızlı yol.</li>
+        <li><strong>Volume Selection</strong> = sahnenin bir bölgesindeki nesneleri toplu seç.</li>
+        <li><strong>Çoklu seçim Details paneli</strong> = ortak özellikleri toplu değiştir.</li>
+        <li><strong>Individual Pivots</strong> seçeneği çoklu seçimde her nesneyi kendi yerinde döndürür.</li>
+        <li><strong>Layers</strong> = overlay grup (bir actor birden çok layer'a girebilir).</li>
+        <li><strong>Folder vs Layer:</strong> folder hiyerarşi, layer mantıksal grup.</li>
+        <li><strong>Ctrl+A = tümünü seç, Ctrl+D = çoğalt.</strong></li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Profesyonel seçim alışkanlığı</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~15 dk</span></div>
+            <div class="project-title">Proje 1: Sahneyi folder'larla organize et</div>
+            <p class="project-desc">Mevcut bir sahnede Outliner'da en az 4 folder oluştur: Lights, Props, Terrain, Characters. Sahnedeki actor'ları doğru folder'lara taşı. Sonra bir folder'a tıklayıp toplu işlem yap (örn. tüm ışıkları kapat).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>4 folder oluşturuldu</li><li>Tüm actor'lar bir folder'da</li><li>Folder tıklamasıyla toplu seçim çalışıyor</li><li>Toplu işlem (ışık kapama) başarılı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Outliner organizasyon alışkanlığını kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~30 dk</span></div>
+            <div class="project-title">Proje 2: 50 nesneli toplu değişiklik</div>
+            <p class="project-desc">Bir mesh'i (örn. Cube) sahneye 50 kez kopyala (Ctrl+D ile çoğalt, sürükle), farklı yerlere yerleştir. Sonra Select Matching ile hepsini toplu seç, Details'ten:</p>
+            <ul style="margin:8px 0;padding-left:20px;color:var(--text-secondary);font-size:13px;">
+              <li>Materyali değiştir (50 küp birden)</li>
+              <li>Ölçeği R ile büyüt (Individual Pivots ile)</li>
+              <li>Hepsini bir folder'a taşı</li>
+            </ul>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>50 kopya sahnede</li><li>Select Matching ile tümü seçildi</li><li>Materyal toplu değişti</li><li>Individual Pivots aktifken hepsi kendi yerinde döndü/büyüdü</li><li>Folder'a taşındı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Toplu işlemin gücünü ve Individual Pivots'un önemini görmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~45 dk</span></div>
+            <div class="project-title">Proje 3: Çok katmanlı sahne yönetimi</div>
+            <p class="project-desc">Kompleks bir sahnede (önceki bölümlerden Landscape + ağaçlar + Foliage + ışıklar) tam profesyonel organizasyon kur:</p>
+            <ul style="margin:8px 0;padding-left:20px;color:var(--text-secondary);font-size:13px;">
+              <li>Outliner'da 5+ folder hiyerarşisi</li>
+              <li>3 Layer (Cinematic, Gameplay, Editor) oluştur</li>
+              <li>Bir Layer'ı gizle, hidden sahne durumunu test et</li>
+              <li>Sağ tık → Select Matching Material ile aynı materyali kullanan tüm nesneleri seç, bir Layer'a koy</li>
+              <li>Volume Selection ile sahnenin bir bölgesini seçip ayrı bir folder'a taşı</li>
+            </ul>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>5+ folder hiyerarşisi var</li><li>3 Layer kuruldu</li><li>Layer gizleme çalışıyor</li><li>Select Matching Material kullanıldı</li><li>Volume Selection ile bölge seçimi yapıldı</li><li>Sahne karmaşıkken bile organize ve yönetilebilir</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel sahne yönetimi disiplinini oturtmak — büyük projenin omurgası.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q20-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Sahnedeki tüm aynı mesh'i kullanan nesneleri tek seferde seçmek için ne yapılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q20-1')"><span class="quiz-option-key">A</span><span>Bir bir Ctrl+tıkla</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q20-1')"><span class="quiz-option-key">B</span><span>Bir tanesini seç → sağ tık → Select Matching Static Mesh</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-1')"><span class="quiz-option-key">C</span><span>Ctrl+A ile tümünü seç</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-1')"><span class="quiz-option-key">D</span><span>Outliner'da arama yap</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q20-1-ok">✓ Doğru! Select Matching Static Mesh, aynı mesh'i kullanan tüm Actor'ları anında seçer — toplu işlem için temel araç.</div>
+        <div class="quiz-feedback fail" id="q20-1-fail">✗ Yanlış. Doğru yol Select Matching Static Mesh. Ctrl+A her şeyi seçer (filtresiz), arama isim bazlıdır ve tüm aynı mesh'leri yakalamaz.</div>
+      </div>
+
+      <div class="quiz-question" id="q20-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Çoklu seçimde her nesnenin kendi pivot'una göre dönmesi/ölçeklenmesi için hangi seçenek aktif edilir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q20-2')"><span class="quiz-option-key">A</span><span>Snap to Grid</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q20-2')"><span class="quiz-option-key">B</span><span>Individual Pivots</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-2')"><span class="quiz-option-key">C</span><span>Local Space</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-2')"><span class="quiz-option-key">D</span><span>World Origin</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q20-2-ok">✓ Doğru! Individual Pivots, her nesnenin kendi merkezini esas alır — 100 ağaç her biri kendi yerinde döner.</div>
+        <div class="quiz-feedback fail" id="q20-2-fail">✗ Yanlış. Individual Pivots şart — bu olmadan tüm seçim ortak merkezden döner ve yer değiştirebilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q20-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Outliner'daki Folder yapısının temel amacı nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q20-3')"><span class="quiz-option-key">A</span><span>Performansı artırmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q20-3')"><span class="quiz-option-key">B</span><span>Sahneyi organize etmek ve folder tıklamasıyla toplu seçim yapmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-3')"><span class="quiz-option-key">C</span><span>Mesh'leri sıkıştırmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-3')"><span class="quiz-option-key">D</span><span>Sahneyi build etmek</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q20-3-ok">✓ Doğru! Folder = organizasyon + toplu seçim. Tek tıklamayla folder içindeki tüm actor'lar seçilir.</div>
+        <div class="quiz-feedback fail" id="q20-3-fail">✗ Yanlış. Folder amacı organizasyon + toplu seçim. Performansla ilgili değil; bir mantıksal/hiyerarşik organizasyondur.</div>
+      </div>
+
+      <div class="quiz-question" id="q20-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Folder ile Layer arasındaki temel fark nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q20-4')"><span class="quiz-option-key">A</span><span>İkisi de aynı şey</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q20-4')"><span class="quiz-option-key">B</span><span>Folder hiyerarşik (1 actor 1 folder), Layer overlay (1 actor birden çok layer'da)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-4')"><span class="quiz-option-key">C</span><span>Folder texture, Layer Blueprint için</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-4')"><span class="quiz-option-key">D</span><span>Folder gizlenebilir, Layer gizlenmez</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q20-4-ok">✓ Doğru! Folder fiziksel/hiyerarşik düzendir, Layer ise mantıksal overlay — bir actor birden fazla Layer'da olabilir.</div>
+        <div class="quiz-feedback fail" id="q20-4-fail">✗ Yanlış. Folder = hiyerarşi (tek folder), Layer = overlay (birden çok). İkisi de gizlenebilir, farklı amaçlar için kullanılır.</div>
+      </div>
+
+      <div class="quiz-question" id="q20-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Sahnenin bir 3D bölgesindeki tüm nesneleri toplu seçmek için en uygun yöntem hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q20-5')"><span class="quiz-option-key">A</span><span>Outliner aramada bölge ismini yaz</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q20-5')"><span class="quiz-option-key">B</span><span>Selection Mode → Volume Selection</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-5')"><span class="quiz-option-key">C</span><span>Ctrl+A</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q20-5')"><span class="quiz-option-key">D</span><span>Select Matching Material</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q20-5-ok">✓ Doğru! Volume Selection bir 3D kutu çizip içindeki tüm uyumlu nesneleri toplu seçer — mekânsal seçimde standart yöntem.</div>
+        <div class="quiz-feedback fail" id="q20-5-fail">✗ Yanlış. 3D bölge seçimi = Volume Selection (Selection Mode'da). Diğerleri mekânsal değil, isim/materyal/sınıf bazlı çalışır.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s20"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="19-foliage-mode.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 19</div><div class="page-nav-title">Foliage Mode</div></div>
+      </a>
+      <a href="21-lumen-nanite.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 21</div><div class="page-nav-title">Lumen & Nanite</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

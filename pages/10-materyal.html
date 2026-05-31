@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 10: Materyal — UnrealAkademi</title>
+  <meta name="description" content="PBR, Material Editor, Base Color, Roughness, Metallic, Normal, Material Instance.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 10: Materyal — UnrealAkademi">
+  <meta property="og:description" content="PBR, Material Editor, Base Color, Roughness, Metallic, Normal, Material Instance.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 10: Materyal — UnrealAkademi">
+  <meta name="twitter:description" content="PBR, Material Editor, Base Color, Roughness, Metallic, Normal, Material Instance.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link active" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>İçerik & Görsel</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Materyal</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 10</span>
+        <span class="page-category">İçerik & Görsel</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 75 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Materyal — Yüzeylerin Sırrı</h1>
+      <p class="page-lead">
+        Bir 3D model "ne renkte, ne kadar parlak, ne kadar pürüzlü?" bilgisini Materyal'den alır. Bir küpü altın yapan da, beton yapan da aynı küp — sadece materyali farklı.
+        Bu bölümde PBR mantığını, Material Editor'ı, parametre ve instance sistemini ve gerçek hayata yakın yüzeyler kurmayı öğreneceksin.
+      </p>
+    </header>
+
+    <!-- 10.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.1</div>
+        <h2 class="topic-title">Materyal nedir? — Yüzey reçetesi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Materyal, bir 3D modelin yüzeyine "böyle görün" diyen bir reçetedir. Rengi, parlaklığı, pürüzlülüğü, metalliği, hatta ışığı nasıl yansıttığını belirler. Aynı küp — biri materyalle altın, biri beton, biri cam olur.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-paint"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir mobilyacı düşün: aynı sandalye iskeletini ister parlak vernikle (cila), ister mat boyayla, ister metal kaplamayla bitirebilir. <strong>İskelet (Mesh) aynı, kaplama (Materyal) farklı.</strong> UE5'te de yüzlerce farklı yüzey için yüzlerce materyal yazarsın; mesh'leri ise tekrar tekrar kullanırsın.
+            </p>
+          </div>
+        </div>
+
+        <h4>Material → Mesh atama</h4>
+        <p>Bir mesh sahnede materyalini Details panelinden alır:</p>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Static Mesh Component</div><div class="info-item-value">Mesh + Element 0 (Material)</div></div>
+          <div class="info-item"><div class="info-item-label">Birden fazla slot</div><div class="info-item-value">Karmaşık mesh'lerde Element 0/1/2...</div></div>
+          <div class="info-item"><div class="info-item-label">Sürükle-bırak</div><div class="info-item-value">Content Browser'dan mesh'in üstüne</div></div>
+          <div class="info-item"><div class="info-item-label">Set Material</div><div class="info-item-value">Blueprint'ten çalışma anında değiştir</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.2 PBR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.2</div>
+        <h2 class="topic-title">PBR — Fiziksel temelli render</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'te materyaller <strong>PBR (Physically Based Rendering)</strong> mantığıyla çalışır. Yani gerçek dünyadaki ışık kurallarını taklit eder. Sen "bu yüzey ne kadar metalik, ne kadar pürüzlü?" gibi <em>fiziksel</em> değerler verirsin, motor ışığı buna göre hesaplar.
+        </p>
+
+        <p>PBR'nin 5 temel girdisi vardır. Bunlar bir Material'in "ana terminalleri":</p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-palette"></i></div>
+            <h4>Base Color</h4>
+            <p>Yüzeyin rengi — gölgesiz, ışıksız "ham" rengi. Bir tahta için kahverengi, kan için kırmızı. <strong>Asla saf siyah veya saf beyaz olmamalı</strong> (gerçek dünyada bile değil).</p>
+            <span class="tag-small">Vector3 (RGB)</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(168,168,168,.15);color:#d1d5db;"><i class="ti ti-coin"></i></div>
+            <h4>Metallic</h4>
+            <p>Metal mi, değil mi? <strong>0 veya 1</strong>, arada değer nadiren mantıklıdır. Altın/demir = 1, ahşap/plastik/cilt = 0. Yarım metal yoktur.</p>
+            <span class="tag-small">Scalar · 0 veya 1</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-grain"></i></div>
+            <h4>Roughness</h4>
+            <p>Pürüzlülük — 0 = ayna gibi keskin yansıma, 1 = tamamen mat. Bir cila bardak 0.1, bir lastik 0.9. <strong>En çok oynayacağın değer budur.</strong></p>
+            <span class="tag-small">Scalar · 0.0 → 1.0</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-mountain"></i></div>
+            <h4>Normal</h4>
+            <p>Pürüzlü yüzey illüzyonu. Aslında mesh düzdür ama Normal map'le tuğla dokulu, deri kabarık, taş çentikli görünür. Renkli ama renkli değil — mor-mavi tonlu özel bir texture.</p>
+            <span class="tag-small">Vector3 · normal map</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-sun-high"></i></div>
+            <h4>Emissive</h4>
+            <p>Yüzey kendi ışık yayar mı? Lambalar, ekranlar, lavlar için kullanılır. Renk + parlaklık. Lumen ışıklandırmada gerçekten ışık kaynağı görevi görür.</p>
+            <span class="tag-small">Vector3 · ışık çıkışı</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-eye-off"></i></div>
+            <h4>Opacity / Mask</h4>
+            <p>Saydamlık. Cam, su, ağ çiti, yapraklar... 0 = görünmez, 1 = tam görünür. <strong>Performans için</strong> mümkünse Mask (0 veya 1) kullan, Opacity (yumuşak geçiş) pahalıdır.</p>
+            <span class="tag-small">Scalar · özel</span>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">"Result" node — Materyal'in çıkış kapısı</div>
+            <p>
+              Material Editor'da en sağdaki büyük node <strong>Material çıkışıdır</strong>. Yukarıdaki 5-6 girdi pin'i onun sol tarafındadır. Hangi bilgiyi hangi pin'e bağlarsan o sonuç oluşur. Material Editor'da temelde tek bir hedef vardır: bu node'a doğru veri akıtmak.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.3 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.3</div>
+        <h2 class="topic-title">Material Editor — Anatomi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Content Browser'da <strong>sağ tık → Material</strong> ile yeni materyal oluştur. Çift tıkla, Material Editor açılır. Blueprint editörüne çok benzer — soldan sağa veri akan bir graph.
+        </p>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-palette"></i> Material Editor — Yerleşim</span>
+            <span>Şematik</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Material editor şeması">
+              <rect x="0" y="0" width="780" height="380" rx="8" fill="#0d0d1a"/>
+
+              <!-- toolbar -->
+              <rect x="8" y="8" width="764" height="38" rx="6" fill="#1f1f30" stroke="#7c5cff" stroke-width="1.5"/>
+              <rect x="20" y="16" width="80" height="22" rx="4" fill="#1a4a2e"/>
+              <text x="60" y="31" fill="#34d399" font-family="monospace" font-size="10" text-anchor="middle">Apply</text>
+              <rect x="110" y="16" width="60" height="22" rx="4" fill="#2a2a3e"/>
+              <text x="140" y="31" fill="#9898b0" font-family="monospace" font-size="10" text-anchor="middle">Save</text>
+
+              <!-- Preview (sol) -->
+              <rect x="8" y="54" width="200" height="180" rx="6" fill="#1a1a28" stroke="#67e8f9" stroke-width="1.5"/>
+              <text x="108" y="74" fill="#67e8f9" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">PREVIEW</text>
+              <line x1="20" y1="84" x2="196" y2="84" stroke="#2a2a3e"/>
+              <circle cx="108" cy="160" r="50" fill="#444" stroke="#666"/>
+              <ellipse cx="92" cy="142" rx="14" ry="9" fill="#888" opacity="0.6"/>
+
+              <!-- Details (sol alt) -->
+              <rect x="8" y="242" width="200" height="130" rx="6" fill="#16161d" stroke="#fb923c" stroke-width="1.5"/>
+              <text x="108" y="262" fill="#fb923c" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">DETAILS</text>
+              <line x1="20" y1="272" x2="196" y2="272" stroke="#2a2a3e"/>
+              <text x="20" y="290" fill="#9898b0" font-family="monospace" font-size="9">Material Domain: Surface</text>
+              <text x="20" y="306" fill="#9898b0" font-family="monospace" font-size="9">Blend Mode: Opaque</text>
+              <text x="20" y="322" fill="#9898b0" font-family="monospace" font-size="9">Shading Model: Default Lit</text>
+
+              <!-- GRAPH (orta) -->
+              <rect x="216" y="54" width="430" height="318" rx="6" fill="#13131f" stroke="#7c5cff" stroke-width="2"/>
+              <line x1="216" y1="213" x2="646" y2="213" stroke="#22223a" stroke-width="1"/>
+              <line x1="431" y1="54" x2="431" y2="372" stroke="#22223a" stroke-width="1"/>
+
+              <!-- bir texture sample node -->
+              <rect x="245" y="100" width="110" height="56" rx="4" fill="#1f1f30" stroke="#3a3a5a"/>
+              <rect x="245" y="100" width="110" height="14" rx="4" fill="#3a3a5a"/>
+              <text x="300" y="111" fill="#fff" font-family="monospace" font-size="7" text-anchor="middle">Texture Sample</text>
+              <circle cx="350" cy="128" r="3" fill="#f5c842"/>
+              <text x="345" y="146" fill="#9898b0" font-family="monospace" font-size="7" text-anchor="end">RGB</text>
+
+              <!-- bir scalar -->
+              <rect x="270" y="180" width="60" height="34" rx="4" fill="#1f1f30" stroke="#a3d11a"/>
+              <text x="300" y="201" fill="#a3d11a" font-family="monospace" font-size="9" text-anchor="middle">0.6</text>
+              <circle cx="328" cy="197" r="3" fill="#a3d11a"/>
+
+              <!-- M Result -->
+              <rect x="520" y="170" width="110" height="120" rx="4" fill="#2a1a4e" stroke="#7c5cff" stroke-width="2"/>
+              <text x="575" y="186" fill="#a78bfa" font-family="monospace" font-size="9" text-anchor="middle">M_Result</text>
+              <line x1="520" y1="192" x2="630" y2="192" stroke="#7c5cff"/>
+              <text x="525" y="208" fill="#f5c842" font-family="monospace" font-size="8">● Base Color</text>
+              <text x="525" y="222" fill="#d1d5db" font-family="monospace" font-size="8">● Metallic</text>
+              <text x="525" y="236" fill="#a78bfa" font-family="monospace" font-size="8">● Roughness</text>
+              <text x="525" y="250" fill="#67e8f9" font-family="monospace" font-size="8">● Normal</text>
+              <text x="525" y="264" fill="#34d399" font-family="monospace" font-size="8">● Emissive</text>
+              <text x="525" y="278" fill="#fb923c" font-family="monospace" font-size="8">● Opacity</text>
+
+              <!-- Bağlantı -->
+              <path d="M 353 128 Q 430 128 430 210 Q 430 210 520 210" fill="none" stroke="#f5c842" stroke-width="1.5"/>
+              <path d="M 330 197 Q 425 197 425 235 Q 425 235 520 235" fill="none" stroke="#a3d11a" stroke-width="1.5"/>
+
+              <text x="431" y="362" fill="#7c5cff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">MATERIAL GRAPH</text>
+
+              <!-- Palette (sağ) -->
+              <rect x="654" y="54" width="118" height="318" rx="6" fill="#16161d" stroke="#a78bfa" stroke-width="1.5"/>
+              <text x="713" y="74" fill="#c4b5fd" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">PALETTE</text>
+              <line x1="664" y1="84" x2="762" y2="84" stroke="#2a2a3e"/>
+              <text x="664" y="102" fill="#9898b0" font-family="monospace" font-size="9">▸ Constants</text>
+              <text x="664" y="120" fill="#9898b0" font-family="monospace" font-size="9">▸ Math</text>
+              <text x="664" y="138" fill="#9898b0" font-family="monospace" font-size="9">▸ Texture</text>
+              <text x="664" y="156" fill="#9898b0" font-family="monospace" font-size="9">▸ Coord</text>
+              <text x="664" y="174" fill="#9898b0" font-family="monospace" font-size="9">▸ Parameters</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Preview (sol üst)</div><div class="info-item-value">Anlık önizleme — küre/küp/silindir</div></div>
+          <div class="info-item"><div class="info-item-label">Details (sol alt)</div><div class="info-item-value">Material Domain, Blend Mode, Shading Model</div></div>
+          <div class="info-item"><div class="info-item-label">Graph (orta)</div><div class="info-item-value">Node'lar — Result'a doğru veri akar</div></div>
+          <div class="info-item"><div class="info-item-label">Palette (sağ)</div><div class="info-item-value">Hazır node listesi — kategorilere göre</div></div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Apply vs Save farkı</div>
+            <p>
+              <strong>Apply</strong> sahnedeki materyalleri yeni hâliyle günceller (anında görürsün), ama dosyaya yazmaz. <strong>Save</strong> diske yazar. Üzerinde uzun çalışıyorsan ara ara Save'le, yoksa UE5 çökerse her şey kaybolur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.4 İLK MATERYAL -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.4</div>
+        <h2 class="topic-title">İlk materyalini oluştur — Adım adım</h2>
+      </div>
+      <div class="topic-body">
+        <p>Basit bir kırmızı plastik materyal yapacağız — temel iş akışını öğrenmek için ideal.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Material oluştur</div>
+              <p>Content Browser'da sağ tık → <strong>Material</strong>. İsim: <code>M_KirmiziPlastik</code>. Çift tıkla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Renk node'u ekle</div>
+              <p>Graph'ta boş alana sağ tık → <strong>"Constant3Vector"</strong> ara, ekle. Çift tıkla, renk seçiciden kırmızı seç. Bu node'un çıkışını <strong>M_Result'un Base Color</strong> pinine sürükle.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Roughness ayarla</div>
+              <p>Sağ tık → <strong>"Constant"</strong> (Scalar) ekle. Değerini <strong>0.3</strong> yap (yarı parlak). M_Result'un <strong>Roughness</strong> pinine bağla. <kbd>1</kbd> tuşunu basılı tutup boş alana tıklayarak da hızlıca Constant ekleyebilirsin (<kbd>3</kbd> = Constant3Vector).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Apply → Sahneye sürükle</div>
+              <p>Üstte <strong>Apply</strong>, sonra <strong>Save</strong>. Content Browser'a dön, materyali bir küpün üstüne sürükle bırak. Küp kırmızı plastik oldu.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hızlı node ekleme kısayolları</div>
+            <p>
+              Boş alana <kbd>1</kbd> + tık = Constant (Scalar), <kbd>2</kbd> = Constant2Vector, <kbd>3</kbd> = Constant3Vector, <kbd>4</kbd> = Constant4Vector, <kbd>T</kbd> = Texture Sample, <kbd>S</kbd> = Scalar Parameter. Çok zaman kazandırır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.5 TEXTURE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.5</div>
+        <h2 class="topic-title">Texture kullanmak — Doku eklemek</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Tek renk yetmediğinde <strong>Texture</strong> (görüntü dosyası) kullanırsın. Bir tahta texture'ı, bir tuğla deseni... Texture'lar Content Browser'a sürükle-bırakla import edilir (PNG, JPG, TGA).
+        </p>
+
+        <h4>Texture Sample node'u</h4>
+        <p>Graph'a sağ tık → <strong>Texture Sample</strong> ekle. Details'te Texture seç. Çıkışları:</p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">RGB (üst, beyaz)</div><div class="info-item-value">Renkli birleşik kanal — Base Color'a</div></div>
+          <div class="info-item"><div class="info-item-label">R / G / B</div><div class="info-item-value">Ayrı kanallar (Roughness için R kullanılır)</div></div>
+          <div class="info-item"><div class="info-item-label">A</div><div class="info-item-value">Alpha — saydamlık veya mask</div></div>
+        </div>
+
+        <h4>Texture türleri — Aynı PBR girdileri için ayrı texture'lar</h4>
+        <table class="compare-table">
+          <thead><tr><th>Texture</th><th>Ne taşır?</th><th>Sıkıştırma</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Base Color (Diffuse)</strong></td><td>Yüzeyin rengi</td><td>Default (BC1/BC7)</td></tr>
+            <tr><td><strong>Normal Map</strong></td><td>Pürüz illüzyonu (mor-mavi)</td><td>Normalmap (BC5)</td></tr>
+            <tr><td><strong>Roughness</strong></td><td>Pürüzlülük haritası (siyah-beyaz)</td><td>Grayscale (BC4)</td></tr>
+            <tr><td><strong>Metallic</strong></td><td>Metal bölgeleri (siyah-beyaz)</td><td>Grayscale</td></tr>
+            <tr><td><strong>ORM (paketli)</strong></td><td>R: AO · G: Roughness · B: Metallic (tek dosya, 3 bilgi)</td><td>Default</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — ORM paketleme</div>
+            <p>
+              Performans için Roughness, Metallic ve Ambient Occlusion gibi gri-tonlu bilgileri tek bir RGB texture'a paketlemek standartır: R=AO, G=Roughness, B=Metallic. Tek texture, 3 girdi — hem disk hem GPU kazancı. Quixel Megascans bu formatı kullanır.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Normal Map import ayarı</div>
+            <p>
+              Normal map import ederken Texture'ı çift tıkla, <strong>Compression Settings</strong>'i <code>Normalmap</code>, <strong>sRGB</strong>'yi <strong>OFF</strong> yap. Aksi halde mor-mavi yerine kahverengi görünür ve sahte pürüzler bozuk olur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.6 PARAMETRE & INSTANCE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.6</div>
+        <h2 class="topic-title">Parametre & Material Instance — Akıllı tekrar</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir oyunda 50 farklı renkte plastik kutu olacaksa <strong>50 ayrı materyal yapmazsın</strong> — bu çok israftır. Bunun yerine bir "ana materyal" (parent) yazar, içine <strong>parametre</strong>ler koyarsın. Sonra bu ana materyalden <strong>Material Instance</strong>'lar üretirsin: her instance aynı yapıyı kullanır ama parametre değerleri farklıdır.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-template"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Materyal = pasta tarifi. Parametreli ana materyal = "üzerine X krema, Y meyve koy" diye boşlukları olan tarif. Her Instance = aynı tarifin farklı versiyonu (biri çilekli, biri çikolatalı). Yeni tarif yazmıyorsun — sadece doldurduğun değerleri değiştiriyorsun.
+            </p>
+          </div>
+        </div>
+
+        <h4>Parametre türleri</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(163,209,26,.12);color:#a3d11a;"><i class="ti ti-circle-dot"></i></div>
+            <h4>Scalar Parameter</h4>
+            <p>Tek float değer. Roughness, Metallic, parlaklık çarpanı. Constant yerine kullan: Scalar Parameter (S+tık) — isimlendir.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-palette"></i></div>
+            <h4>Vector Parameter</h4>
+            <p>Renk veya 3'lü değer. Base Color'ı parametre yaparsan, her instance farklı renk verebilir.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,179,255,.12);color:#38bdf8;"><i class="ti ti-photo"></i></div>
+            <h4>Texture Parameter</h4>
+            <p>Texture Sample'ı parametreye çevirirsen, her instance farklı texture takabilir.</p>
+          </div>
+        </div>
+
+        <h4>Material Instance oluşturma</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Ana materyalini hazırla</div>
+              <p><code>M_PlastikAna</code> oluştur. Base Color için <strong>VectorParameter "Renk"</strong>, Roughness için <strong>ScalarParameter "Puruz"</strong> ekle (S+tık). Apply + Save.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Instance üret</div>
+              <p>Content Browser'da M_PlastikAna'ya sağ tık → <strong>"Create Material Instance"</strong>. İsim: <code>MI_KirmiziPlastik</code>. Çift tıkla. Details'te parametreleri görürsün — tikleri at, kırmızı seç.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Daha fazla instance</div>
+              <p>Aynı ana materyalden MI_MaviPlastik, MI_YesilPlastik, MI_MatPlastik (puruz=0.9) üret. 4 farklı materyal, tek graph. Daha sonra ana materyali değiştirsen hepsi etkilenir.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Dynamic Material Instance (DMI)</div>
+            <p>
+              Çalışma sırasında parametreyi değiştirmek istersen Blueprint'te <strong>Create Dynamic Material Instance</strong> kullanırsın. Sonra <strong>Set Vector/Scalar Parameter Value</strong> ile o instance'ı oyun anında değiştirebilirsin: hasar alınca yüzey kızar, ısı arttıkça parlar, vs. Bu, gameplay materyal animasyonlarının temelidir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.7 UV & TILING -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">10.7</div>
+        <h2 class="topic-title">UV ve Tiling — Texture'ı yüzeye sarmak</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir 3D mesh'in yüzeyine texture'ın nasıl yerleşeceğini <strong>UV koordinatları</strong> belirler. UV, 0-1 arasında 2D bir haritadır — texture'ın hangi noktası mesh'in hangi yerine gelecek bilgisidir.
+        </p>
+
+        <h4>Tiling — Texture'ı tekrarla</h4>
+        <p>
+          Bir tuğla texture'ı bir duvarda tek bir karo gibi görünmesin diye <strong>tekrarlatırsın</strong>. Material'da: <strong>TexCoord × Multiply</strong> yaparsın. TexCoord (U) çıkışını bir Multiply node'una bağla, B değerini 4 yap → texture 4x4 tekrar eder.
+        </p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Tiling — temel zincir</div>
+          <div class="bp-flow">
+            <div class="bp-node pure">
+              <div class="bp-node-title">TexCoord[0]</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>UV</span><span class="pin pin-vector"></span></div></div>
+            </div>
+            <span class="bp-arrow"></span>
+            <div class="bp-node pure">
+              <div class="bp-node-title">Multiply (×4)</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin pin-vector"></span><span>A</span></div>
+                <div class="bp-node-row output"><span>Result</span><span class="pin pin-vector"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Texture Sample (UV girişi)</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin pin-vector"></span><span>UVs</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Tiling parametresi yap</div>
+            <p>
+              Multiply'ın değerini Scalar Parameter "Tiling" yap — Material Instance'ta her duvar için farklı tekrar oranı verebilirsin. 1 = tek karo, 8 = 8×8 küçük tuğla.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Mesh = iskelet, Material = kaplama.</strong> Aynı mesh, farklı materyallerle farklı görünür.</li>
+        <li><strong>PBR'nin 5 ana girdisi:</strong> Base Color, Metallic, Roughness, Normal, Emissive.</li>
+        <li><strong>Metallic 0 veya 1 olmalı,</strong> arası anlamlı değil. Roughness her değer kullanılır.</li>
+        <li><strong>Normal Map mor-mavidir,</strong> import'ta Compression: Normalmap + sRGB OFF.</li>
+        <li><strong>Constant3Vector = renk,</strong> Constant = tek float. Kısayollar: 1/3 + tık.</li>
+        <li><strong>Apply</strong> sahneye yansıtır, <strong>Save</strong> diske yazar — ikisi ayrı.</li>
+        <li><strong>Material Instance = aynı tarif, farklı doldurmalar.</strong> Performans + esneklik.</li>
+        <li><strong>Parametre = ana materyalde boşluk.</strong> Vector, Scalar, Texture parametre türleri var.</li>
+        <li><strong>TexCoord × N</strong> = texture'ı N kez tekrarla (tiling).</li>
+        <li><strong>Dynamic Material Instance</strong> = çalışma anında parametre değiştirebilen instance.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Materyal sistemiyle gerçek yüzeyler</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: 4 farklı yüzey</div>
+            <p class="project-desc">4 ayrı materyal yap: <strong>M_Altın</strong> (sarı, Metallic=1, Roughness=0.2), <strong>M_Lastik</strong> (siyah, Metallic=0, Roughness=0.9), <strong>M_Plastik</strong> (mavi, Metallic=0, Roughness=0.4), <strong>M_Lamba</strong> (Emissive yüksek). Sahnedeki 4 küpe ata.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>4 ayrı materyal oluşturuldu</li><li>PBR pinleri doğru kullanıldı</li><li>Metallic 0 veya 1 — arası yok</li><li>Lamba materyali sahnede ışık veriyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>PBR'nin 5 girdisini farklı yüzeylerde içselleştirmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Texture'lı tuğla duvarı</div>
+            <p class="project-desc">İnternetten ücretsiz bir tuğla texture seti indir (Base Color + Normal + Roughness) veya Quixel Bridge kullan. Import et. <strong>M_Tugla</strong> materyal yap, üç texture'ı doğru pinlere bağla. <strong>TexCoord × Multiply</strong> ile 4×4 tekrar sağla. Yassı bir küpe ata, duvar gibi görünsün.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>3 texture import edildi</li><li>Normal Map sRGB OFF + Compression: Normalmap</li><li>3'ü de doğru pinlere bağlı</li><li>Tiling çalışıyor (texture tekrarlanıyor)</li><li>Yan ışıkla pürüz hissi gözüküyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Texture import, çoklu kanal, UV tiling — gerçek asset workflow'u.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~55 dk</span></div>
+            <div class="project-title">Proje 3: Ana materyal + 5 Instance + dinamik renk</div>
+            <p class="project-desc"><strong>M_KutuAna</strong> oluştur: Vector Param "Renk", Scalar Param "Puruz", Scalar Param "Tiling". 5 Material Instance üret (kırmızı/mavi/yeşil/sarı/mor) — her biri farklı renk + farklı pürüzlülük. Bonus: Bir Actor Blueprint'inde, BeginPlay'de <strong>Create Dynamic Material Instance</strong> + <strong>Set Vector Parameter Value</strong> ile rastgele renk ata. Her doğan kutu farklı renkte olsun.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Ana materyal 3 parametre içeriyor</li><li>5 farklı Instance üretildi, hepsi farklı görünüyor</li><li>Dynamic Material Instance Blueprint'te oluşturuldu</li><li>Set Vector Parameter Value çalışıyor</li><li>Her yeniden Play'de farklı renkler çıkıyor (Random)</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Parametreli materyal mimarisi + runtime materyal kontrolü — profesyonel temel.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q10-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>PBR materyalde Metallic değeri için en doğru kullanım hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q10-1')"><span class="quiz-option-key">A</span><span>Genelde 0.5 — arada bir yerde</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q10-1')"><span class="quiz-option-key">B</span><span>0 ya da 1 — yarım metal yoktur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-1')"><span class="quiz-option-key">C</span><span>Her zaman 1</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-1')"><span class="quiz-option-key">D</span><span>Roughness ile aynı değerde olmalı</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q10-1-ok">✓ Doğru! Metallic gerçek dünyada ikili bir özelliktir — yüzey ya metaldir (1) ya değildir (0). Arası değer gerçekçi sonuç vermez.</div>
+        <div class="quiz-feedback fail" id="q10-1-fail">✗ Yanlış. Metallic 0 ya da 1 olmalıdır — fizikte yarım metal yoktur. Roughness ise her değer alabilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q10-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Bir mesh'in yüzeyinde sahte pürüz/kabarıklık illüzyonu vermek için hangi texture türü kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q10-2')"><span class="quiz-option-key">A</span><span>Base Color</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-2')"><span class="quiz-option-key">B</span><span>Roughness</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q10-2')"><span class="quiz-option-key">C</span><span>Normal Map</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-2')"><span class="quiz-option-key">D</span><span>Emissive</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q10-2-ok">✓ Doğru! Normal Map mesh'i değiştirmeden sahte derinlik ve pürüz illüzyonu yaratır.</div>
+        <div class="quiz-feedback fail" id="q10-2-fail">✗ Yanlış. Pürüz/kabarıklık illüzyonu = Normal Map. Roughness sadece "ne kadar mat?" sorusunu yanıtlar.</div>
+      </div>
+
+      <div class="quiz-question" id="q10-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Aynı kutuyu 50 farklı renkte yapmak istiyorsun. En doğru yol hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q10-3')"><span class="quiz-option-key">A</span><span>50 ayrı materyal yaz</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q10-3')"><span class="quiz-option-key">B</span><span>Renk için Vector Parameter'lı bir ana materyal yap, 50 Material Instance üret</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-3')"><span class="quiz-option-key">C</span><span>50 ayrı texture yap</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-3')"><span class="quiz-option-key">D</span><span>Tek materyal yap, sahnede elle renklendir</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q10-3-ok">✓ Doğru! Parent materyal + Instance'lar = tek graph, çok varyasyon. Performans ve bakım açısından doğru yöntem.</div>
+        <div class="quiz-feedback fail" id="q10-3-fail">✗ Yanlış. Doğru yol parametreli ana materyal + Instance'lar. 50 ayrı materyal hem israftır hem değişiklik yaparken kâbus olur.</div>
+      </div>
+
+      <div class="quiz-question" id="q10-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Normal map import ederken yapılması gereken ayar hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q10-4')"><span class="quiz-option-key">A</span><span>sRGB ON + Compression: Default</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q10-4')"><span class="quiz-option-key">B</span><span>sRGB OFF + Compression: Normalmap</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-4')"><span class="quiz-option-key">C</span><span>sRGB ON + Compression: Grayscale</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-4')"><span class="quiz-option-key">D</span><span>Hiçbir ayar gerekmez</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q10-4-ok">✓ Doğru! Normal map renk değil yön bilgisi tutar — sRGB OFF olmalı, Compression: Normalmap.</div>
+        <div class="quiz-feedback fail" id="q10-4-fail">✗ Yanlış. Normal map yön verisi taşıdığı için sRGB OFF + Compression: Normalmap olmalıdır. Aksi halde pürüzler yanlış yönde görünür.</div>
+      </div>
+
+      <div class="quiz-question" id="q10-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Çalışma sırasında (oyun içinde) bir materyalin rengini değiştirmek için ne kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q10-5')"><span class="quiz-option-key">A</span><span>Material'i her seferinde yeniden oluştur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-5')"><span class="quiz-option-key">B</span><span>Sıradan Material Instance</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q10-5')"><span class="quiz-option-key">C</span><span>Create Dynamic Material Instance + Set Vector Parameter Value</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q10-5')"><span class="quiz-option-key">D</span><span>Sahnede yeni mesh ekle</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q10-5-ok">✓ Doğru! Dynamic Material Instance, runtime'da parametreleri değiştirilebilen özel bir instance türüdür.</div>
+        <div class="quiz-feedback fail" id="q10-5-fail">✗ Yanlış. Runtime'da materyal değişimi için Dynamic Material Instance kullanılır; sıradan instance'lar runtime'da değişmez.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s10"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="09-hud-arayuz.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 09</div><div class="page-nav-title">HUD & Arayüz</div></div>
+      </a>
+      <a href="11-icerik-yukleme.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 11</div><div class="page-nav-title">İçerik Yükleme</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 25: Blueprint İleri — UnrealAkademi</title>
+  <meta name="description" content="Interface, Event Dispatcher, Inheritance, Soft Reference, Behavior Tree.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 25: Blueprint İleri — UnrealAkademi">
+  <meta property="og:description" content="Interface, Event Dispatcher, Inheritance, Soft Reference, Behavior Tree.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 25: Blueprint İleri — UnrealAkademi">
+  <meta name="twitter:description" content="Interface, Event Dispatcher, Inheritance, Soft Reference, Behavior Tree.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link active" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>İleri Programlama</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Blueprint İleri</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 25</span>
+        <span class="page-category">İleri Programlama</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 90 dakika</span>
+        <span class="difficulty difficulty-hard">İleri</span>
+      </div>
+      <h1 class="page-title">Blueprint İleri — Profesyonel Mimari</h1>
+      <p class="page-lead">
+        Bölüm 4-6'da Blueprint'in temellerini öğrendin. Bu bölüm seni amatörden profesyonele taşır: <strong>Interface, Event Dispatcher, Inheritance, Soft Reference, Behavior Tree, Component Pattern</strong> — sürdürülebilir, ölçeklenebilir Blueprint sisteminin yapı taşları.
+      </p>
+    </header>
+
+    <!-- 25.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.1</div>
+        <h2 class="topic-title">Neden ileri Blueprint? — Spagetti tuzağı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Yeni başlarken her şey tek bir Blueprint'in içine sığar — bir karaktere 50 fonksiyon eklersin, her objeyi <strong>Cast to BP_Player</strong> ile bağlarsın, oluyor. Sonra proje büyür: 20 düşman türü, 30 silah, 100 etkileşim... <strong>Cast zinciri kopar</strong>, "BP'yi açınca crash atıyor", "asset audit alınamıyor". Bu, <em>spagetti Blueprint</em> tuzağıdır.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-plug-connected"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir evin elektrik tesisatı düşün: Tek bir kablo doğrudan her cihaza gitseydi, bir cihaz değişince tüm sistemi yeniden çekmen gerekirdi. Bunun yerine <strong>sigorta panosu</strong> ve <strong>standart prizler</strong> var — cihaz cihaza takılır, biri bozulunca diğerleri etkilenmez. Bu bölüm Blueprint için "sigorta panosu + standart priz" mimarisini öğretiyor.
+            </p>
+          </div>
+        </div>
+
+        <h4>İleri Blueprint'in 6 ana aracı</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-plug"></i></div>
+            <h4>Interface</h4>
+            <p>"Bu objeyle konuşabilirsin" sözleşmesi. Cast olmadan iletişim.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-broadcast"></i></div>
+            <h4>Event Dispatcher</h4>
+            <p>"Yayınlıyorum, dileyen dinler". Çok-dinleyicili olay sistemi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-binary-tree"></i></div>
+            <h4>Inheritance</h4>
+            <p>Parent/Child mantığı. Ortak davranışı bir yerde tut, üzerine kişiselleştir.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-link"></i></div>
+            <h4>Soft Reference</h4>
+            <p>Hard yerine "gerektiğinde yükle" referans. Memory ve start-up kazancı.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-robot"></i></div>
+            <h4>Behavior Tree</h4>
+            <p>AI'nın "ne yapacağına" karar veren ağaç yapısı.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(239,68,68,.12);color:#ef4444;"><i class="ti ti-puzzle"></i></div>
+            <h4>Component Pattern</h4>
+            <p>Yeniden kullanılabilir davranış parçaları. Kompozisyon > Kalıtım.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.2 INTERFACE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.2</div>
+        <h2 class="topic-title">Interface — Cast'siz iletişim</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir oyunda 20 farklı objeye "etkileşilebilir" olmasını istiyorsun: kapı, sandık, NPC, anahtar, mum... Klasik yol: her birinde "Interact" fonksiyonu var, oyuncu objeye baktığında <strong>Cast to Kapı, Cast to Sandık, Cast to NPC...</strong> diye 20 dallı bir zincir. Korkunç.
+        </p>
+        <p>
+          Çözüm: <strong>Blueprint Interface (BPI)</strong>. "Bana Interact fonksiyonu olduğunu söz veriyorum" diyen bir sözleşme. Sonra oyuncu sadece "objeye Interact gönder" der — kim implement etmişse o cevap verir.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-power"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir TV uzaktan kumandası farklı markaları çevirebilir. Kumanda "Açma sinyali" gönderir — TV, fırın, klima... hepsi farklı şirketlerin ürünü, ama hepsi <strong>"açılma" standardını implement</strong> eder. Kumanda hangi marka olduğunu bilmek zorunda değil; sinyali gönderir, anlayan cevap verir. Interface tam bunu yapar.
+            </p>
+          </div>
+        </div>
+
+        <h4>Interface oluşturma ve kullanma</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Interface asset'i</div>
+              <p>Content Browser → sağ tık → <strong>Blueprints → Blueprint Interface</strong>. İsim: <code>BPI_Interactable</code>. Çift tıkla, içinde fonksiyon ekle: <code>Interact</code> (input parametre: <code>Instigator</code>, output: <code>bool Success</code>).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Interface'i implement et</div>
+              <p>Kapı Blueprint'ini aç → Class Settings → <strong>Implemented Interfaces → Add → BPI_Interactable</strong>. Artık My Blueprint panelinde "Interact" fonksiyonu görünür — çift tıkla, kapıya özel kodu yaz (kapıyı aç).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sandık, NPC, vs için aynı</div>
+              <p>Sandık, NPC, Mum Blueprint'lerinde aynı interface'i implement et. Her biri kendi Interact mantığını yazar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Karakterden çağır</div>
+              <p>Karakter Blueprint'inde: Line Trace → Hit Actor referans. Sağ tık → <strong>"Interact (Message)"</strong> ara — interface fonksiyonları "Message" suffix ile görünür. Cast yok. Sadece çağırırsın; implement etmiş olan cevap verir, etmemiş ise sessiz geçer.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Interface çağrımı — Cast'siz</div>
+          <div class="bp-flow">
+            <div class="bp-node function">
+              <div class="bp-node-title">Line Trace</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row output"><span>Hit Actor</span><span class="pin pin-object"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow"></span>
+            <div class="bp-node macro">
+              <div class="bp-node-title">Interact (Message) ★</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin pin-object"></span><span>Target</span></div>
+                <div class="bp-node-row input"><span class="pin pin-object"></span><span>Instigator</span></div>
+                <div class="bp-node-row output"><span>Success</span><span class="pin pin-bool"></span></div>
+              </div>
+            </div>
+            <span class="bp-comment">// Kim implement etmişse o cevap verir — Cast hiç gerekmedi.</span>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">"Call" vs "Message" farkı</div>
+            <p>
+              Bir interface fonksiyonunu çağırırken iki seçenek vardır: <strong>Call</strong> (target interface'i implement <em>etmeli</em>, etmiyorsa hata) ve <strong>Message</strong> (etmemişse sessiz geçer). Çok obje türüne aynı şeyi göndereceksen <strong>Message</strong> kullan — daha güvenli.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Does Implement Interface</div>
+            <p>
+              Bazen önceden "bu obje interface'i taşıyor mu?" sorusunu sormak istersin. <strong>Does Implement Interface</strong> node'u true/false döner. Etkileşim UI prompt'unu sadece interaktif objelerde göstermek için ideal: oyuncu baktığında "Does Implement Interface BPI_Interactable" → evetse "E ile etkileşim" UI'ı gösterir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.3 EVENT DISPATCHER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.3</div>
+        <h2 class="topic-title">Event Dispatcher — Çok dinleyicili sinyal</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Interface "bir objeye iletişim kurmanın" yoluydu. Event Dispatcher ise bir objeden <strong>çoklu dinleyicilere</strong> sinyal yayma yoludur. "Boss öldü" sinyali çıkar; HUD haberleşir (skor güncelle), Quest Manager (görev tamamla), Audio Manager (zafer müziği) ayrı ayrı dinler.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-radio"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Event Dispatcher bir <strong>radyo istasyonu</strong>dur. İstasyon yayın yapar — kim dinlemek isterse "abone olur" (Bind). Kimin dinlediğini istasyon bilmez, umursamaz. Yayın çıkar, dinleyiciler tepki verir. Yeni dinleyici eklemek için kaynağa dokunmazsın — sadece Bind eder.
+            </p>
+          </div>
+        </div>
+
+        <h4>Kullanım — Boss ölüm sinyali</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Dispatcher tanımla</div>
+              <p>BP_Boss → sol panel → <strong>Event Dispatchers → +</strong>. İsim: <code>OnBossDefeated</code>. İstersen parametre ekle (örn. bossLevel: int).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sinyali fırlat (Call)</div>
+              <p>BP_Boss → Event Graph → Health 0 olduğunda: <strong>Call OnBossDefeated</strong> node'u. Parametreleri doldur. Yayın bitti.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Dinleyiciler bind eder</div>
+              <p>HUD Widget'ta BeginPlay'de: Boss referansı al → <strong>Bind Event to OnBossDefeated</strong> → bir custom event'i hedef olarak ver. Custom event tetiklendiğinde skor güncellenir. Aynı şekilde QuestManager kendi event'ini bind eder.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Interface vs Event Dispatcher — Hangisi ne zaman?</div>
+            <p>
+              <strong>Interface:</strong> "Bir hedefe bir şey söylemek". 1 → 1 (veya az). Yön: dışarıdan içeri.<br>
+              <strong>Event Dispatcher:</strong> "Bir şey oldu, dileyen duysun". 1 → N. Yön: içeriden dışarıya.<br>
+              Bir kapıyı açmak → Interface. Boss öldü, herkes haber alsın → Event Dispatcher.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.4 INHERITANCE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.4</div>
+        <h2 class="topic-title">Inheritance — Parent / Child Blueprint</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          5 farklı düşman türü yapıyorsun: Goblin, Ork, Şövalye, Büyücü, Köpek. Hepsinde <strong>health, damage, takeDamage, die</strong> ortak. 5 Blueprint'e aynı kodu kopyala-yapıştır mı yapacaksın? Hayır — <strong>Parent Blueprint</strong> yazarsın, diğerleri ondan miras (inherit) alır.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Parent oluştur</div>
+              <p>Yeni Blueprint Class → Parent Class: <strong>Character</strong>. İsim: <code>BP_EnemyBase</code>. İçine ortak variable (Health, Damage, AttackRange) ve ortak fonksiyon (TakeDamage, Die) yaz.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Child Blueprint üret</div>
+              <p>BP_EnemyBase'e sağ tık → <strong>"Create Child Blueprint Class"</strong>. İsim: <code>BP_Goblin</code>. Açıldığında parent'taki tüm değişken ve fonksiyon hazır. Sadece farklılıkları (mesh, ses, özel saldırı) yaz.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Override (üzerine yaz)</div>
+              <p>Parent'taki bir fonksiyonu değiştirmek istersen My Blueprint paneli → fonksiyona sağ tık → <strong>Override Function</strong>. Yeni davranış yazarsın, parent'taki kullanılmaz olur. <strong>Parent: TakeDamage</strong> node'u ile yine de orijinal davranışı çağırabilirsin (super gibi).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Çok derin inheritance kötüdür</div>
+            <p>
+              2-3 katman inheritance iyi, ama 5+ katman <strong>"diamond problem"</strong> ve karmaşa yaratır. Çok derinleşince <strong>Component Pattern</strong>'a geç (aşağıda). Kural: <em>"Is-a" → Inheritance, "Has-a" → Component</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.5 SOFT REFERENCE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.5</div>
+        <h2 class="topic-title">Soft Reference — Akıllı yükleme</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir Blueprint başka bir asset'e <strong>Hard Reference</strong> verdiğinde, ilki yüklendiğinde diğeri de zorla RAM'e yüklenir. 100 farklı silahı destekleyen karakter, hepsini hard reference eden bir liste tutuyorsa — oyuncu sadece 1 silahı kullansa bile, 100'ü RAM'de. Bu, <strong>level başlangıç süresi ve memory</strong> patlamasının ana sebebidir.
+        </p>
+
+        <p>
+          <strong>Soft Reference</strong>: "Bu asset'i göstereceğim, ama şimdi yükleme, gerektiğinde yükle." Talep edildiğinde manuel <strong>Async Load Asset</strong> ile yüklersin.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Konu</th><th>Hard Reference</th><th>Soft Reference</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tip</strong></td><td>Class / Object</td><td>Soft Class Reference / Soft Object Reference</td></tr>
+            <tr><td><strong>Yükleme</strong></td><td>Otomatik (parent'la birlikte)</td><td>İstendiğinde (Async Load)</td></tr>
+            <tr><td><strong>RAM yükü</strong></td><td>Yüksek</td><td>Düşük</td></tr>
+            <tr><td><strong>Kullanım</strong></td><td>Sürekli kullanılan asset</td><td>Nadir kullanılan / büyük asset</td></tr>
+            <tr><td><strong>Erişim</strong></td><td>Anında</td><td>1 frame gecikme (yükleme)</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Pratik tarif — Async load</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Variable Soft Reference olarak ayarla</div>
+              <p>Karakterde <code>EquippedWeapon</code> variable. Tip: <strong>Soft Class Reference → BP_Weapon</strong>. Bu sayede karakter yüklenirken silah hemen RAM'e gelmez.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İhtiyaç anında yükle</div>
+              <p>Silahı kuşanma anında: <strong>Async Load Class Asset</strong> node → On Completed → spawn et. Async olduğu için frame'i bloklamaz.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Size Map'i incele</div>
+            <p>
+              Content Browser'da bir asset'e sağ tık → <strong>"Size Map"</strong>. Hard reference zinciri görsel olarak çıkar. <em>Şok edici</em> sonuçlar görebilirsin: ufak görünen bir UI Widget'ın 200 MB asset'i tetiklediği keşifleri burada bulursun. Memory optimizasyonun başlangıç noktası.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.6 BEHAVIOR TREE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.6</div>
+        <h2 class="topic-title">Behavior Tree — AI karar ağacı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Düşman AI için "Tick içinde uzun if-else" yazmak hızla cehenneme döner. UE5'in <strong>Behavior Tree</strong> sistemi AI'nin "ne yapacağına" görsel bir <em>ağaç</em> ile karar verir. Solda yüksek öncelikli, sağda düşük öncelikli davranışlar.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-tree"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir bekçinin önceliklerini düşün: <strong>1)</strong> Yaralanmışsa kaç. <strong>2)</strong> Düşman görüyorsa saldır. <strong>3)</strong> Devriye yap. Yukarıdan aşağı kontrol eder; yaralı değilse 2'ye, düşman yoksa 3'e. Bekçi ağacı bu sıra. Behavior Tree de aynı şekilde sol→sağ, üst→alt önceliklerle çalışır.
+            </p>
+          </div>
+        </div>
+
+        <h4>4 ana asset</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-tree"></i></div>
+            <h4>Behavior Tree (BT)</h4>
+            <p>Ağaç yapısı — root'tan node'lara doğru kararlar. <code>BT_Enemy</code>.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-database"></i></div>
+            <h4>Blackboard</h4>
+            <p>AI'nin "hafızası". Variable'lar (TargetPlayer, IsAlerted, LastKnownPos). BT bunları okur/yazar.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-brand-codepen"></i></div>
+            <h4>AI Controller</h4>
+            <p>Bir Pawn'ı kontrol eden özel Controller. BT'yi <strong>Run Behavior Tree</strong> ile başlatır.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-eye"></i></div>
+            <h4>AI Perception</h4>
+            <p>Görme/duyma — Sight Config, Hearing Config. Algıladığında Blackboard'a "TargetPlayer" yazar.</p>
+          </div>
+        </div>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-tree"></i> Behavior Tree örneği</span>
+            <span>Selector + Sequence</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Behavior Tree örneği">
+              <rect x="0" y="0" width="720" height="320" rx="8" fill="#0d0d1a"/>
+
+              <!-- Root -->
+              <rect x="320" y="20" width="80" height="40" rx="6" fill="#1f1f30" stroke="#7c5cff" stroke-width="2"/>
+              <text x="360" y="44" fill="#a78bfa" font-family="monospace" font-size="11" text-anchor="middle">ROOT</text>
+
+              <!-- Selector -->
+              <rect x="280" y="90" width="160" height="40" rx="6" fill="#2a1a4e" stroke="#a78bfa" stroke-width="2"/>
+              <text x="360" y="115" fill="#c4b5fd" font-family="monospace" font-size="10" text-anchor="middle">SELECTOR (?)</text>
+              <line x1="360" y1="60" x2="360" y2="90" stroke="#7c5cff" stroke-width="1.5"/>
+
+              <!-- Sub 1: Attack Sequence -->
+              <rect x="50" y="170" width="160" height="40" rx="6" fill="#3a1010" stroke="#ef4444" stroke-width="2"/>
+              <text x="130" y="195" fill="#fca5a5" font-family="monospace" font-size="10" text-anchor="middle">SEQUENCE (→) Saldır</text>
+              <line x1="280" y1="110" x2="130" y2="170" stroke="#a78bfa" stroke-width="1.5"/>
+
+              <!-- Sub 2: Investigate -->
+              <rect x="240" y="170" width="160" height="40" rx="6" fill="#3a3010" stroke="#f5c842" stroke-width="2"/>
+              <text x="320" y="195" fill="#fde68a" font-family="monospace" font-size="10" text-anchor="middle">SEQUENCE (→) Araştır</text>
+              <line x1="340" y1="130" x2="320" y2="170" stroke="#a78bfa" stroke-width="1.5"/>
+
+              <!-- Sub 3: Patrol -->
+              <rect x="430" y="170" width="160" height="40" rx="6" fill="#1a3025" stroke="#34d399" stroke-width="2"/>
+              <text x="510" y="195" fill="#8fcaa6" font-family="monospace" font-size="10" text-anchor="middle">SEQUENCE (→) Devriye</text>
+              <line x1="380" y1="130" x2="510" y2="170" stroke="#a78bfa" stroke-width="1.5"/>
+
+              <!-- Sub-sub: Attack tasks -->
+              <rect x="20" y="240" width="100" height="32" rx="4" fill="#1f1f30" stroke="#3a3a5a"/>
+              <text x="70" y="261" fill="#9898b0" font-family="monospace" font-size="9" text-anchor="middle">Move To Target</text>
+              <rect x="130" y="240" width="100" height="32" rx="4" fill="#1f1f30" stroke="#3a3a5a"/>
+              <text x="180" y="261" fill="#9898b0" font-family="monospace" font-size="9" text-anchor="middle">Attack</text>
+              <line x1="100" y1="210" x2="70" y2="240" stroke="#ef4444" stroke-width="1"/>
+              <line x1="160" y1="210" x2="180" y2="240" stroke="#ef4444" stroke-width="1"/>
+
+              <!-- Sub-sub: Patrol tasks -->
+              <rect x="430" y="240" width="100" height="32" rx="4" fill="#1f1f30" stroke="#3a3a5a"/>
+              <text x="480" y="261" fill="#9898b0" font-family="monospace" font-size="9" text-anchor="middle">Find Waypoint</text>
+              <rect x="540" y="240" width="100" height="32" rx="4" fill="#1f1f30" stroke="#3a3a5a"/>
+              <text x="590" y="261" fill="#9898b0" font-family="monospace" font-size="9" text-anchor="middle">Move To</text>
+              <line x1="500" y1="210" x2="480" y2="240" stroke="#34d399" stroke-width="1"/>
+              <line x1="520" y1="210" x2="590" y2="240" stroke="#34d399" stroke-width="1"/>
+
+              <text x="360" y="300" fill="#67e8f9" font-family="sans-serif" font-size="11" text-anchor="middle">Sol → Sağ önceliği · Üstten alta kontrol</text>
+            </svg>
+          </div>
+        </div>
+
+        <h4>Selector vs Sequence — İki ana composite</h4>
+        <ul class="hap-list" style="margin-top:6px;">
+          <li><strong>Selector (?):</strong> Çocukları sırayla dener, <strong>biri başarılı olunca durur</strong>. "Şunlardan biri olsun yeter" mantığı.</li>
+          <li><strong>Sequence (→):</strong> Çocukları sırayla işler, <strong>biri başarısız olunca durur</strong>. "Hepsi sırayla yapılmalı" mantığı.</li>
+        </ul>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Decorator & Service</div>
+            <p>
+              <strong>Decorator</strong>'lar node'a bir koşul ekler (örn. "TargetPlayer != none ise bu dal çalışsın"). <strong>Service</strong>'ler arka planda belirli aralıklarla çalışır (örn. her 0.5 sn Blackboard'a player mesafesini yaz). İkisini birlikte kullanmak BT'yi son derece zekileştirir. Selector + Decorator + Service üçlüsü AAA AI'larının omurgasıdır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25.7 COMPONENT PATTERN -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">25.7</div>
+        <h2 class="topic-title">Component Pattern — Kompozisyon kalıtıma karşı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir karakter hem yüzebilir hem tırmanabilir hem büyü yapabilir. Bunları tek bir Blueprint'e koymak şişman bir BP üretir. <strong>Inheritance</strong> ile çözmek istersen: BP_Char → BP_SwimmingChar → BP_ClimbingSwimmingChar → BP_MagicClimbingSwimmingChar... aşağıya doğru saçma uzar.
+        </p>
+
+        <p>
+          <strong>Çözüm:</strong> Davranışları <strong>ActorComponent</strong>'lere parçala. <code>BP_SwimComponent</code>, <code>BP_ClimbComponent</code>, <code>BP_MagicComponent</code>. Karakter ihtiyacı olan component'leri "takar". <em>Has-a, is-a değil.</em>
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-puzzle"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir telefon düşün: yeni kamera, yeni hoparlör, yeni pil... Apple her özellik için yeni telefon modeli yapmaz; <strong>modülleri değiştirir</strong>. "Yüzme komponenti", "tırmanma komponenti" de aynı: bir karaktere takar, başka karakterden çıkarırsın. Component = takılabilir özellik modülü.
+            </p>
+          </div>
+        </div>
+
+        <h4>Custom Actor Component oluşturma</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Component asset'i</div>
+              <p>Yeni Blueprint Class → Parent: <strong>ActorComponent</strong>. İsim: <code>BPC_HealthComponent</code>. İçine Health variable, TakeDamage fonksiyonu, OnDeath event dispatcher ekle.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Karaktere tak</div>
+              <p>BP_PlayerChar açıldığında: Add Component → <strong>BPC_HealthComponent</strong>. Karakter artık bir health'e sahip — bütün mantık component'ten geliyor.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Aynı component'i düşmana, NPC'ye, hatta kapıya tak</div>
+              <p>Düşman da, kapı da (kırılır kapı) aynı HealthComponent'i kullanabilir. Tek bir health mantığı, sınırsız obje. <strong>DRY</strong> (Don't Repeat Yourself) kuralının ta kendisi.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">"Has-a" mantığı</div>
+            <p>
+              Sorudur: "Karakterin <em>health'i var (has-a)</em> mı, yoksa karakter health <em>türü mü (is-a)</em>?" Cevap: Has-a. O zaman Component. "Goblin bir düşmandır" = Is-a → Inheritance. Doğru aracı bu basit testten seç.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Interface:</strong> Cast'siz çoklu obje türlerine konuşmak. 1→1.</li>
+        <li><strong>Event Dispatcher:</strong> "Yayınlıyorum, dileyen dinler". 1→N.</li>
+        <li><strong>Interface "Call" hatayı atar,</strong> "Message" sessiz geçer — güvenli olan Message.</li>
+        <li><strong>Inheritance:</strong> "Is-a" — Goblin bir düşmandır.</li>
+        <li><strong>Component:</strong> "Has-a" — karakter bir health'e sahiptir.</li>
+        <li><strong>Override Function</strong> ile parent davranışı child'da değiştirilir.</li>
+        <li><strong>Hard Reference:</strong> otomatik yükleme, yüksek memory.</li>
+        <li><strong>Soft Reference:</strong> talep-based yükleme, düşük memory; Async Load ile çek.</li>
+        <li><strong>Size Map</strong> ile gizli hard reference zincirlerini gör.</li>
+        <li><strong>Behavior Tree:</strong> AI karar ağacı. Sol → Sağ öncelik.</li>
+        <li><strong>Selector (?)</strong>: biri başarılı olunca dur. <strong>Sequence (→)</strong>: biri başarısız olunca dur.</li>
+        <li><strong>Blackboard</strong>: AI hafızası. Variable'lar burada.</li>
+        <li><strong>Kompozisyon kalıtıma yeğdir</strong> — derin inheritance'a girmeden component'e geç.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>İleri Blueprint mimarisini uygula</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~30 dk</span></div>
+            <div class="project-title">Proje 1: BPI_Interactable ile etkileşim sistemi</div>
+            <p class="project-desc"><code>BPI_Interactable</code> Interface oluştur (Interact fonksiyonu). 3 farklı obje yap: <strong>BP_Door</strong> (kapı açar), <strong>BP_Chest</strong> (sandık ışıldatır), <strong>BP_Lamp</strong> (lambayı açar/kapar). Hepsi BPI_Interactable implement etsin. Karakter Line Trace ile baktığı objeye <strong>Interact (Message)</strong> gönderir, hangi obje olduğunu Cast etmeden. E tuşunda çalışsın.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>BPI_Interactable interface'i oluşturuldu</li><li>3 obje hepsinde implemented</li><li>Karakter Cast olmadan iletişim kuruyor</li><li>Her obje farklı tepki veriyor</li><li>Hiç Cast node'u yok</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Cast cehenneminden kurtulup interface ile temiz iletişim kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~50 dk</span></div>
+            <div class="project-title">Proje 2: HealthComponent + Event Dispatcher</div>
+            <p class="project-desc"><strong>BPC_HealthComponent</strong> Actor Component oluştur: Health (float), TakeDamage(amount), <strong>OnDeath</strong> Event Dispatcher. Karaktere ve 2 düşman türüne (BP_Goblin, BP_Ork) ekle. <strong>HUD Widget</strong>'ta, karakterin HealthComponent'inin OnDeath'ine bind ol — GameOver UI göster. Bir <strong>QuestManager</strong> Actor'da, düşmanların OnDeath'ine bind olup öldürülen sayıyı tut.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>BPC_HealthComponent oluşturuldu (variable + fonksiyon + dispatcher)</li><li>Karakter ve 2 düşman türünde component takılı</li><li>HUD karakterin OnDeath'ine bind</li><li>QuestManager düşman OnDeath'ine bind</li><li>Component pattern: Health mantığı tek bir yerde</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Component + Event Dispatcher ikilisini gerçek senaryoda kullanmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~90 dk</span></div>
+            <div class="project-title">Proje 3: AI Düşmanı — Behavior Tree + Inheritance + Component</div>
+            <p class="project-desc"><strong>BP_EnemyBase</strong> parent class: HealthComponent + AI Controller + Behavior Tree. <strong>BP_Goblin</strong> ve <strong>BP_Ork</strong> child class'ları, sadece mesh/saldırı farklı. Behavior Tree: Selector → (Sequence: Saldır), (Sequence: Devriye). Blackboard'da <code>TargetPlayer</code>. AI Perception ile karakteri görünce TargetPlayer yazılır. <strong>BTTask</strong>'lar: MoveToTarget, Attack, FindWaypoint, MoveToWaypoint.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>BP_EnemyBase parent oluşturuldu</li><li>2 child (Goblin, Ork) miras alıyor, farklılaşıyor</li><li>HealthComponent component pattern olarak takılı</li><li>BT_Enemy + BB_Enemy oluşturuldu</li><li>AI Perception → Blackboard'a TargetPlayer yazıyor</li><li>Selector ile saldır/devriye geçişi çalışıyor</li><li>BT debug görünür (üst menü → Show Behavior Tree)</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>4 ileri sistemin birlikte çalıştığı tam profesyonel AI'yi inşa etmek.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q25-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>20 farklı tür objeye "Etkileşim" göndermek istiyorsun. En profesyonel yöntem hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q25-1')"><span class="quiz-option-key">A</span><span>20 farklı Cast zinciri</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q25-1')"><span class="quiz-option-key">B</span><span>Blueprint Interface — hepsi implement eder, Message ile çağır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-1')"><span class="quiz-option-key">C</span><span>Event Dispatcher</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-1')"><span class="quiz-option-key">D</span><span>Hepsini Parent Blueprint olarak birleştir</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q25-1-ok">✓ Doğru! Interface "kim implement etmişse cevap verir" yaklaşımıdır — N farklı türe Cast olmadan iletişim için ideal.</div>
+        <div class="quiz-feedback fail" id="q25-1-fail">✗ Yanlış. Çok-türlü iletişim için Interface kullanılır. Cast zinciri spagettiye yol açar, Event Dispatcher ise içeriden dışarıya yöndür.</div>
+      </div>
+
+      <div class="quiz-question" id="q25-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>"Boss öldü" sinyalini hem HUD'a hem QuestManager'a hem Audio'ya haber vermek istiyorsun. En uygun araç?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q25-2')"><span class="quiz-option-key">A</span><span>Blueprint Interface</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q25-2')"><span class="quiz-option-key">B</span><span>Event Dispatcher (OnBossDefeated)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-2')"><span class="quiz-option-key">C</span><span>Direct Cast</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-2')"><span class="quiz-option-key">D</span><span>Inheritance</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q25-2-ok">✓ Doğru! Çok dinleyiciye sinyal yaymak = Event Dispatcher. Yayıncı dinleyicileri tanımaz, dinleyiciler kendileri bind olur.</div>
+        <div class="quiz-feedback fail" id="q25-2-fail">✗ Yanlış. 1→N yayın için Event Dispatcher kullanılır. Interface 1→1, Cast doğrudan iletişimdir.</div>
+      </div>
+
+      <div class="quiz-question" id="q25-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>"Karakter bir health'e sahip" mantığı için doğru yaklaşım hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q25-3')"><span class="quiz-option-key">A</span><span>Inheritance — BP_HealthyCharacter parent class</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q25-3')"><span class="quiz-option-key">B</span><span>Component — BPC_HealthComponent ekle</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-3')"><span class="quiz-option-key">C</span><span>Interface — BPI_Health implement et</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-3')"><span class="quiz-option-key">D</span><span>Static variable</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q25-3-ok">✓ Doğru! "Has-a" ilişkisi (karakter bir şeye sahiptir) Component pattern'la modellenir. Inheritance "is-a" içindir.</div>
+        <div class="quiz-feedback fail" id="q25-3-fail">✗ Yanlış. "Karakter health'e sahip" = Has-a = Component. Inheritance Is-a için.</div>
+      </div>
+
+      <div class="quiz-question" id="q25-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir Behavior Tree'de Sequence (→) node'u nasıl çalışır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q25-4')"><span class="quiz-option-key">A</span><span>Çocukları sırayla işler, biri başarısız olunca durur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-4')"><span class="quiz-option-key">B</span><span>Çocukları sırayla dener, biri başarılı olunca durur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-4')"><span class="quiz-option-key">C</span><span>Tüm çocukları paralel çalıştırır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-4')"><span class="quiz-option-key">D</span><span>Rastgele bir çocuk seçer</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q25-4-ok">✓ Doğru! Sequence "hepsi sırayla yapılmalı" — biri başarısız olunca zincir kırılır. Selector ise tam tersi: biri başarılı olunca durur.</div>
+        <div class="quiz-feedback fail" id="q25-4-fail">✗ Yanlış. Sequence = sırayla, herhangi biri fail = dur. Birinin başarısı durdurur dediğin Selector'dır.</div>
+      </div>
+
+      <div class="quiz-question" id="q25-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Karakter 100 farklı silah destekliyor ama oyuncu sadece 1 silahla geliyor. Memory için en uygun yaklaşım?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q25-5')"><span class="quiz-option-key">A</span><span>100 silahı Hard Reference olarak array'de tut</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q25-5')"><span class="quiz-option-key">B</span><span>Soft Class Reference array + Async Load ile gerektiğinde çek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-5')"><span class="quiz-option-key">C</span><span>Tek bir silah Blueprint'i kullan</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q25-5')"><span class="quiz-option-key">D</span><span>Static variable ile global tut</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q25-5-ok">✓ Doğru! Soft Reference RAM'i serbest tutar, Async Load ile sadece kullanılacak silah yüklenir. Hard Reference 100'ünü RAM'e yüklerdi.</div>
+        <div class="quiz-feedback fail" id="q25-5-fail">✗ Yanlış. Memory optimizasyonu için Soft Reference + Async Load. Hard reference 100 silahın hepsini RAM'e zorla yükler.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s25"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="24-yayinlama.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 24</div><div class="page-nav-title">Yayınlama</div></div>
+      </a>
+      <a href="26-cpp-giris.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 26</div><div class="page-nav-title">C++ Giriş</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

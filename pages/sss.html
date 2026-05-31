@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSS — UnrealAkademi</title>
+  <meta name="description" content="UE5 öğrenme, Blueprint vs C++, performans, asset lisansları ve kariyer hakkında sık sorulan sorular.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="SSS — UnrealAkademi">
+  <meta property="og:description" content="UE5 öğrenme, Blueprint vs C++, performans, asset lisansları ve kariyer hakkında sık sorulan sorular.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SSS — UnrealAkademi">
+  <meta name="twitter:description" content="UE5 öğrenme, Blueprint vs C++, performans, asset lisansları ve kariyer hakkında sık sorulan sorular.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra active" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">SSS</span>
+    </nav>
+
+    <header class="helper-page-header">
+      <h1><i class="ti ti-help-circle"></i> Sık Sorulan Sorular</h1>
+      <p>UE5 öğrenmeye başlayan veya orta seviyede takılan kullanıcıların en sık sorduğu soruların derin cevapları.</p>
+    </header>
+
+    <div class="simple-page">
+
+      <!-- BAŞLANGIÇ -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-flame"></i> Başlangıç ve Sistem</h2>
+
+        <details class="faq-item">
+          <summary>UE5 öğrenmek için hangi bilgisayar yeterli?</summary>
+          <div class="faq-body">
+            <p>UE5'in <strong>resmi minimum gereksinimleri</strong>:</p>
+            <ul>
+              <li><strong>CPU:</strong> 4 çekirdek 2.5GHz+ (Intel i5-4. nesil veya Ryzen 5 1500X+)</li>
+              <li><strong>RAM:</strong> 16 GB (32 GB tavsiye)</li>
+              <li><strong>GPU:</strong> DirectX 12 destekli, 4 GB VRAM (GTX 1060 / RX 580 alt sınır)</li>
+              <li><strong>Disk:</strong> 100 GB+ SSD (HDD'de editör çok yavaş)</li>
+            </ul>
+            <p><strong>Lumen ve Nanite</strong> ile rahat çalışmak için: RTX 2070+ / RX 6700+, 32 GB RAM, NVMe SSD. Daha eski PC'lerde Lumen kapatılarak yine geliştirilebilir.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Blueprint mi C++ mı önce öğrenmeliyim?</summary>
+          <div class="faq-body">
+            <p><strong>Kesinlikle önce Blueprint.</strong> Blueprint, oyun yapımının kavramlarını (event, function, variable, conditional) <em>görsel olarak</em> öğretir. Bu kavramları kavradıktan sonra C++'a geçmek 10x daha kolaydır.</p>
+            <p>Programlama hiç bilmiyorsan: 6-12 ay Blueprint ile mini oyunlar yap, mantığı oturt. Sonra C++'a yumuşak geçiş yap. AAA stüdyolar bile <strong>hibrit yaklaşım</strong> kullanır: temel sistemler C++'ta, gameplay tweak'leri Blueprint'te.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>UE5 ücretli mi?</summary>
+          <div class="faq-body">
+            <p><strong>Hayır, ücretsizdir.</strong> Epic Games Launcher'dan indirip kullanabilirsin. Eğitim, demo, kişisel projeler için tamamen ücretsiz.</p>
+            <p><strong>Royalty (telif payı):</strong> Bir oyun yayınladıktan sonra yıllık <strong>$1,000,000</strong> üzerinde gelir elde edersen, Epic <strong>%5</strong> royalty alır. Yani ilk 1 milyon dolara kadar kuruş ödemezsin. Bu indie ve küçük stüdyolar için son derece uygun bir model.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>UE4'ten UE5'e proje taşıma sorunsuz mu?</summary>
+          <div class="faq-body">
+            <p>Genelde sorunsuz çalışır ama bazı uyarılar var:</p>
+            <ul>
+              <li><strong>Yedekle:</strong> Önce projenin kopyasını al, geri dönemeyebilirsin.</li>
+              <li><strong>Lumen + Nanite</strong> otomatik açılmaz — manuel ayarlaman gerekir.</li>
+              <li>UE4'teki bazı plug-in'ler UE5'te yok veya isim değişmiş olabilir.</li>
+              <li>Material function'ları yeniden derleme gerekebilir.</li>
+              <li>Kompleks projelerde 1-2 günlük migration süreci normaldir.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- ÖĞRENME -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-school"></i> Öğrenme Süreci</h2>
+
+        <details class="faq-item">
+          <summary>UE5'i ne kadar sürede öğrenirim?</summary>
+          <div class="faq-body">
+            <p>Dürüst cevap: <strong>"öğrendim" dediğin seviyeye 1-2 yıl</strong>, profesyonel olmak 3-5 yıl. Ama "ilk oyununu yapacak kadar" diye bakarsan:</p>
+            <ul>
+              <li><strong>2-3 ay:</strong> Editor + Blueprint temelleri (bu sitenin Bölüm 1-9'u).</li>
+              <li><strong>6 ay:</strong> Tek başına basit bir oyun bitirebilirsin (platformcu, mini FPS).</li>
+              <li><strong>1 yıl:</strong> Bir konuda (örn. UI, çevre, animasyon) derinleşmiş olursun.</li>
+              <li><strong>2-3 yıl:</strong> Endüstri seviyesinde junior pozisyona başvurabilirsin.</li>
+            </ul>
+            <p>Hızı belirleyen şey <strong>günlük süreklilik</strong>tir — günde 1 saat 7 gün, haftada 7 saat'ten iyidir.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Tutorial izliyorum ama hatırlayamıyorum. Ne yapayım?</summary>
+          <div class="faq-body">
+            <p>Bu "tutorial hell" denen tuzaktır. Çözüm:</p>
+            <ol>
+              <li><strong>Sadece izleme.</strong> Tutorialı aynı anda yapmadan izlemek hatırlamayı sağlamaz.</li>
+              <li><strong>Tutorialı bitirdikten sonra projeyi sil, kendin baştan yap.</strong> Eğer 2. denemede yapamıyorsan demek ki öğrenmedin.</li>
+              <li><strong>Kendi mini-projeni başlat.</strong> Tutorial sonrası "aynı sistemi kendi oyunumda nasıl uygularım?" sorusunu sor.</li>
+              <li><strong>Notlar al.</strong> Hangi node neyi yapar, kendi kelimelerinle yaz.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Hangi tutorial kanallarını / kursları öneriyorsun?</summary>
+          <div class="faq-body">
+            <p>İngilizce:</p>
+            <ul>
+              <li><strong>Mathew Wadstein</strong> (YouTube) — her node için ayrı tutorial, ansiklopedi gibi.</li>
+              <li><strong>Unreal Sensei</strong> (YouTube) — derli toplu başlangıç videoları.</li>
+              <li><strong>Smart Poly</strong> (YouTube) — gameplay sistemleri.</li>
+              <li><strong>Ryan Laley</strong> (YouTube) — orta-ileri konular.</li>
+              <li><strong>Stephen Ulibarri</strong> (Udemy) — premium kalitede UE5 + C++ kursları.</li>
+              <li><strong>dev.epicgames.com/community/learning</strong> — Epic'in resmi ücretsiz kursları.</li>
+            </ul>
+            <p>Türkçe kaynaklar henüz İngilizceye göre kıt, ama YouTube'da arayınca çok iyi bireysel eğitmenler var. Bu site de bunu kapatmak için var.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- BLUEPRINT/C++ -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-code"></i> Blueprint / C++ Soruları</h2>
+
+        <details class="faq-item">
+          <summary>Blueprint performans için yeterli mi?</summary>
+          <div class="faq-body">
+            <p>%90 oyun için <strong>kesinlikle evet</strong>. Performans farkı sadece her kare çalışan ağır hesaplamalarda (binlerce nesnenin pozisyonunu tek tek değiştirmek gibi) hissedilir.</p>
+            <p>Indie ve küçük stüdyoların büyük çoğunluğu sadece Blueprint ile profesyonel oyun yayınlıyor. Fortnite bile çoğunlukla Blueprint mantığı kullanır.</p>
+            <p>C++ gerekiyor olabilir eğer:</p>
+            <ul>
+              <li>Her kare 10,000+ nesneye iş yaptırıyorsan</li>
+              <li>Yeni asset türü / editor uzantısı yazıyorsan</li>
+              <li>Karmaşık networking veya save sistemine ihtiyacın varsa</li>
+              <li>3. parti C++ kütüphane (database, REST API) entegre ediyorsan</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>"Spagetti Blueprint" sorunu nasıl çözülür?</summary>
+          <div class="faq-body">
+            <p>Üç teknik kullan:</p>
+            <ol>
+              <li><strong>Function'lara böl.</strong> 10+ node'lu graph'ları function yap. Event Graph sadece "ne zaman ne çağrılacak" olsun.</li>
+              <li><strong>Macro'larla tekrarı azalt.</strong> Aynı node setini birden çok yerde kullanıyorsan macro çıkar.</li>
+              <li><strong>Component Pattern.</strong> Inventory, Health, AI gibi sistemleri ayrı Actor Component'lere taşı. Her actor sadece ihtiyacı olan component'i ekler. (Detay: Bölüm 25.)</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Cast vs Interface — Hangisini ne zaman?</summary>
+          <div class="faq-body">
+            <p><strong>Cast To:</strong> Hedef türü <em>kesinlikle biliyorsan</em>. Örnek: trigger'ın içine BP_PlayerCharacter girdi → Cast'le karakteri al.</p>
+            <p><strong>Interface:</strong> Birden fazla farklı sınıfla aynı yöntemle konuşacaksan. Örnek: kapı, sandık, asansör — hepsinde "Interact" fonksiyonu. Interaction Interface kur, hepsi implement etsin.</p>
+            <p>Cast pahalıdır (hard reference yaratır), aşırı kullanma. Interface daha modüler ama biraz daha çabuktur.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- ASSETS -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-photo"></i> Asset ve Lisans</h2>
+
+        <details class="faq-item">
+          <summary>Marketplace ücretsizlerini ticari oyunda kullanabilir miyim?</summary>
+          <div class="faq-body">
+            <p><strong>Çoğunlukla evet,</strong> ama her asset'in lisans sayfasını mutlaka oku. Çoğu Marketplace asset'i <strong>"Standard Unreal Engine Marketplace License"</strong> ile gelir, bu da:</p>
+            <ul>
+              <li>✓ Ticari UE5 oyunlarında kullanabilirsin</li>
+              <li>✓ Sınırsız kez kullanabilirsin (kendi projenin kapsamında)</li>
+              <li>✗ Asset'i tek başına satamazsın</li>
+              <li>✗ Açık kaynak / paylaşımcı bir yere yükleyemezsin</li>
+            </ul>
+            <p>"Free For The Month" asset'leri bir kez "satın aldığında" sonsuza dek senin olur.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Quixel Megascans'ı ücretsiz kullanabilir miyim?</summary>
+          <div class="faq-body">
+            <p>UE5 projelerinde <strong>tamamen ücretsiz ve sınırsız</strong>. Megascans yıllarca abonelik gerektiren bir hizmetti; Epic 2019'da satın aldıktan sonra UE5 kullanıcılarına açtı.</p>
+            <p>Tek kısıtlama: Megascans asset'lerini <em>UE5 olmayan</em> bir motorda kullanmak istersen ayrı bir lisans gerekir. Sadece UE5 ile sınırlı kal — sorun yok.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Müzik ve ses efekti nereden bulurum?</summary>
+          <div class="faq-body">
+            <p>Ücretsiz / royalty-free kaynaklar:</p>
+            <ul>
+              <li><strong>freesound.org</strong> — Topluluk paylaşımı sesler (CC lisansları, kaynak göster).</li>
+              <li><strong>zapsplat.com</strong> — Profesyonel SFX kütüphanesi (ücretsiz hesap).</li>
+              <li><strong>Pixabay Music</strong> / <strong>Bensound</strong> — Royalty-free müzik.</li>
+              <li><strong>Epic Marketplace Free Sound Effects</strong> — Epic'in resmi ses paketleri.</li>
+              <li><strong>YouTube Audio Library</strong> — Ücretsiz, atıf gerektirmeyen müzikler.</li>
+            </ul>
+            <p><strong>UYARI:</strong> YouTube'daki popüler şarkıları kullanma — sonra DMCA yer ve oyununu yayından çekerler.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- PERFORMANS -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-bolt"></i> Performans ve Sorun Giderme</h2>
+
+        <details class="faq-item">
+          <summary>FPS'im düşük, ne yapayım?</summary>
+          <div class="faq-body">
+            <p>Sırayla dene:</p>
+            <ol>
+              <li><strong>Konsol → <code>stat unit</code></strong>. CPU mu GPU mu darboğaz? <strong>Game</strong> yüksekse CPU, <strong>GPU</strong> yüksekse ekran kartı sorunu.</li>
+              <li><strong><code>r.ScreenPercentage 75</code></strong> — çözünürlüğü düşür, anında FPS kazancı.</li>
+              <li><strong>Window → Scalability → Engine Scalability Settings</strong> — Lumen/Shadow/Effects'i Low'a çek.</li>
+              <li><strong>Hardware Ray Tracing'i kapat</strong>, sadece Software Lumen kullan.</li>
+              <li><strong>Foliage</strong> ve <strong>Nanite görselleştirme</strong> kontrol et — gereksiz yere açık mı?</li>
+              <li><strong>Window → Insights</strong> ile profiling yap — hangi function darboğaz oluşturuyor görünür.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Proje açılmıyor / çöküyor</summary>
+          <div class="faq-body">
+            <p>Sırayla dene:</p>
+            <ol>
+              <li><strong>Saved/Crashes</strong> klasöründeki son log'u oku — neden çöktü?</li>
+              <li><strong>Intermediate, DerivedDataCache, Saved</strong> klasörlerini sil (proje yedeğin varsa). UE5 yeniden üretir.</li>
+              <li><strong>Visual Studio'da</strong> projenin .sln'ini aç, Build → Rebuild Solution.</li>
+              <li><strong>Plug-in çakışması:</strong> son eklediğin plug-in'i devre dışı bırak, dene.</li>
+              <li><strong>Son çare:</strong> Yeni boş proje aç, asset'leri elle taşı. Çok asset varsa <strong>Migrate</strong> kullan (sağ tık → Asset Actions → Migrate).</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Paketleme hata veriyor</summary>
+          <div class="faq-body">
+            <p><strong>Output Log</strong>'da kırmızı yazıları ara, <em>ilk</em> hatadan başla (sonrakiler genelde domino etkisi). En sık 4 hata:</p>
+            <ul>
+              <li><strong>"Missing module":</strong> Visual Studio'da Build → Rebuild Solution.</li>
+              <li><strong>"Map not found":</strong> Project Settings → Maps & Modes → Game Default Map ayarlanmamış.</li>
+              <li><strong>"Cooking failed":</strong> Bir asset corrupt — sahnede ara, sil veya yeniden aç + kaydet.</li>
+              <li><strong>"Disk full":</strong> Saved/StagedBuilds klasörünü temizle.</li>
+            </ul>
+            <p>Detay: Bölüm 24 (Yayınlama) içindeki "Sık Hatalar" tablosu.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- KARIYER -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-briefcase"></i> Kariyer ve Yayın</h2>
+
+        <details class="faq-item">
+          <summary>UE5 ile nasıl para kazanırım?</summary>
+          <div class="faq-body">
+            <p>Birkaç yol:</p>
+            <ol>
+              <li><strong>Kendi oyununu sat</strong> (Steam, itch.io, Epic Games Store). Risk yüksek, getiri belirsiz ama bağımsızlık.</li>
+              <li><strong>Stüdyoda çalış</strong> (Gameplay Programmer, Tech Artist, Level Designer). Düzenli maaş, güvenli.</li>
+              <li><strong>Freelance / sözleşmeli proje.</strong> Upwork, ArtStation gibi platformlarda iş bul.</li>
+              <li><strong>Marketplace'te asset sat.</strong> Plug-in, material pack, mesh kütüphanesi.</li>
+              <li><strong>YouTube / Patreon.</strong> Kendi tutorial içeriğini üret.</li>
+              <li><strong>ArchViz / VR / sinematik.</strong> Mimari ofisleri, otomotiv firmaları, film stüdyoları için iş.</li>
+            </ol>
+            <p>Çoğu profesyonel bunlardan 2-3'ünü birleştirir (örn. stüdyoda çalış + akşam kendi oyununu yap).</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Portfolyom olmadan iş bulur muyum?</summary>
+          <div class="faq-body">
+            <p><strong>Hayır.</strong> Bu sektörde portfolyo, CV'den daha önemli. Bir stüdyo "neler yapabildiğini" görmek ister. Portfolyo formatı kısaca:</p>
+            <ul>
+              <li>itch.io profili (yayınlanmış oyunlar)</li>
+              <li>YouTube'da 2-3 gameplay videosu (oyununu kendi anlatınla göster)</li>
+              <li>ArtStation hesabı (görsel sanatçısıysan)</li>
+              <li>GitHub (kod sergilemek için)</li>
+              <li>LinkedIn (network için)</li>
+            </ul>
+            <p><strong>Az ama bitmiş 3 proje</strong>, yarım kalmış 30 projeden çok daha değerlidir.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>İlk oyunumu Steam'de mi itch.io'da mı yayınlayayım?</summary>
+          <div class="faq-body">
+            <p><strong>İlk yayın için itch.io.</strong> Sebepler:</p>
+            <ul>
+              <li>Ücretsiz hesap, sınırsız oyun yükleme</li>
+              <li>Tek tık yayın, onay süreci yok</li>
+              <li>Game Jam'lerin yuvası — direkt topluluk içinde olursun</li>
+              <li>Fiyatlandırmada esnek (ücretsiz, "ne kadar verirsen", sabit fiyat)</li>
+            </ul>
+            <p>Steam ise <strong>$100 Steam Direct</strong> ücreti, onay süreci 30-90 gün, ama 100x daha büyük kitle. Ciddi yayın yapacaksan itch.io'da test et, Steam'e profesyonel halini koy.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- BU SITE -->
+      <div class="faq-group">
+        <h2 class="faq-group-title"><i class="ti ti-flame"></i> UnrealAkademi Hakkında</h2>
+
+        <details class="faq-item">
+          <summary>Bu site ücretsiz mi? Reklam var mı?</summary>
+          <div class="faq-body">
+            <p><strong>Evet, tamamen ücretsiz. Reklam yok, abonelik yok, kayıt zorunlu değil.</strong> Amaç Türkçe UE5 eğitim kaynaklarının büyümesine katkı sağlamak.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>İçerikte hata gördüm / öneriim var</summary>
+          <div class="faq-body">
+            <p>Çok değerli. <a href="iletisim.html">İletişim</a> sayfasından e-posta veya sosyal medya kanalı ile ulaş — her geri bildirim incelenip uygulanıyor.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Yeni bölüm gelecek mi?</summary>
+          <div class="faq-body">
+            <p>Bu site sürekli güncelleniyor. UE5'in yeni sürümleri (5.5, 5.6) ile gelen büyük özellikler için ek bölümler eklenir. Ayrıca <strong>multiplayer, AI derinleşme, Niagara ileri, Sequencer ileri, MetaHuman</strong> gibi konularda genişleme planı var. İletişim üzerinden hangi konuları istediğini iletebilirsin.</p>
+          </div>
+        </details>
+      </div>
+
+    </div>
+
+    <nav class="page-nav">
+      <a href="cheatsheet.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Geri</div><div class="page-nav-title">Cheat Sheet</div></div>
+      </a>
+      <a href="sozluk.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Devam</div><div class="page-nav-title">Sözlük</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

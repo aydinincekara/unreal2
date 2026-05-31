@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 06: Variable Türleri — UnrealAkademi</title>
+  <meta name="description" content="int, float, bool, string, vector, struct, array, map.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 06: Variable Türleri — UnrealAkademi">
+  <meta property="og:description" content="int, float, bool, string, vector, struct, array, map.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 06: Variable Türleri — UnrealAkademi">
+  <meta name="twitter:description" content="int, float, bool, string, vector, struct, array, map.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link active" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>Blueprint Temelleri</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Variable Türleri</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 06</span>
+        <span class="page-category">Blueprint Temelleri</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 80 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+        <span class="badge badge-primary"><i class="ti ti-star"></i> Temel Taş</span>
+      </div>
+      <h1 class="page-title">Variable Türleri — Veriyi Saklamak</h1>
+      <p class="page-lead">
+        Bir oyun aslında sürekli değişen veriden ibarettir: can, skor, isim, konum, envanter... Bu
+        verileri saklayan kutulara <strong>variable (değişken)</strong> denir. Bu bölümde her veri tipini
+        rengi, ne sakladığı ve gerçek örneğiyle tek tek tanıyacağız — Array, Set ve Map'i de detaylıca.
+      </p>
+    </header>
+
+    <!-- 6.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.1</div>
+        <h2 class="topic-title">Variable nedir? — Etiketli kutu</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir variable, içine bir <strong>değer koyduğun, etiketli bir kutudur.</strong> Kutuya bir isim
+          verirsin (<code>Health</code>), bir tür seçersin (sayı), içine değer koyarsın (100). Sonra istediğin
+          zaman kutuyu açıp değeri okur (Get) veya değiştirirsin (Set).
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-box"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Variable'lar <strong>etiketli kavanozlardır.</strong> "Şeker" yazan kavanoza şeker, "Tuz" yazana
+              tuz koyarsın. Tür önemli: "Sıvı" kavanozuna katı koyamazsın. UE5'te de "Sayı" kutusuna metin
+              koyamazsın — her kutunun bir türü vardır ve o türü saklar.
+            </p>
+          </div>
+        </div>
+
+        <h4>Get ve Set — Okuma ve Yazma</h4>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Bir variable'ın iki kullanımı</div>
+          <div style="display:flex; gap:24px; flex-wrap:wrap;">
+            <div class="bp-node variable">
+              <div class="bp-node-title">Get Health</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>değeri oku</span><span class="pin pin-float"></span></div></div>
+            </div>
+            <div class="bp-node function">
+              <div class="bp-node-title">Set Health</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div>
+                <div class="bp-node-row input"><span class="pin pin-float"></span><span>yeni değer</span></div>
+                <div class="bp-node-row output"><span>exec</span><span class="pin-triangle pin-exec"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p>
+          <strong>Get</strong> (sarı, sade) değeri okur — sıraya girmez. <strong>Set</strong> (mavi, exec'li)
+          değeri değiştirir — sıraya girer çünkü "bir şeyi değiştirmek" bir eylemdir. Variable'ı My Blueprint
+          panelinden graph'a sürüklerken UE5 sana "Get mi Set mi?" diye sorar.
+        </p>
+
+        <h4>Variable nasıl oluşturulur?</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">My Blueprint → Variables → +</div>
+              <p>Sol paneldeki Variables başlığının yanındaki <strong>+</strong> butonuna bas. Yeni bir variable belirir, ismini yaz.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Tür seç</div>
+              <p>Details panelinde <strong>Variable Type</strong> dropdown'undan tür seç (Boolean, Float, String...). Renk otomatik o türe göre olur.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Compile → Varsayılan değer ata</div>
+              <p>Compile et. Sonra Details'te <strong>Default Value</strong> alanına başlangıç değerini gir (örn. Health = 100).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.2 TEMEL TÜRLER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.2</div>
+        <h2 class="topic-title">Temel veri türleri — Renk renk</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          İşte en çok kullanacağın temel türler. Her birinin <strong>sabit bir rengi</strong> var (pin
+          rengiyle aynı). Rengi tanıyınca türü anlarsın:
+        </p>
+
+        <!-- BOOLEAN -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-bool"></span>
+            <span class="var-card-name">Boolean (bool)</span>
+            <span class="var-card-color">Kırmızı</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Sadece iki değer — <code>true</code> (doğru) veya <code>false</code> (yanlış). Açık/kapalı, var/yok, evet/hayır.</p>
+            <p><strong>Örnek:</strong> <code>IsAlive</code> (hayatta mı?), <code>HasKey</code> (anahtar var mı?), <code>IsDoorOpen</code> (kapı açık mı?).</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Branch (if) node'u boolean ile çalışır — kararların temelidir.</div>
+          </div>
+        </div>
+
+        <!-- INTEGER -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-int"></span>
+            <span class="var-card-name">Integer (int)</span>
+            <span class="var-card-color">Camgöbeği</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Tam sayı — ondalık yok. 0, 1, 42, -7, 1000. Sayma işleri için.</p>
+            <p><strong>Örnek:</strong> <code>Score</code> (skor), <code>Lives</code> (can sayısı), <code>AmmoCount</code> (mermi), <code>Level</code> (seviye no).</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Sayılabilen şeyler (3 can, 5 mermi) için integer; ölçülen şeyler (2.5 metre) için float.</div>
+          </div>
+        </div>
+
+        <!-- FLOAT -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-float"></span>
+            <span class="var-card-name">Float</span>
+            <span class="var-card-color">Açık yeşil</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Ondalıklı sayı — 3.14, 0.5, 99.9, -12.34. Hassas/ölçülen değerler.</p>
+            <p><strong>Örnek:</strong> <code>Health</code> (can: 87.5), <code>Speed</code> (hız), <code>Damage</code> (hasar), <code>Timer</code> (süre).</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Can, hız, mesafe, süre gibi çoğu oyun değeri float'tır. UE5'te varsayılan ondalık türü.</div>
+          </div>
+        </div>
+
+        <!-- STRING -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-string"></span>
+            <span class="var-card-name">String</span>
+            <span class="var-card-color">Pembe</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Metin — harfler, kelimeler, cümleler. "Merhaba", "Oyuncu1", "Level tamamlandı".</p>
+            <p><strong>Örnek:</strong> <code>PlayerName</code> (oyuncu adı), debug mesajları, dosya yolları.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Print String string alır. Oyuncuya gösterilecek kalıcı metinler için Text daha iyidir (çeviri desteği).</div>
+          </div>
+        </div>
+
+        <!-- NAME -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-name"></span>
+            <span class="var-card-name">Name</span>
+            <span class="var-card-color">Lavanta</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Kısa, değişmez etiket/anahtar. String'e benzer ama daha hızlıdır ve karşılaştırma için optimize edilmiştir.</p>
+            <p><strong>Örnek:</strong> Kemik adı (<code>"head"</code>), socket adı, tag, satır adı (DataTable).</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Gösterilmeyecek, sadece sistem içi kimlik/anahtar olan metinler Name olmalı (performans).</div>
+          </div>
+        </div>
+
+        <!-- TEXT -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-text"></span>
+            <span class="var-card-name">Text</span>
+            <span class="var-card-color">Açık leylak</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> Oyuncuya <em>gösterilecek</em> metin. Çeviri (lokalizasyon) destekler — farklı dillere çevrilebilir.</p>
+            <p><strong>Örnek:</strong> UI yazıları, diyaloglar, buton etiketleri, "Oyun Bitti" ekranı.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Ekranda görünecek her şey Text olmalı — ileride oyununu başka dile çevirmek istersen kolaylık sağlar.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.3 String vs Name vs Text -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.3</div>
+        <h2 class="topic-title">String mi, Name mi, Text mi? — Karışıklığı bitir</h2>
+      </div>
+      <div class="topic-body">
+        <p>Bu üçü yeni başlayanları en çok karıştıran konudur. İşte net ayrım:</p>
+
+        <table class="compare-table">
+          <thead><tr><th>Tür</th><th>Amaç</th><th>Çeviri?</th><th>Hız</th><th>Kullan</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pin pin-name" style="vertical-align:middle;"></span> <strong>Name</strong></td><td>Sistem içi anahtar/kimlik</td><td>Hayır</td><td>En hızlı</td><td>Kemik, tag, satır adı</td></tr>
+            <tr><td><span class="pin pin-string" style="vertical-align:middle;"></span> <strong>String</strong></td><td>İşlenen/geçici metin</td><td>Hayır</td><td>Orta</td><td>Debug, hesap, birleştirme</td></tr>
+            <tr><td><span class="pin pin-text" style="vertical-align:middle;"></span> <strong>Text</strong></td><td>Oyuncuya gösterilen</td><td>✓ Evet</td><td>Yavaş</td><td>UI, diyalog, menü</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Pratik kural</div>
+            <p>
+              <strong>Ekranda görünecek mi?</strong> → Text. <strong>Sistem içi kimlik mi?</strong> → Name.
+              <strong>Geçici işlenen metin mi (debug, birleştirme)?</strong> → String. Aralarında dönüşüm
+              node'ları var (ToText, ToString), istediğinde çevirirsin.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.4 YAPISAL TÜRLER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.4</div>
+        <h2 class="topic-title">Yapısal türler — Vector, Rotator, Transform</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bazı veriler tek sayı değildir; birden çok sayıyı bir arada tutar. 3D dünyada konum, dönüş ve
+          ölçek bu türdendir:
+        </p>
+
+        <!-- VECTOR -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-vector"></span>
+            <span class="var-card-name">Vector</span>
+            <span class="var-card-color">Sarı</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> 3 float bir arada — <code>X, Y, Z</code>. Genelde 3D uzayda bir konum veya yön.</p>
+            <p><strong>Örnek:</strong> Actor konumu (1000, 250, 80), hareket yönü, kuvvet vektörü, ölçek.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Eksen renkleri: X kırmızı, Y yeşil, Z mavi (mavi = yukarı/aşağı).</div>
+          </div>
+        </div>
+
+        <!-- ROTATOR -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-rotator"></span>
+            <span class="var-card-name">Rotator</span>
+            <span class="var-card-color">Açık mavi</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> 3 açı — <code>Pitch (yukarı/aşağı), Yaw (sağ/sol), Roll (yatış)</code>. Bir nesnenin dönüşü.</p>
+            <p><strong>Örnek:</strong> Karakterin bakış yönü, dönen kapı, kamera açısı.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Pitch = başını eğme, Yaw = sağa-sola dönme, Roll = yana yatma (uçak gibi).</div>
+          </div>
+        </div>
+
+        <!-- TRANSFORM -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-transform"></span>
+            <span class="var-card-name">Transform</span>
+            <span class="var-card-color">Turuncu</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> 3'ü bir arada — <strong>Location (Vector) + Rotation (Rotator) + Scale (Vector)</strong>. Bir nesnenin tam "duruşu".</p>
+            <p><strong>Örnek:</strong> Spawn noktası (nerede + hangi açıyla + ne boyutta), kayıt edilen poz.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> Bir Actor'ı tam olarak konumlandırmak için tek transform yeterli — 3 bilgiyi birden taşır.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-puzzle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Bunlar birer "Struct"tır</div>
+            <p>
+              Vector, Rotator, Transform aslında <strong>Struct</strong> (yapı) örnekleridir — yani birden
+              çok değeri paketleyen kaplardır. Pinlerini "Split" ederek (sağ tık → Split Struct Pin) içindeki
+              tek tek X, Y, Z değerlerine ulaşabilirsin. Kendi struct'ını da yaratabilirsin (6.6).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.5 REFERANS TÜRLERİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.5</div>
+        <h2 class="topic-title">Referans türleri — Object ve Class</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bazen bir variable bir sayı/metin değil, <strong>başka bir nesnenin kendisini</strong> tutar.
+          Bunlara referans denir:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,179,255,.12);color:#38bdf8;"><i class="ti ti-link"></i></div>
+            <h4><span class="pin pin-object" style="vertical-align:middle;"></span> Object Reference</h4>
+            <p>Sahnedeki belirli bir nesneyi işaret eder. "Şu kapı", "bu düşman". Mavi pin. O nesnenin fonksiyonlarını çağırabilirsin.</p>
+            <span class="tag-small">= Belirli bir örnek</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(181,118,255,.12);color:#c084fc;"><i class="ti ti-stack-2"></i></div>
+            <h4><span class="pin pin-class" style="vertical-align:middle;"></span> Class Reference</h4>
+            <p>Bir nesne <em>türünü</em> işaret eder, örneği değil. "Düşman tipi" (hangi düşmanı spawn edeceğim?). Mor pin.</p>
+            <span class="tag-small">= Şablon/tür</span>
+          </div>
+        </div>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-id"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Object vs Class farkı</div>
+            <p>
+              <strong>Class</strong> bir <em>kalıptır</em> — "kurabiye kalıbı". <strong>Object</strong> o kalıptan
+              çıkan <em>gerçek kurabiyedir.</em> Spawn Actor node'una "hangi kalıbı kullanayım?" diye Class verirsin,
+              o da sana gerçek bir Object (kurabiye) üretir. Class = tür, Object = o türün canlı örneği.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.6 KONTEYNERLER: ARRAY/SET/MAP -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.6</div>
+        <h2 class="topic-title">Koleksiyonlar — Array, Set, Map</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Tek bir değer yetmediğinde, birden çok değeri bir variable'da toplarsın. UE5'te 3 koleksiyon
+          türü vardır. Hepsi herhangi bir temel türle çalışır (Integer array, String array vb.). Pin
+          şekilleri farklıdır:
+        </p>
+
+        <!-- ARRAY -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin-square pin-int" style="border:2px solid #00d4aa; background:transparent;"></span>
+            <span class="var-card-name">Array (Dizi)</span>
+            <span class="var-card-color">İçi boş kareler</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> <strong>Sıralı</strong> liste. Aynı değer tekrar olabilir. Her elemanın bir <em>index</em>'i (sırası) vardır: 0, 1, 2...</p>
+            <p><strong>Örnek:</strong> Envanter [kılıç, kalkan, iksir], yüksek skor listesi, bekleyen düşmanlar.</p>
+            <div class="info-grid" style="margin-top:12px;">
+              <div class="info-item"><div class="info-item-label">Add</div><div class="info-item-value">Sona ekle</div></div>
+              <div class="info-item"><div class="info-item-label">Get (index)</div><div class="info-item-value">Sıradaki elemanı al</div></div>
+              <div class="info-item"><div class="info-item-label">Remove</div><div class="info-item-value">Elemanı çıkar</div></div>
+              <div class="info-item"><div class="info-item-label">Length</div><div class="info-item-value">Eleman sayısı</div></div>
+            </div>
+            <div class="var-card-tip"><i class="ti ti-alert-triangle"></i> Index 0'dan başlar! İlk eleman [0], ikinci [1]. 3 elemanlı dizide son index 2'dir.</div>
+          </div>
+        </div>
+
+        <!-- SET -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin pin-int" style="border:2px solid #00d4aa; background:rgba(0,212,170,.3);"></span>
+            <span class="var-card-name">Set (Küme)</span>
+            <span class="var-card-color">Dolu yuvarlak kümeler</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> <strong>Tekrarsız</strong> küme. Aynı değer iki kez olamaz. Sıra garantisi yoktur. "Bir şey içinde var mı?" sorusu çok hızlıdır.</p>
+            <p><strong>Örnek:</strong> Toplanan benzersiz rozetler, ziyaret edilen bölgeler, aktif efektler (her efekt bir kez).</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> "Bu oyuncu bu görevi tamamladı mı?" gibi benzersizlik/aitlik sorularında Set, Array'den hızlıdır.</div>
+          </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="var-card">
+          <div class="var-card-head">
+            <span class="pin-square pin-int" style="border-radius:1px; background:#00d4aa;"></span>
+            <span class="var-card-name">Map (Sözlük)</span>
+            <span class="var-card-color">Dolu kareler</span>
+          </div>
+          <div class="var-card-body">
+            <p><strong>Ne saklar:</strong> <strong>Anahtar → Değer</strong> eşleşmesi. Her anahtar benzersiz, her anahtarın bir değeri var. Sözlük gibi: kelime → anlam.</p>
+            <p><strong>Örnek:</strong> Oyuncu skorları ("Ali"→90, "Veli"→75), eşya fiyatları ("kılıç"→100), dil tablosu.</p>
+            <div class="var-card-tip"><i class="ti ti-bulb"></i> "İsme göre değer bul" gerektiğinde Map kullan — anahtarla anında değere ulaşırsın, aramaya gerek yok.</div>
+          </div>
+        </div>
+
+        <table class="compare-table">
+          <thead><tr><th>Özellik</th><th>Array</th><th>Set</th><th>Map</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sıralı mı?</strong></td><td>✓ Evet (index)</td><td>✗ Hayır</td><td>✗ Hayır</td></tr>
+            <tr><td><strong>Tekrar olur mu?</strong></td><td>✓ Olur</td><td>✗ Olmaz</td><td>Anahtar benzersiz</td></tr>
+            <tr><td><strong>Yapısı</strong></td><td>[a, b, c]</td><td>{a, b, c}</td><td>{a→1, b→2}</td></tr>
+            <tr><td><strong>"İçinde var mı?"</strong></td><td>Yavaş (tek tek arar)</td><td>Çok hızlı</td><td>Çok hızlı (anahtarla)</td></tr>
+            <tr><td><strong>Ne zaman?</strong></td><td>Sıra önemliyse</td><td>Benzersizlik önemliyse</td><td>Anahtar→değer gerekiyorsa</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Doğru koleksiyonu seçmek performanstır</div>
+            <p>
+              1000 elemanlı bir Array'de "bu var mı?" diye aramak yavaştır (en kötü ihtimalle 1000 kontrol).
+              Aynı işi Set veya Map saniyenin çok küçük bir kısmında yapar (hash tablosu). Büyük veri
+              kümelerinde yanlış koleksiyon seçimi oyununu kasabilir. Kural: sıra gerekiyorsa Array,
+              benzersizlik/aitlik gerekiyorsa Set, anahtar→değer gerekiyorsa Map.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.7 STRUCT & ENUM -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.7</div>
+        <h2 class="topic-title">Kendi türlerin — Struct ve Enum</h2>
+      </div>
+      <div class="topic-body">
+        <p>Hazır türler yetmediğinde kendi türlerini yaratabilirsin:</p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,191,165,.12);color:#2dd4bf;"><i class="ti ti-package"></i></div>
+            <h4>Struct (Yapı)</h4>
+            <p>Birden çok variable'ı tek pakette toplar. Örn. "ItemData" = İsim (String) + İkon (Texture) + Fiyat (Int) + Ağırlık (Float). Bir eşyanın tüm bilgisi tek variable'da.</p>
+            <span class="tag-small">Veri paketi</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-list-check"></i></div>
+            <h4>Enum (Seçenek listesi)</h4>
+            <p>Sabit seçenekler kümesi. Örn. "GameState" = {MainMenu, Playing, Paused, GameOver}. Sadece bu değerlerden biri olabilir — yazım hatası riski yok.</p>
+            <span class="tag-small">Sınırlı seçenek</span>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Ne zaman Struct, ne zaman Enum?</div>
+            <p>
+              Bir şeyin <strong>birden çok özelliği</strong> varsa (eşyanın adı, fiyatı, ikonu) → <strong>Struct</strong>.
+              Bir şey <strong>sınırlı sayıda durumdan biri</strong> olacaksa (oyun durumu: menü/oynanıyor/duraklatıldı)
+              → <strong>Enum</strong>. Enum, Branch yerine <strong>Switch on Enum</strong> ile çok temiz akış sağlar.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Struct + Array + DataTable</div>
+            <p>
+              Profesyonel veri yönetiminde bu üçü birleşir: bir <strong>Struct</strong> tanımlarsın (eşya şablonu),
+              onu bir <strong>DataTable</strong>'da satır satır doldurursun (tüm eşyalar), oyunda Name anahtarıyla
+              çekersin. Yüzlerce eşyayı/düşmanı/seviyeyi Blueprint'i şişirmeden yönetmenin yolu budur.
+              Inventory, item, dialog sistemleri hep böyle kurulur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6.8 VARIABLE GÖRÜNÜRLÜĞÜ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">6.8</div>
+        <h2 class="topic-title">Göz ikonu — Public/Private ve Instance Editable</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir variable'ın yanındaki <strong>göz ikonuna</strong> tıklayınca "açık göz" olur. Bu, variable'ı
+          <strong>Instance Editable</strong> (public) yapar — sahnedeki her kopyada Details panelinden ayrı
+          ayrı değer girebilirsin.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Kapalı göz (private)</div><div class="info-item-value">Sadece Blueprint içinden erişilir</div></div>
+          <div class="info-item"><div class="info-item-label">Açık göz (public)</div><div class="info-item-value">Sahnede her kopyada ayarlanabilir</div></div>
+        </div>
+
+        <p>
+          <strong>Örnek:</strong> Bir "Düşman" Blueprint'i yaptın, <code>Health</code>'i public yaptın.
+          Sahneye 3 düşman koydun. Her birinin Details'inde farklı can girebilirsin: biri 100, biri 250,
+          biri 500. Tek Blueprint, farklı kopyalar.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Tooltip ekle</div>
+            <p>
+              Public variable'lara Details → <strong>Tooltip</strong> alanından açıklama ekle. Üzerine gelince
+              ne işe yaradığı görünür — ekip çalışmasında ve aylar sonra kendine hatırlatmada çok değerli.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Bool</strong> = doğru/yanlış (kırmızı), <strong>Integer</strong> = tam sayı (camgöbeği), <strong>Float</strong> = ondalık (yeşil).</li>
+        <li><strong>Sayılan</strong> şey integer, <strong>ölçülen</strong> şey float.</li>
+        <li><strong>String</strong> işle, <strong>Name</strong> anahtarla, <strong>Text</strong> göster.</li>
+        <li><strong>Vector</strong> = X,Y,Z konum; <strong>Rotator</strong> = dönüş; <strong>Transform</strong> = üçü birden.</li>
+        <li><strong>Get</strong> okur (sarı, sade), <strong>Set</strong> değiştirir (mavi, exec'li).</li>
+        <li><strong>Array</strong> sıralı+tekrarlı, <strong>Set</strong> tekrarsız, <strong>Map</strong> anahtar→değer.</li>
+        <li><strong>Array index 0'dan başlar!</strong> İlk eleman [0].</li>
+        <li><strong>Object</strong> = belirli örnek, <strong>Class</strong> = tür/şablon.</li>
+        <li><strong>Struct</strong> birden çok özellik, <strong>Enum</strong> sınırlı seçenek için.</li>
+        <li><strong>Açık göz</strong> = public = sahnede her kopyada ayarlanabilir.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Variable'ları gerçek sistemlerde kullan</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Sayaç</div>
+            <p class="project-desc">Bir Integer variable <code>Counter</code> (varsayılan 0) oluştur. Overlap event'inde <strong>Set Counter = Counter + 1</strong> yap, Print String ile "Sayaç: " + Counter göster (ToString ile çevir). Karakter her değdiğinde sayı artsın.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Integer variable oluşturuldu</li><li>Get + Set ile değer artırıldı</li><li>Integer → String dönüşümü yapıldı</li><li>Ekranda artan sayı görüldü</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Get/Set döngüsünü ve tür dönüşümünü öğrenmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~35 dk</span></div>
+            <div class="project-title">Proje 2: Basit envanter (Array)</div>
+            <p class="project-desc">Bir <strong>String Array</strong> <code>Inventory</code> oluştur. 3 farklı toplanabilir eşya Actor'ı yap (Kılıç, Kalkan, İksir). Her biri overlap'te kendi adını oyuncunun Inventory array'ine <strong>Add</strong> etsin. E tuşuna basınca <strong>ForEachLoop</strong> ile envanteri ekrana yazdır.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>String Array oluşturuldu</li><li>Add ile eleman ekleniyor</li><li>ForEachLoop ile liste dolaşılıyor</li><li>Toplanan tüm eşyalar yazdırılıyor</li><li>Index/Length kavramı anlaşıldı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Array kullanımı, Add ve ForEachLoop ile koleksiyon işlemek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~55 dk</span></div>
+            <div class="project-title">Proje 3: Skor tablosu (Map + Struct)</div>
+            <p class="project-desc">Bir <strong>Struct</strong> <code>OyuncuBilgi</code> yarat (İsim: String, Skor: Int, Seviye: Int). Bir <strong>Map</strong> <code>SkorTablosu</code> (anahtar: String isim, değer: OyuncuBilgi struct) oluştur. 3 oyuncu ekle. Bir isme göre <strong>Find</strong> ile oyuncuyu bul ve bilgilerini ekrana yaz. Bonus: en yüksek skoru bulan mantık ekle.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Struct (OyuncuBilgi) tanımlandı</li><li>Map (anahtar→struct) oluşturuldu</li><li>Add ile oyuncular eklendi</li><li>Find ile anahtara göre erişildi</li><li>Struct pinleri Split/Break ile okundu</li><li>Bonus: en yüksek skor bulundu</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Struct + Map kombinasyonuyla gerçek veri yapısı kurmak — profesyonel temel.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q6-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Oyuncunun can sayısını 3, 2, 1 şeklinde tutmak için hangi tür uygundur?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q6-1')"><span class="quiz-option-key">A</span><span>Float</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q6-1')"><span class="quiz-option-key">B</span><span>Integer</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-1')"><span class="quiz-option-key">C</span><span>String</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-1')"><span class="quiz-option-key">D</span><span>Boolean</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q6-1-ok">✓ Doğru! Can sayısı sayılan, tam bir değerdir → Integer. Ondalık gerekmez.</div>
+        <div class="quiz-feedback fail" id="q6-1-fail">✗ Yanlış. Sayılabilen tam değerler (3 can) Integer'dır. Float ölçülen ondalık değerler içindir.</div>
+      </div>
+
+      <div class="quiz-question" id="q6-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Ekranda oyuncuya gösterilecek, ileride başka dile çevrilebilecek bir yazı için hangi tür?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q6-2')"><span class="quiz-option-key">A</span><span>String</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-2')"><span class="quiz-option-key">B</span><span>Name</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q6-2')"><span class="quiz-option-key">C</span><span>Text</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-2')"><span class="quiz-option-key">D</span><span>Integer</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q6-2-ok">✓ Doğru! Text, oyuncuya gösterilen ve çeviri (lokalizasyon) destekleyen metin türüdür.</div>
+        <div class="quiz-feedback fail" id="q6-2-fail">✗ Yanlış. Gösterilen + çevrilebilir metin = Text. String işlenen geçici metin, Name sistem anahtarıdır.</div>
+      </div>
+
+      <div class="quiz-question" id="q6-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>3 elemanlı bir Array'de ilk elemanın index'i kaçtır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q6-3')"><span class="quiz-option-key">A</span><span>0</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-3')"><span class="quiz-option-key">B</span><span>1</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-3')"><span class="quiz-option-key">C</span><span>3</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-3')"><span class="quiz-option-key">D</span><span>-1</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q6-3-ok">✓ Doğru! Array index 0'dan başlar. İlk eleman [0], ikinci [1], üçüncü (son) [2].</div>
+        <div class="quiz-feedback fail" id="q6-3-fail">✗ Yanlış. Index 0'dan başlar — ilk eleman [0]'dır. 3 elemanlı dizide son index 2'dir.</div>
+      </div>
+
+      <div class="quiz-question" id="q6-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>"İsme göre skor bul" (Ali→90, Veli→75) gibi anahtar-değer eşleşmesi için hangi koleksiyon?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q6-4')"><span class="quiz-option-key">A</span><span>Array</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-4')"><span class="quiz-option-key">B</span><span>Set</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q6-4')"><span class="quiz-option-key">C</span><span>Map</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-4')"><span class="quiz-option-key">D</span><span>Boolean</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q6-4-ok">✓ Doğru! Map, anahtar→değer eşleşmesi tutar. Anahtarla (isim) anında değere (skor) ulaşırsın.</div>
+        <div class="quiz-feedback fail" id="q6-4-fail">✗ Yanlış. Anahtar→değer = Map. Array sıralı liste, Set tekrarsız kümedir.</div>
+      </div>
+
+      <div class="quiz-question" id="q6-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Bir eşyanın adını, fiyatını ve ikonunu tek bir variable'da paketlemek istersen ne kullanırsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q6-5')"><span class="quiz-option-key">A</span><span>Enum</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q6-5')"><span class="quiz-option-key">B</span><span>Struct</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-5')"><span class="quiz-option-key">C</span><span>Boolean</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q6-5')"><span class="quiz-option-key">D</span><span>Float</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q6-5-ok">✓ Doğru! Struct, birden çok özelliği (ad+fiyat+ikon) tek pakette toplar. Enum ise sınırlı seçenek listesi içindir.</div>
+        <div class="quiz-feedback fail" id="q6-5-fail">✗ Yanlış. Birden çok özelliği paketlemek = Struct. Enum sabit seçenekler (menü/oynanıyor/duraklatıldı) içindir.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s6"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="05-actor-event-function.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 05</div><div class="page-nav-title">Actor & Event</div></div>
+      </a>
+      <a href="07-input-hareket.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 07</div><div class="page-nav-title">Input & Hareket</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

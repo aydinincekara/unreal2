@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 17: Mesh Paint Mode — UnrealAkademi</title>
+  <meta name="description" content="Vertex color, texture painting, RGBA layer karışımı.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 17: Mesh Paint Mode — UnrealAkademi">
+  <meta property="og:description" content="Vertex color, texture painting, RGBA layer karışımı.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 17: Mesh Paint Mode — UnrealAkademi">
+  <meta name="twitter:description" content="Vertex color, texture painting, RGBA layer karışımı.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link active" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Mesh Paint Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 17</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 55 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">Mesh Paint Mode — Mesh'e Boya, Detay Ekle</h1>
+      <p class="page-lead">
+        Aynı duvarın bir kısmı yosunlu, bir kısmı temiz olsun istiyorsun. Karakterin kıyafetini farklı tonda istiyorsun. Sahneye fırçayla doku çeşitliliği eklemek için <strong>Mesh Paint</strong> kullanılır. Photoshop benzeri, ama doğrudan 3D mesh üzerine boyama.
+      </p>
+    </header>
+
+    <!-- 17.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">17.1</div>
+        <h2 class="topic-title">Mesh Paint nedir? — Vertex Color & Texture Painting</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Mesh Paint, bir mesh'in üzerine doğrudan fırçayla boyama yapmana izin verir. İki ana tür var:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-palette"></i></div>
+            <h4>Vertex Color (renk boyama)</h4>
+            <p>Her vertex'e bir renk değeri yazar (RGBA, 4 kanal). Materyal bu rengi okuyarak farklı doku/renk gösterir. <strong>Hafif</strong> — texture yok, sadece vertex'lerde renk bilgisi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-brush"></i></div>
+            <h4>Texture Painting</h4>
+            <p>Mesh'in texture'ına doğrudan piksel boyar. <strong>Detaylı</strong> ama mesh'e özel texture gerektirir, daha ağırdır. Genelde tek karakter veya hero asset için kullanılır.</p>
+          </div>
+        </div>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-spray"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Vertex Color, duvara <em>renkli ışık tutmak</em> gibidir — ucuz, hızlı, ama düşük çözünürlük (vertex sayısı kadar nokta). Texture Painting ise <em>gerçek boya ile boyamak</em> — yüksek detay, ama her sahneye uygulamak ağır olur. Çoğu oyunda <strong>Vertex Color + akıllı materyal</strong> kombinasyonu kullanılır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17.2 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">17.2</div>
+        <h2 class="topic-title">Vertex Color iş akışı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Vertex Color tek başına işe yaramaz — bir <strong>materyalin onu okuyup kullanması</strong> gerekir. Akış: önce materyali Vertex Color'a duyarlı hale getir, sonra mesh'e boya at.
+        </p>
+
+        <h4>1. Materyali hazırla</h4>
+        <p>Materyal Editor'da <strong>Vertex Color</strong> node'u ekle. RGB pinleri var (her kanal ayrı bilgi). En basit kullanım: iki farklı texture'ı Vertex Color'ın bir kanalıyla karıştırmak.</p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Tipik Vertex Color material zinciri</div>
+          <div class="bp-flow">
+            <div class="bp-node function">
+              <div class="bp-node-title">Texture A (temiz)</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>RGB</span><span class="pin pin-vector"></span></div></div>
+            </div>
+            <div class="bp-node function">
+              <div class="bp-node-title">Texture B (yosunlu)</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>RGB</span><span class="pin pin-vector"></span></div></div>
+            </div>
+            <div class="bp-node pure">
+              <div class="bp-node-title">Vertex Color</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>R</span><span class="pin pin-float"></span></div></div>
+            </div>
+            <span class="bp-arrow"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Lerp (A, B, Alpha)</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>Result → BaseColor</span><span class="pin pin-vector"></span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          <strong>Lerp</strong> (Linear Interpolate) node'u: Vertex Color R kanalı 0 ise Texture A (temiz), 1 ise Texture B (yosunlu) gösterir. Sen kırmızıyla boyadıkça (R=1) yosunlu doku ortaya çıkar.
+        </p>
+
+        <h4>2. Mesh Paint Mode'a gir + boya</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Modu seç</div>
+              <p>Mod dropdown'undan <strong>Mesh Paint</strong>'i seç. Sol panelde fırça ayarları açılır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Vertex sekmesini seç</div>
+              <p>Üstte <strong>Vertex / Texture</strong> seçenekleri. <strong>Vertex</strong>'i seç. Color, Weight, Erase alt seçenekleri.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Fırça ayarı</div>
+              <p>Sağ panelde fırça boyutu (Radius), gücü (Strength) ve renk seç. Channels (R/G/B/A) hangi kanala yazacağını belirler. R = ilk kanal.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Boya</div>
+              <p>Mesh'in üzerine sol tıkla → sürükle. Boyadığın yerlerde yosun ortaya çıksın. <strong>Shift+sol tık</strong> silme yapar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Vertex Color = vertex sayısına bağlı</div>
+            <p>
+              Mesh'in az vertex'i varsa boyama kaba görünür. <strong>Çözünürlük artırmak için mesh'i Subdivide etmen gerekebilir</strong> (Modeling Mode'da). Tek bir Cube'un sadece 8 köşesi vardır — orada ayrıntılı boyama imkânsızdır. Mesh ne kadar yoğunsa boyama o kadar hassas.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — RGBA = 4 farklı materyal</div>
+            <p>
+              Tek bir Vertex Color'un 4 kanalı var: R, G, B, A. Bu 4 kanalı 4 ayrı dokuyla Lerp edersen: temel kaya + yosun + kar + kum = aynı mesh'te 4 katman. Mountain/forest sanat yönetmenliği bu mantıkla çalışır. Profesyonel landscape blending budur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17.3 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">17.3</div>
+        <h2 class="topic-title">Texture Painting — Doğrudan texture'a boyamak</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Daha hassas detay istiyorsan Texture Painting'e geçersin. Burada boyadığın şey gerçek bir texture dosyasıdır — UV'ye göre piksel piksel boyanır.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Texture'lı materyal şart</div>
+              <p>Materyal bir Texture Sample'a sahip olmalı. Mesh Paint Mode otomatik o texture'ı bulur.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Texture sekmesini seç</div>
+              <p>Mod panelinde <strong>Texture</strong> sekmesi. UE5 boyanabilir texture'ları listeler — birini seç.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Boya ve Commit</div>
+              <p>Mesh'in üzerine boya. Bittiğinde <strong>Save</strong> tuşuna bas — değişiklikler texture'a yazılır. Diğer mesh'lerde de aynı texture'ı kullanıyorsan onlar da etkilenir!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Texture paylaşımı tuzağı</div>
+            <p>
+              Bir texture'ı 10 mesh ortak kullanıyorsa, ona boyama yaptığında <strong>10 mesh birden değişir</strong>. Tek bir mesh için özel boyama yapacaksan önce <strong>Duplicate Texture</strong> yap, sadece onun materyaline ata, sonra boya.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17.4 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">17.4</div>
+        <h2 class="topic-title">Fırça ayarları</h2>
+      </div>
+      <div class="topic-body">
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Radius</div><div class="info-item-value">Fırça boyutu (cm)</div></div>
+          <div class="info-item"><div class="info-item-label">Strength</div><div class="info-item-value">Tek vuruşta etki yoğunluğu (0-1)</div></div>
+          <div class="info-item"><div class="info-item-label">Falloff</div><div class="info-item-value">Fırça kenarının yumuşaklığı</div></div>
+          <div class="info-item"><div class="info-item-label">Flow</div><div class="info-item-value">Sürekli sürtüldüğünde birikme hızı</div></div>
+          <div class="info-item"><div class="info-item-label">Channels</div><div class="info-item-value">Hangi kanal(lar)a yazılacak (RGBA)</div></div>
+          <div class="info-item"><div class="info-item-label">Erase Color</div><div class="info-item-value">Shift+tık ile silinen renk değeri</div></div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Yumuşak geçiş için</div>
+            <p>
+              Strength = 0.2 ve Flow = 0.5 ile sür — tek vuruşta tam etki olmaz, sürtükçe birikir. Daha doğal/yumuşak geçişler için bu ayar Photoshop'taki "Airbrush" gibi çalışır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17.5 USE CASE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">17.5</div>
+        <h2 class="topic-title">Gerçek dünya kullanımları</h2>
+      </div>
+      <div class="topic-body">
+        <p>Mesh Paint'in pratik faydaları:</p>
+
+        <div class="tips-list">
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-mountain"></i></div>
+            <p><strong>Çevresel detay:</strong> Aynı duvar mesh'ini sahnede 20 kez kullansan da, her birine farklı yosun/leke deseni boyayarak çeşitlilik yaratırsın. Tekrar hissi kaybolur.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-user"></i></div>
+            <p><strong>Karakter varyasyonu:</strong> Bir asker karakteri varsa, her sahnede farklı kir/kan/iz boyayarak benzersiz görünmesini sağlarsın. Aynı asset, farklı hikâye.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-droplet"></i></div>
+            <p><strong>Sıvı/kar/toz birikmesi:</strong> Köşelerde, çatlaklarda toz/kar/su lekesi boyayarak gerçekçilik kat. PBR + Vertex Color karışımı = ücretsiz sanat değeri.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-target-arrow"></i></div>
+            <p><strong>Etkileşim izi:</strong> Oyunda merminin geçtiği yerde Blueprint runtime'da Vertex Color boyayarak iz bırakabilirsin (advanced).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Vertex Color = vertex'lere renk yaz</strong> (RGBA, 4 kanal), hafif sistem.</li>
+        <li><strong>Texture Painting = texture'a piksel boya</strong>, ağır ama detaylı.</li>
+        <li><strong>Materyal Vertex Color'ı okumalı</strong> — Vertex Color node + Lerp ile.</li>
+        <li><strong>Lerp(A, B, Alpha)</strong> = boyadığın yere göre dokular karışır.</li>
+        <li><strong>4 kanal = 4 farklı doku katmanı</strong> (kaya/yosun/kar/kum gibi).</li>
+        <li><strong>Vertex sayısı yetersizse</strong> Subdivide ile artır (boyama hassasiyeti).</li>
+        <li><strong>Radius, Strength, Falloff, Flow</strong> = ana fırça ayarları.</li>
+        <li><strong>Texture Paint paylaşılan texture'ı bozar</strong> — önce Duplicate yap.</li>
+        <li><strong>Shift+tık</strong> silme, <strong>Channels</strong> hangi kanala yazılacağını belirler.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Mesh'lere karakter kat</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Renkli Vertex boyama</div>
+            <p class="project-desc">Yoğun vertex'li bir mesh kullan (Subdivide edilmiş düz zemin). Materyalde sadece <strong>VertexColor</strong> node'unu doğrudan Base Color'a bağla (renk = vertex rengi). Mesh Paint Mode'da renkleri (kırmızı/yeşil/mavi) sür, mesh canlanır. Test amaçlı ilk deneme.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Subdivide edilmiş mesh hazır</li><li>Materyal Vertex Color'ı Base Color'a bağlı</li><li>Farklı renklerle boyama yapıldı</li><li>Renkler mesh üzerinde görünüyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Vertex Color sisteminin temel mantığını görmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Yosun karışan taş yüzeyi</div>
+            <p class="project-desc">Quixel'den bir taş + bir yosun texture seti al. <strong>M_TasYosun</strong> materyalinde <strong>Lerp</strong> ile iki texture'ı karıştır, alpha = VertexColor.R. Yoğun bir mesh'e (kaya) ata. Mesh Paint ile çatlaklara/üst yüzeylere kırmızı (R=1) boyayarak yosun çıkar. Doğal kaya+yosun görüntüsü oluştur.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>İki texture import edildi (PBR setiyle)</li><li>Lerp materyal kuruldu</li><li>Vertex Color R = alpha bağlandı</li><li>Boyanan yerlerde yosun çıkıyor</li><li>Doğal görünüm elde edildi</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Vertex Color + Materyal karışımı (texture blending) kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: 3 katmanlı arazi (RGB blending)</div>
+            <p class="project-desc">Geniş düz bir mesh (subdivide edilmiş). 3 texture: çim, toprak, kaya. Materyalde iki <strong>Lerp</strong> zinciri: Lerp(çim, toprak, VertexColor.R) → Lerp(çıktı, kaya, VertexColor.G). Boyarken R kanalı toprak, G kanalı kaya bölgelerini açar. Tepecikler kayalık, dipler çimen olacak şekilde bir manzara boyala.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>3 ayrı texture seti hazır</li><li>İki kademeli Lerp materyal kuruldu</li><li>R = toprak, G = kaya kanalları kullanıldı</li><li>Manzara doğal karışım gösteriyor</li><li>Erase (Shift+tık) ile düzeltme yapıldı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>RGBA kanallarla çoklu doku karışımı — profesyonel arazi tekniği.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🎮 GERÇEK OYUNLAR — MESH PAINT -->
+    <aside class="real-world-box">
+      <div class="real-world-header">
+        <div class="real-world-icon"><i class="ti ti-device-gamepad"></i></div>
+        <h3 class="real-world-title">Vertex Painting — Gerçek oyunlarda nerede görürsün?</h3>
+      </div>
+      <div class="real-world-grid">
+        <div class="real-world-item">
+          <div class="real-world-game">The Last of Us Part II</div>
+          <div class="real-world-where">Arazi geçişleri</div>
+          <p class="real-world-desc">Yol kenarındaki çamur-asfalt geçişi, kum-otlu zemin karışımı — hepsi vertex paint ile boyanmış.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Red Dead Redemption 2</div>
+          <div class="real-world-where">Karakter ve hayvan kirleri</div>
+          <p class="real-world-desc">Atların terlemesi, karakter elbisesindeki çamur lekeleri — vertex tabanlı doku karışımı.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Hellblade II</div>
+          <div class="real-world-where">Kaya yüzeylerinde yosun ve nem</div>
+          <p class="real-world-desc">Aynı kaya mesh'i farklı yerlerde farklı görünür — yeşil yosun veya kuru çatlaklar vertex paint ile.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Senin oyunun için</div>
+          <div class="real-world-where">Doğal görünümlü manzara ve eskitilmiş yüzeyler</div>
+          <p class="real-world-desc">Tek bir duvar mesh'ini 10 farklı yerde 10 farklı eskime seviyesinde göster — 10 ayrı materyal yerine 1 + paint.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q17-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Vertex Color sisteminde renk bilgisi nerede saklanır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q17-1')"><span class="quiz-option-key">A</span><span>Texture dosyasında piksel piksel</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q17-1')"><span class="quiz-option-key">B</span><span>Mesh'in her vertex'inde, RGBA olarak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-1')"><span class="quiz-option-key">C</span><span>Materyal asset'inde</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-1')"><span class="quiz-option-key">D</span><span>Blueprint variable'da</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q17-1-ok">✓ Doğru! Vertex Color her vertex'e RGBA değeri yazar. Materyal bu değeri okuyup farklı yorum verir.</div>
+        <div class="quiz-feedback fail" id="q17-1-fail">✗ Yanlış. Vertex Color = mesh'in vertex'lerinde saklı renk. Texture'a piksel boyamak Texture Painting'tir, ayrı yöntem.</div>
+      </div>
+
+      <div class="quiz-question" id="q17-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Vertex Color'a göre 2 farklı dokuyu karıştırmak için materyalde hangi node kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q17-2')"><span class="quiz-option-key">A</span><span>Multiply</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-2')"><span class="quiz-option-key">B</span><span>Add</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q17-2')"><span class="quiz-option-key">C</span><span>Lerp (Linear Interpolate)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-2')"><span class="quiz-option-key">D</span><span>Subtract</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q17-2-ok">✓ Doğru! Lerp(A, B, Alpha) = Alpha 0 ise A, 1 ise B'yi gösterir; vertex color alpha olarak idealdir.</div>
+        <div class="quiz-feedback fail" id="q17-2-fail">✗ Yanlış. Karışım için Lerp kullanılır. Multiply/Add renk karıştırma değil, matematik işlemidir.</div>
+      </div>
+
+      <div class="quiz-question" id="q17-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Boyamada ayrıntı yetersizse (kaba görünüyor) ne yapılmalı?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q17-3')"><span class="quiz-option-key">A</span><span>Strength'i 1'e çıkar</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q17-3')"><span class="quiz-option-key">B</span><span>Mesh'i Subdivide ederek vertex sayısını artır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-3')"><span class="quiz-option-key">C</span><span>Texture'ı sil</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-3')"><span class="quiz-option-key">D</span><span>Vertex Color kanalını değiştir</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q17-3-ok">✓ Doğru! Vertex Color hassasiyeti vertex sayısına bağlıdır — Subdivide ile artırırsan boyama detaylanır.</div>
+        <div class="quiz-feedback fail" id="q17-3-fail">✗ Yanlış. Detay = vertex sayısı. Az vertex = kaba boyama, çok vertex = hassas. Subdivide ile çözülür.</div>
+      </div>
+
+      <div class="quiz-question" id="q17-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Texture Painting yapmadan önce hangi önlemi alman gerekir (paylaşılan texture varsa)?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q17-4')"><span class="quiz-option-key">A</span><span>Texture'ı sil</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q17-4')"><span class="quiz-option-key">B</span><span>Texture'ı Duplicate yap, sadece o mesh'in materyaline ata</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-4')"><span class="quiz-option-key">C</span><span>Vertex sayısını düşür</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-4')"><span class="quiz-option-key">D</span><span>Hiçbir şey gerekmez</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q17-4-ok">✓ Doğru! Aynı texture'ı 10 mesh kullanıyorsa boyaman 10'unu birden değiştirir — Duplicate ile koruma şart.</div>
+        <div class="quiz-feedback fail" id="q17-4-fail">✗ Yanlış. Paylaşılan texture'ı bozmamak için önce Duplicate Texture yapılmalı, mesh'e ait kopya boyanır.</div>
+      </div>
+
+      <div class="quiz-question" id="q17-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Tek bir Vertex Color'un kaç bağımsız kanalı vardır (her biri farklı dokuya alpha olabilir)?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q17-5')"><span class="quiz-option-key">A</span><span>1</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-5')"><span class="quiz-option-key">B</span><span>2</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q17-5')"><span class="quiz-option-key">C</span><span>3</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q17-5')"><span class="quiz-option-key">D</span><span>4 (RGBA)</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q17-5-ok">✓ Doğru! R, G, B, A — dört bağımsız kanal demek dört ayrı doku katmanı kontrol edebilirsin.</div>
+        <div class="quiz-feedback fail" id="q17-5-fail">✗ Yanlış. RGBA = 4 kanal. Bu yüzden tek vertex color ile 4 farklı doku katmanı blend edebilirsin.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s17"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="16-fracture-mode.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 16</div><div class="page-nav-title">Fracture Mode</div></div>
+      </a>
+      <a href="18-landscape-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 18</div><div class="page-nav-title">Landscape Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 19: Foliage Mode — UnrealAkademi</title>
+  <meta name="description" content="Instanced Static Mesh, density, scale variation, Grass System.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 19: Foliage Mode — UnrealAkademi">
+  <meta property="og:description" content="Instanced Static Mesh, density, scale variation, Grass System.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 19: Foliage Mode — UnrealAkademi">
+  <meta name="twitter:description" content="Instanced Static Mesh, density, scale variation, Grass System.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link active" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Foliage Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 19</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 60 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">Foliage Mode — Binlerce Ağaç, Tek Tıkla</h1>
+      <p class="page-lead">
+        Bir ormanı tek tek ağaç yerleştirerek yapmaya kalkma — günler sürer ve performans yere serer. <strong>Foliage Mode</strong> sana fırçayla binlerce ağaç, çim, taş <em>aynı anda</em> ekme imkânı verir. Üstelik <strong>Instanced Static Mesh</strong> sayesinde 10.000 ağaç bile bilgisayarı yormaz.
+      </p>
+    </header>
+
+    <!-- 19.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.1</div>
+        <h2 class="topic-title">Foliage nedir? — Instanced popülasyon</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Foliage Mode'un kalbi <strong>Instanced Static Mesh (ISM)</strong> sistemidir. Normalde sahneye 10.000 ağaç koysan her biri ayrı bir Actor olur ve oyun ölür. Instanced sistem ise aynı ağaç mesh'inden 10.000 <em>kopyayı tek bir veri yapısında</em> tutar. GPU bunları tek seferde çizer — devasa performans kazancı.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-trees"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Sıradan Actor koymak, <strong>her ağaca ayrı bir doğum sertifikası yazmak</strong> gibidir — 10.000 sertifika = bürokrasi kabusu. Instanced sistem ise <em>"şu noktalarda şu ağaç var"</em> diye tek bir liste tutar — 10.000 nokta, tek liste. UE5 listeyi okuyup hepsini birden çizer. Aynı görsel, 100x daha hızlı.
+            </p>
+          </div>
+        </div>
+
+        <h4>3 ana yöntem</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-brush"></i></div>
+            <h4>Foliage Mode (manuel)</h4>
+            <p>Fırçayla istediğin yerlere kendin ek. Tam kontrol, sanatsal yerleşim. Bu bölümün ana konusu.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-spray"></i></div>
+            <h4>Grass System (otomatik)</h4>
+            <p>Landscape materyal'ine bağlı. Belli katmanlarda otomatik çim oluşturur. Ana otomasyon.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-vector"></i></div>
+            <h4>Procedural Foliage</h4>
+            <p>Akıllı simülasyon — ağaçların büyüme, rekabet, ölüm kurallarına göre kendiliğinden dağılması.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19.2 FOLIAGE MODE'A GİRİŞ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.2</div>
+        <h2 class="topic-title">Foliage Mode'a giriş</h2>
+      </div>
+      <div class="topic-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Mode'u aç</div>
+              <p>Mod dropdown'unda <strong>Foliage</strong>'ı seç (kısayol <kbd>Shift</kbd>+<kbd>4</kbd>). Sol panelde foliage araçları belirir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Foliage Type ekle</div>
+              <p>Sol panele bir Static Mesh sürükle bırak (örn. SM_Tree_01). UE5 otomatik bir <strong>Foliage Type</strong> oluşturur — bu artık fırçayla atabileceğin bir tür.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Bir veya birden çok tür seç</div>
+              <p>Türlerin solunda tik kutusu var. Tikli olanlar fırça vurduğunda atılır. Birden fazla seçersen UE5 onları karıştırarak dağıtır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Fırça ile sahneye boya</div>
+              <p>Mesh üzerinde (Landscape veya Static Mesh) sol tıkla sürükle — onlarca ağaç bir anda belirir. <strong>Shift+sol tık</strong> silme yapar.</p>
+            </div>
+          </div>
+        </div>
+
+        <h4>Fırça ayarları</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Brush Size</div><div class="info-item-value">Fırça yarıçapı (cm)</div></div>
+          <div class="info-item"><div class="info-item-label">Paint Density</div><div class="info-item-value">Birim alanda kaç nesne</div></div>
+          <div class="info-item"><div class="info-item-label">Erase Density</div><div class="info-item-value">Silmede kalan yoğunluk</div></div>
+          <div class="info-item"><div class="info-item-label">Single Instance Mode</div><div class="info-item-value">Her tıkta tek nesne (T tuşu)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19.3 FOLIAGE TYPE AYARLARI -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.3</div>
+        <h2 class="topic-title">Foliage Type — Akıllı dağılım ayarları</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir Foliage Type'a çift tıklarsan veya seçersen, Details panelinde onlarca ayar görürsün. Bunlar her bir nesnenin <strong>nasıl yerleşeceğini</strong> kontrol eder. En önemlileri:
+        </p>
+
+        <h4>Mesh ayarları</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Mesh</div><div class="info-item-value">Hangi Static Mesh kullanılacak</div></div>
+          <div class="info-item"><div class="info-item-label">Materials</div><div class="info-item-value">Override materyaller (opsiyonel)</div></div>
+          <div class="info-item"><div class="info-item-label">Cast Shadow</div><div class="info-item-value">Gölge üretir mi?</div></div>
+        </div>
+
+        <h4>Yerleşim (Painting) ayarları</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Density / 1Kuu</div><div class="info-item-value">1024 birim²'ye kaç tane</div></div>
+          <div class="info-item"><div class="info-item-label">Radius</div><div class="info-item-value">İki nesne arası minimum mesafe</div></div>
+          <div class="info-item"><div class="info-item-label">Scale</div><div class="info-item-value">Rastgele boyut aralığı (örn. 0.8-1.5)</div></div>
+          <div class="info-item"><div class="info-item-label">Random Yaw</div><div class="info-item-value">Z ekseninde rastgele dönüş</div></div>
+          <div class="info-item"><div class="info-item-label">Align to Normal</div><div class="info-item-value">Yüzeyin eğimine göre dön</div></div>
+          <div class="info-item"><div class="info-item-label">Z Offset</div><div class="info-item-value">Yere gömme/kaldırma (cm)</div></div>
+        </div>
+
+        <h4>Filtreleme — Sadece uygun yere koy</h4>
+        <p>Önemli bir özellik: foliage'ın sadece <em>uygun</em> yerlere düşmesini sağlamak.</p>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Ground Slope Angle</div><div class="info-item-value">Min/max yamaç açısı (örn. 0-30°)</div></div>
+          <div class="info-item"><div class="info-item-label">Height (Z)</div><div class="info-item-value">Min/max yükseklik (deniz seviyesi vb.)</div></div>
+          <div class="info-item"><div class="info-item-label">Landscape Layer Filter</div><div class="info-item-value">Sadece "Cim" katmanına gibi</div></div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Akıllı dağılım örneği</div>
+            <p>
+              Ağaçları sadece düz/hafif eğimli yerlere koymak istersen: Ground Slope Angle = 0-20°, Landscape Layer = sadece "Cim". Artık fırçayla geniş bir alanı süpürsen bile ağaçlar sadece yamacın altına ve çimli yerlere düşer — doğal manzara kendiliğinden oluşur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19.4 GRASS SYSTEM -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.4</div>
+        <h2 class="topic-title">Grass System — Otomatik çim</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Geniş bir tarlaya elle çim boyamak çılgınlıktır. <strong>Grass System</strong>, Landscape materyaline bağlı bir otomasyon: hangi katmana hangi çim, ne yoğunlukta, ne kadar uzakta görünür — hepsi materyalde tanımlanır.
+        </p>
+
+        <h4>Kurulum (özet)</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Landscape Grass Type asset'i oluştur</div>
+              <p>Content Browser → sağ tık → <strong>Foliage → Landscape Grass Type</strong>. İçinde Grass Variety array'i — her variety bir mesh + ayarlar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Materyalde Landscape Grass Output</div>
+              <p>Landscape materyalinde <strong>Landscape Grass Output</strong> node ekle. Her layer'a karşılık bir Grass Type bağla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Boyala — otomatik çıkar</div>
+              <p>O katmanı Landscape Paint Mode'da boyadığın yerlerde otomatik çim çıkar. Sen Foliage Mode'a hiç girmedin.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Cull Distance ve LOD</div>
+            <p>
+              Grass Variety'de <strong>Start Cull Distance</strong> ve <strong>End Cull Distance</strong> ayarları: çim sadece kamera yakınında görünür, uzakta otomatik kaybolur. 10 metreden ötede zaten algılanmaz, niye işlemcide kalsın? Bu, açık dünya performansının kritik anahtarıdır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19.5 ETKİLEŞİM -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.5</div>
+        <h2 class="topic-title">Foliage ile etkileşim — Çarpışma ve eğilme</h2>
+      </div>
+      <div class="topic-body">
+        <p>Foliage instance'ları varsayılan olarak tamamen pasif — karakter içlerinden geçer. Etkileşim isteyenler için ayarlar:</p>
+
+        <h4>Çarpışma (Collision)</h4>
+        <p>Foliage Type → Details → <strong>Collision Presets</strong>. Genelde "BlockAll" yaparsan karakter ağaca çarpamaz olur. Çim için kapalı, ağaçlar için açık idealdir.</p>
+
+        <h4>Karakter eğmesi (Wind/Player Interaction)</h4>
+        <p>Çimin/yaprakların oyuncu geçince eğilmesi için <strong>Pivot Painter</strong> veya <strong>Mesh Distance Field</strong> tabanlı materyaller kullanılır. Bu, foliage'a hareket katar — mesh yerinden oynamadan, vertex'ler eğilir.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Quixel ağaçlarında hazır geliyor</div>
+            <p>
+              Quixel Bridge'den indirdiğin çoğu bitki/ağaç asset'inde <strong>rüzgar ve etkileşim materyali zaten kurulmuştur</strong>. Sahneye atınca otomatik sallanırlar. Sen sıfırdan kurmadan yararlanırsın.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19.6 PERFORMANS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">19.6</div>
+        <h2 class="topic-title">Performans uyarıları</h2>
+      </div>
+      <div class="topic-body">
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Instance sayısı tehlikesi</div>
+            <p>
+              10.000 ağaç ISM ile sorun değil, ama her ağaç <strong>çok karmaşık</strong> ise (1M+ poligon) yine sorun olur. Foliage için <strong>LOD'lu, düşük poligon</strong> mesh kullan. Quixel ağaçları LOD'lu gelir; kendi modellerini import ederken LOD0/LOD1/LOD2'yi oluşturmayı unutma.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Cull Distance — Pratik kural</div>
+            <p>
+              Çim için 1000-3000 cm (10-30m), küçük çalı için 5000 cm (50m), ağaç için 15000-30000 cm (150-300m). Karakterin görüş mesafesine göre ayarlanır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Foliage = Instanced Static Mesh popülasyonu</strong> — 10K+ kopya bile hızlı.</li>
+        <li><strong>Static Mesh'i panele sürükle</strong> → Foliage Type oluşur.</li>
+        <li><strong>Density</strong> = yoğunluk, <strong>Radius</strong> = min mesafe, <strong>Scale</strong> = rastgele boyut.</li>
+        <li><strong>Random Yaw + Align to Normal</strong> doğal yerleşim verir.</li>
+        <li><strong>Ground Slope Angle filtresi</strong> = sadece düz alanlara ağaç.</li>
+        <li><strong>Landscape Layer Filter</strong> = sadece "Cim" katmanına ağaç (akıllı dağılım).</li>
+        <li><strong>Grass System</strong> = otomatik çim, Landscape materyaline bağlı.</li>
+        <li><strong>Cull Distance</strong> = uzakta görünmez (performans).</li>
+        <li><strong>LOD'lu mesh şart</strong> — çok poligon = performans çöker.</li>
+        <li><strong>Quixel bitkileri hazır rüzgar + LOD</strong> ile gelir.</li>
+        <li><strong>Shift+sol tık</strong> = silme, <strong>T tuşu</strong> = tek tek mod.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Ormanlar, çayırlar, manzaralar</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Küçük orman</div>
+            <p class="project-desc">Önceki bölümdeki Landscape üzerine 1-2 ağaç türü Foliage Type olarak ekle. Density orta, Scale 0.8-1.2, Random Yaw açık. Fırçayla ormanlık alanlar oluştur. Karakteri sahnede gez — performans iyi olmalı.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>En az 1 Foliage Type tanımlandı</li><li>En az 50 ağaç boyandı</li><li>Random Yaw aktif (her ağaç farklı yöne)</li><li>Random Scale aktif (çeşitlilik var)</li><li>FPS düşmüyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Foliage Mode iş akışını öğrenmek + Instanced performans avantajını görmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~45 dk</span></div>
+            <div class="project-title">Proje 2: Akıllı dağılım — Tepe vs Çayır</div>
+            <p class="project-desc">3 farklı Foliage Type ekle: ağaç, çalı, kaya. Her birine farklı filtre uygula:</p>
+            <ul style="margin:8px 0;padding-left:20px;color:var(--text-secondary);font-size:13px;">
+              <li>Ağaç: Ground Slope = 0-20° (düz/hafif yamaç)</li>
+              <li>Çalı: Ground Slope = 0-45° (her yamaç)</li>
+              <li>Kaya: Ground Slope = 30-90° (sadece dik yamaç)</li>
+            </ul>
+            <p>Fırçayla geniş alanı süpür — her tür otomatik doğru yere düşsün.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>3 farklı Foliage Type kuruldu</li><li>Her birine Slope filtre tanımlandı</li><li>Tek fırça vuruşunda 3 tür akıllıca dağıldı</li><li>Yamaçlarda kaya, düzde ağaç görünüyor</li><li>Doğal manzara hissi var</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Filtre sistemiyle doğal/akıllı dağılım kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~65 dk</span></div>
+            <div class="project-title">Proje 3: Grass System + Cull Distance optimizasyonu</div>
+            <p class="project-desc">Landscape Grass Type oluştur (2 çim türü). Materyalde Landscape Grass Output ile çim katmanına bağla. Boyaman yeterli — otomatik çim çıksın. Sonra Cull Distance'ları ayarla: çim 2000-3000 cm, ağaç 15000-25000 cm. Karakterle ileri/geri yürü, çim/ağaçların uygun mesafede kaybolup geri geldiğini gözlemle. FPS sayacı (Ctrl+Shift+H) ile karşılaştır — Cull açıkken/kapalıyken.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Landscape Grass Type oluşturuldu</li><li>Materyalde Landscape Grass Output kuruldu</li><li>Boyalı katmanda otomatik çim çıkıyor</li><li>Cull Distance ayarları çalışıyor</li><li>FPS sayacıyla performans gözlendi (en az 20+ kazanç)</li><li>Görsel olarak kayıp fark edilmiyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Otomatik Grass System + performans optimizasyonu — açık dünya temelinin tepesi.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🎮 GERÇEK OYUNLAR — FOLIAGE -->
+    <aside class="real-world-box">
+      <div class="real-world-header">
+        <div class="real-world-icon"><i class="ti ti-device-gamepad"></i></div>
+        <h3 class="real-world-title">Foliage System — Gerçek oyunlarda nerede görürsün?</h3>
+      </div>
+      <div class="real-world-grid">
+        <div class="real-world-item">
+          <div class="real-world-game">Fortnite (Chapter 5)</div>
+          <div class="real-world-where">Her haritadaki ormanlar ve otlar</div>
+          <p class="real-world-desc">100.000+ ot ve ağaç tek HISMC instance grubu olarak render edilir — Foliage Mode'un birebir endüstri uygulaması.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Hellblade II</div>
+          <div class="real-world-where">İskandinav ormanları, yosunlu kayalar</div>
+          <p class="real-world-desc">Procedural Foliage Tool ile dağıtılmış, Megascans bitkilerle desteklenmiş — UE5'in tanıtım örneği.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Ghost of Tsushima</div>
+          <div class="real-world-where">Rüzgârla dalgalanan otlu tepeler</div>
+          <p class="real-world-desc">Yapımcı stüdyo aynı tekniği kullanır: Foliage instancing + wind shader + density manipulation.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Senin oyunun için</div>
+          <div class="real-world-where">Atmosferik açık dünya, koruluk, bahçe</div>
+          <p class="real-world-desc">Tek Foliage Type ile saniyeler içinde dağ dolusu çam ağacı, otomatik Grass System ile her toprağa ot. Performans bedava.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q19-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Foliage Mode'un performans avantajının temel kaynağı nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q19-1')"><span class="quiz-option-key">A</span><span>Daha düşük çözünürlüklü mesh kullanmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q19-1')"><span class="quiz-option-key">B</span><span>Instanced Static Mesh — aynı mesh'in binlerce kopyasını tek veri yapısında tutmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-1')"><span class="quiz-option-key">C</span><span>Materyali yok saymak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-1')"><span class="quiz-option-key">D</span><span>Sadece görünenleri çizmek</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q19-1-ok">✓ Doğru! ISM ile 10.000 kopya tek draw call'a sığar — sıradan Actor'lara göre 100x kazanç.</div>
+        <div class="quiz-feedback fail" id="q19-1-fail">✗ Yanlış. Temel avantaj Instanced Static Mesh sistemi — aynı mesh'in tüm kopyaları GPU'ya tek pakette gönderilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q19-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Bir Foliage Type'a sadece düz alanlara düşmesi için hangi filtre kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q19-2')"><span class="quiz-option-key">A</span><span>Brush Size</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-2')"><span class="quiz-option-key">B</span><span>Random Yaw</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q19-2')"><span class="quiz-option-key">C</span><span>Ground Slope Angle (Min/Max)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-2')"><span class="quiz-option-key">D</span><span>Cast Shadow</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q19-2-ok">✓ Doğru! Ground Slope Angle = yamaç açısı filtresi. 0-20° gibi bir aralık verince sadece düz/hafif eğime düşer.</div>
+        <div class="quiz-feedback fail" id="q19-2-fail">✗ Yanlış. Eğim filtresi = Ground Slope Angle. Brush Size fırça boyutu, Random Yaw dönüş içindir.</div>
+      </div>
+
+      <div class="quiz-question" id="q19-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Landscape'in çim katmanına otomatik çim koymak için hangi sistem kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q19-3')"><span class="quiz-option-key">A</span><span>Sıradan Foliage Mode</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q19-3')"><span class="quiz-option-key">B</span><span>Landscape Grass System (materyale bağlı)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-3')"><span class="quiz-option-key">C</span><span>Niagara System</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-3')"><span class="quiz-option-key">D</span><span>Mesh Paint Mode</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q19-3-ok">✓ Doğru! Grass System, Landscape materyaline Landscape Grass Output ile bağlanır — boyadığın katmana otomatik çim çıkar.</div>
+        <div class="quiz-feedback fail" id="q19-3-fail">✗ Yanlış. Landscape katmanına otomatik çim = Grass System (materyale bağlı, otomatik). Foliage Mode manueldir.</div>
+      </div>
+
+      <div class="quiz-question" id="q19-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Cull Distance ayarının amacı nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q19-4')"><span class="quiz-option-key">A</span><span>Foliage'ın boyutunu değiştirmek</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q19-4')"><span class="quiz-option-key">B</span><span>Belli mesafeden sonra foliage'ı gizleyerek performans kazanmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-4')"><span class="quiz-option-key">C</span><span>Foliage'ın rengini ayarlamak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-4')"><span class="quiz-option-key">D</span><span>Çarpışmayı aktif/pasif yapmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q19-4-ok">✓ Doğru! Uzaktaki foliage'ı çizmemek için Cull Distance ayarlanır — açık dünya performansının kritik anahtarı.</div>
+        <div class="quiz-feedback fail" id="q19-4-fail">✗ Yanlış. Cull Distance = mesafe sonrası gizleme. Çim 10m'den ötede zaten algılanmaz, çizmek israftır.</div>
+      </div>
+
+      <div class="quiz-question" id="q19-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Foliage'da rastgele dönüş ve boyut değişikliği neden önemlidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q19-5')"><span class="quiz-option-key">A</span><span>Performans için</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q19-5')"><span class="quiz-option-key">B</span><span>"Klonlama" hissini yok etmek, doğal görünüm vermek için</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-5')"><span class="quiz-option-key">C</span><span>Bellekten kazanmak için</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q19-5')"><span class="quiz-option-key">D</span><span>Gereksizdir, hep aynı görünmesi iyidir</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q19-5-ok">✓ Doğru! Aynı mesh'in 100 kopyası birebir aynı durunca yapay görünür — Random Yaw + Random Scale her birini benzersiz gösterir.</div>
+        <div class="quiz-feedback fail" id="q19-5-fail">✗ Yanlış. Rastgelelik = doğal/benzersiz görünüm. Aynı dönüş ve boyut sahte/yapay hissi verir, gerçek doğa rastgeledir.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s19"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="18-landscape-mode.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 18</div><div class="page-nav-title">Landscape Mode</div></div>
+      </a>
+      <a href="20-selection-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 20</div><div class="page-nav-title">Selection Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

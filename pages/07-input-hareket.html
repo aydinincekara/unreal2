@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 07: Input &amp; Hareket — UnrealAkademi</title>
+  <meta name="description" content="Enhanced Input temelleri, Action, Mapping Context.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 07: Input &amp; Hareket — UnrealAkademi">
+  <meta property="og:description" content="Enhanced Input temelleri, Action, Mapping Context.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 07: Input &amp; Hareket — UnrealAkademi">
+  <meta name="twitter:description" content="Enhanced Input temelleri, Action, Mapping Context.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link active" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>Oyun Mekaniği</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Input & Hareket</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 07</span>
+        <span class="page-category">Oyun Mekaniği</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 80 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Input & Hareket — Karakteri Sen Kontrol Et</h1>
+      <p class="page-lead">
+        Bir oyunda en çok hissedilen şey karakter hareketidir. Bu bölümde klavye/fare/gamepad
+        girdilerini nasıl yakalayacağını, karakterini nasıl yürüteceğini, zıplatacağını ve kameranı
+        nasıl döndüreceğini öğreneceğiz. Sonunda kontrol edebileceğin bir karakterin olacak.
+      </p>
+    </header>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.1</div><h2 class="topic-title">Input nedir? — Oyuncunun sesini duymak</h2></div>
+      <div class="topic-body">
+        <p>
+          <strong>Input</strong> (girdi), oyuncudan oyuna gelen her sinyaldir: klavye tuşu, fare hareketi,
+          gamepad tuşu, dokunmatik ekran dokunuşu. Oyun bu sinyalleri "yakalayıp" ne yapacağına karar verir.
+          Input olmadan oyun olmaz — sadece bir film olur.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-ear"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>Input sistemi <strong>kulak</strong> gibidir. Oyuncu konuşur (tuşa basar), oyun dinler ve cevap verir (karakter hareket eder). İyi bir kulak duyduğunu doğru anlar — "W" basıldı mı bıraktı mı, ne kadar süreyle basılı, gamepad analogu hangi yöne ne kadar itildi.</p>
+          </div>
+        </div>
+
+        <h4>UE5'te iki sistem var: Eski vs Enhanced Input</h4>
+        <table class="compare-table">
+          <thead><tr><th>Sistem</th><th>Eski (Action/Axis Mapping)</th><th>Enhanced Input ✨</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Durumu</strong></td><td>Hala çalışıyor (eski projeler)</td><td>UE5'in önerdiği yeni sistem</td></tr>
+            <tr><td><strong>Esneklik</strong></td><td>Basit, sınırlı</td><td>Modifier, trigger, context'li</td></tr>
+            <tr><td><strong>Tuş değiştirme</strong></td><td>Sabit ayar</td><td>Oyun içinden değiştirilebilir</td></tr>
+            <tr><td><strong>Bu bölümde</strong></td><td>Mantığı görelim (öğretici)</td><td>Detay → Bölüm 22</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Bu bölümde ne yapacağız?</div>
+            <p>Yeni başlayan için kafa karışmasın diye <strong>klasik tuş event'leri</strong> ile başlayacağız (W tuşuna basıldı, Space tuşuna basıldı...). Bu sistem hala çalışıyor ve mantığı net. Enhanced Input'un detayını Bölüm 22'de göreceğiz — orada modern, profesyonel yaklaşımı öğreneceksin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.2</div><h2 class="topic-title">İlk tuş event'i — Klasik yöntem</h2></div>
+      <div class="topic-body">
+        <p>Bir Blueprint'in Event Graph'ında, sağ tıklayıp <strong>"Keyboard Events"</strong> kategorisine gidersen her tuşun event'ini görürsün. Bunlar 2 çıkışı olan kırmızı node'lardır:</p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Klavye event'i — anatomisi</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">Space Bar</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row output"><span>Pressed (basıldı) ▸</span><span class="pin-triangle pin-exec"></span></div>
+                <div class="bp-node-row output"><span>Released (bırakıldı) ▸</span><span class="pin-triangle pin-exec"></span></div>
+              </div>
+            </div>
+            <span class="bp-comment">// Pressed: tuş basıldığı an / Released: bırakıldığı an</span>
+          </div>
+        </div>
+
+        <p><strong>Pressed</strong> pinine bağlarsan, oyuncu tuşa <em>her bastığında</em> bir kez çalışır. <strong>Released</strong>'a bağlarsan, tuşu <em>bıraktığı anda</em> çalışır. İkisi de aynı anda kullanılabilir.</p>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Bu event nereye konmalı?</div>
+            <p>Klavye event'leri genelde <strong>Pawn / Character</strong> Blueprint'ine veya <strong>Player Controller</strong>'a konur. Sıradan bir Actor'da çalışmayabilir çünkü "input alma" ayarı kapalıdır. Character için hazırdır — Pawn değilse Details'te <strong>"Auto Receive Input"</strong>'u <em>Player 0</em> yap.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.3</div><h2 class="topic-title">Karakteri yürüt — İleri/geri/sağa/sola</h2></div>
+      <div class="topic-body">
+        <p>Karakter Blueprint'i (Character class), zaten içinde <strong>CharacterMovementComponent</strong> taşır. Bu component yerçekimi, yürüme, zıplama hesaplarını otomatik yapar. Senin yapacağın tek şey "şu yöne git" demek. Bunu <code>Add Movement Input</code> node'u ile yaparsın.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Yeni Character BP oluştur</div>
+              <p>Content Browser → sağ tık → <strong>Blueprint Class → Character</strong>. İsim: <code>BP_Karakter</code>. Açtığında zaten içinde Capsule, Mesh, CharacterMovement hazır gelir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İleri/geri eksen</div>
+              <p>Event Graph'ta <strong>W</strong> tuş event'i ekle. Pressed çıkışından <strong>Add Movement Input</strong> node'una bağla. World Direction'ın <strong>X</strong>'ini <code>1.0</code> yap. Aynı şeyi <strong>S</strong> tuşu için X=-1.0 yaparak ekle.</p>
+              <div class="step-note"><i class="ti ti-bulb"></i> X = ileri/geri, Y = sağ/sol, Z = yukarı/aşağı.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sağa/sola</div>
+              <p><strong>D</strong> tuşu Pressed → Add Movement Input, World Direction Y = 1.0. <strong>A</strong> tuşu için Y = -1.0.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">GameMode'a ata, sahneye koy</div>
+              <p>Bölüm 03'teki gibi GameMode'unun <strong>Default Pawn Class</strong>'ına <code>BP_Karakter</code>'i ata. Sahneye Player Start koy. Play'e bas — WASD ile karakterin yürümeli.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">"Yürümüyor!" hatası</div>
+            <p>En sık sebepler: <strong>(1)</strong> Karakter sahnede yoksa GameMode → Default Pawn Class doğru atanmamış. <strong>(2)</strong> Tuş event'i yerine "Auto Receive Input" kapalı. <strong>(3)</strong> Add Movement Input yerine "AddActorWorldOffset" kullanılmış (yerçekimi bypass'lar, garip davranış).</p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Aksis vs Buton</div>
+            <p>Klavye için tuş event'i yeterli ama <strong>gamepad analogu</strong> için "ne kadar itildi" bilgisini de almalısın (0.0 - 1.0 arası). Bunun için Enhanced Input'taki <strong>Axis Value</strong> kullanılır. Add Movement Input'un <strong>Scale Value</strong> pinine bu değeri verirsen yumuşak, analog hassasiyetli hareket olur. Detay Bölüm 22.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.4</div><h2 class="topic-title">Zıplama — Tek node, tüm sihir</h2></div>
+      <div class="topic-body">
+        <p>CharacterMovementComponent zıplama mantığını da içinde taşır. Sen sadece "zıpla" diyeceksin. Hazır iki node var:</p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Space tuşu → Jump / Stop Jumping</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">Space Bar</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row output"><span>Pressed ▸</span><span class="pin-triangle pin-exec"></span></div>
+                <div class="bp-node-row output"><span>Released ▸</span><span class="pin-triangle pin-exec"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Jump</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>zıpla</span></div></div>
+            </div>
+          </div>
+          <div class="bp-flow" style="margin-top:8px;">
+            <span class="bp-comment">// Released → StopJumping (kısa basışla kısa zıplama olur)</span>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Jump Z Velocity</div><div class="info-item-value">Zıplama yüksekliği (varsayılan 700)</div></div>
+          <div class="info-item"><div class="info-item-label">Air Control</div><div class="info-item-value">Havadayken yön kontrol oranı (0-1)</div></div>
+          <div class="info-item"><div class="info-item-label">Max Jump Count</div><div class="info-item-value">Çift zıplama için 2 yap</div></div>
+          <div class="info-item"><div class="info-item-label">Gravity Scale</div><div class="info-item-value">Yerçekimi şiddeti (1.0 normal)</div></div>
+        </div>
+
+        <p>Bu ayarları <strong>CharacterMovement component → Details</strong>'ten değiştirebilirsin. Çift zıplama için Max Jump Count'u 2 yap — hiçbir kod yazmadan double jump'ın hazır!</p>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.5</div><h2 class="topic-title">Kamera & Fare — Etrafına bakmak</h2></div>
+      <div class="topic-body">
+        <p>Karakterin bakış yönünü kontrol etmek için fareyi kullanırız. Character BP'ye <strong>Spring Arm</strong> (kamera kolu) ve <strong>Camera</strong> component'leri eklenir. Sonra fare hareketiyle bu kol döndürülür.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Component'leri ekle</div>
+              <p>Components panelinde <strong>+ Add → Spring Arm</strong> ekle. Sonra Spring Arm seçiliyken <strong>+ Add → Camera</strong> ekle (Camera, Spring Arm'ın çocuğu olmalı). Spring Arm'ın Target Arm Length'i 400 yap (üçüncü şahıs mesafe).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Fare Yaw — sağa/sola dönme</div>
+              <p>Event Graph'ta <strong>"Mouse X"</strong> event'i ekle (Axis Events kategorisi). Çıkışındaki <strong>Axis Value</strong>'yu <strong>Add Controller Yaw Input</strong> node'una bağla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Fare Pitch — yukarı/aşağı bakma</div>
+              <p><strong>Mouse Y</strong> event'i → <strong>Add Controller Pitch Input</strong>. Y ekseni ters gelirse Axis Value'yu <strong>-1 ile çarp</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Spring Arm ayarı</div>
+              <p>Spring Arm seçili → Details → <strong>"Use Pawn Control Rotation" = true</strong> yap. Bu, kameranın Controller'ın dönüşünü takip etmesini sağlar.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-fishing-net"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Spring Arm neden var?</div>
+            <p>Spring Arm bir <strong>esnek olta</strong> gibidir. Ucuna kamera takılı. Karakterin arkasından uzanır. Karakter bir duvara sıkışırsa, Spring Arm otomatik kısalır — kamera duvarın içine girmez. Bu yüzden kamerayı doğrudan Character'a değil, Spring Arm'a takıyoruz.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-camera"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Üçüncü şahıs vs Birinci şahıs</div>
+            <p><strong>Üçüncü şahıs:</strong> Spring Arm uzun (400+), karakteri arkadan görürsün. <strong>Birinci şahıs:</strong> Spring Arm yok, Camera doğrudan karakterin başına (Mesh'in head socket'ine) bağlı. Mesh'i de "Owner No See" ayarıyla görünmez yaparsın (kendi vücudunu görmek istemiyorsan).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">7.6</div><h2 class="topic-title">Hız ayarları ve koşma (Sprint)</h2></div>
+      <div class="topic-body">
+        <p>Karakterin hızı <strong>CharacterMovement</strong> component'inin <strong>Max Walk Speed</strong> değeridir (varsayılan 600). Bu sayıyı oyun sırasında değiştirerek "koşma" mekaniği yaparsın:</p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Shift basılıyken koşma — basit yöntem</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">Left Shift</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row output"><span>Pressed ▸</span><span class="pin-triangle pin-exec"></span></div>
+                <div class="bp-node-row output"><span>Released ▸</span><span class="pin-triangle pin-exec"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Set Max Walk Speed (1200)</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>hızlandır</span></div></div>
+            </div>
+            <span class="bp-comment">// Released → 600 (normale döner)</span>
+          </div>
+        </div>
+
+        <p><strong>Pressed</strong>: Get CharacterMovement → Set Max Walk Speed = 1200. <strong>Released</strong>: Set Max Walk Speed = 600. İki çizgili akış — biri hızlandırma, biri yavaşlatma.</p>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Stamina sistemi</div>
+            <p>Profesyonel sprint genelde <strong>stamina (nefes)</strong> ile sınırlanır. Float bir Stamina variable + Tick'te koşunca azalt, dururken artır. Stamina &gt; 0 ise koşmaya izin ver, &lt;= 0 olunca otomatik yavaşlat. UI'da bar göster (Bölüm 09). Bu, Bölüm 05'teki Custom Event ve Bölüm 06'daki Float variable bilgilerinin pratiğe döküldüğü yerdir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Tuş event = Pressed + Released.</strong> Basıldığı an ve bırakıldığı an.</li>
+        <li><strong>Add Movement Input</strong> ile yürüt — yerçekimi/collision otomatik.</li>
+        <li><strong>X = ileri/geri, Y = sağ/sol, Z = yukarı/aşağı.</strong></li>
+        <li><strong>Character class</strong> CharacterMovementComponent ile gelir — hazır.</li>
+        <li><strong>Jump</strong> ve <strong>StopJumping</strong> hazır node'lar — Space'e bağla yeter.</li>
+        <li><strong>Max Jump Count = 2</strong> → çift zıplama, kod yok.</li>
+        <li><strong>Spring Arm</strong> kamerayı duvardan korur — kamerayı ona bağla.</li>
+        <li><strong>Add Controller Yaw/Pitch</strong> fareyle dönüş için.</li>
+        <li><strong>Max Walk Speed</strong> değiştirerek koş — varsayılan 600.</li>
+        <li><strong>Karakter yürümüyor?</strong> GameMode → Default Pawn Class kontrolü, Auto Receive Input.</li>
+      </ul>
+    </div>
+
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Kendi kontrol edebildiğin karakteri yarat</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span></div>
+            <div class="project-title">Proje 1: WASD ile yürüyen karakter</div>
+            <p class="project-desc">Yeni BP_Karakter (Character) oluştur. W/A/S/D tuş event'leri + Add Movement Input ile 4 yöne hareket. GameMode'a ata, Player Start koy. Play'e bas, WASD ile etrafta yürü.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Character BP oluşturuldu</li><li>4 yön (W/A/S/D) event'leri eklendi</li><li>Add Movement Input doğru yönlerle bağlandı</li><li>GameMode'a Default Pawn olarak atandı</li><li>Player Start'tan WASD ile yürünebiliyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Temel hareket sistemini elden kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Çift zıplayan, fareyle bakan karakter</div>
+            <p class="project-desc">Proje 1'in üzerine: Spring Arm + Camera ekle (üçüncü şahıs). Mouse X/Y eksenleriyle bakış (Yaw/Pitch). Space ile Jump. CharacterMovement → Max Jump Count = 2 yap (çift zıplama). Test et.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Spring Arm + Camera doğru hiyerarşide</li><li>Use Pawn Control Rotation aktif</li><li>Mouse X → Yaw, Mouse Y → Pitch çalışıyor</li><li>Space → Jump bağlı</li><li>Çift zıplama yapılabiliyor (Max Jump Count=2)</li><li>Kamera duvarda otomatik kısalıyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Tam üçüncü şahıs kontrol şeması (hareket+kamera+zıplama).</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: Sprint + Stamina sistemi</div>
+            <p class="project-desc">Proje 2 üstüne: Float Stamina variable (max 100). Shift basılıyken Max Walk Speed = 1200 + Tick'te Stamina'yı azalt (Delta × 30). Bırakınca Speed = 600 + Tick'te Stamina'yı artır (Delta × 20). Stamina ≤ 0 olunca otomatik koşmayı durdur (Branch). Ekrana Stamina'yı Print String ile yaz (UI Bölüm 09'da).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Stamina Float variable (0-100) oluşturuldu</li><li>Shift Pressed/Released ile hız değişimi</li><li>Tick'te Stamina azalma/artma çalışıyor</li><li>Delta Seconds × oran kullanıldı (FPS bağımsız)</li><li>Stamina ≤ 0 → koşma otomatik kesiliyor</li><li>Print String ile değer görünüyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Input + variable + Tick + Branch'ı gerçek bir mekanikte birleştirmek.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q7-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Karakteri yerçekimi/collision'a uyumlu olarak hareket ettirmek için hangi node'u kullanırsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q7-1')"><span class="quiz-option-key">A</span><span>Set Actor Location</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q7-1')"><span class="quiz-option-key">B</span><span>Add Movement Input</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-1')"><span class="quiz-option-key">C</span><span>AddActorWorldOffset</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-1')"><span class="quiz-option-key">D</span><span>Print String</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q7-1-ok">✓ Doğru! Add Movement Input, CharacterMovementComponent ile birlikte yerçekimi, collision ve animasyonla uyumlu çalışır.</div>
+        <div class="quiz-feedback fail" id="q7-1-fail">✗ Yanlış. Add Movement Input doğru tercih — diğerleri yerçekimini bypass'lar, karakter duvardan geçebilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q7-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Çift zıplama (double jump) için en kolay yöntem?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q7-2')"><span class="quiz-option-key">A</span><span>Karmaşık Blueprint mantığı yazmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q7-2')"><span class="quiz-option-key">B</span><span>CharacterMovement → Max Jump Count = 2</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-2')"><span class="quiz-option-key">C</span><span>İki Jump node'u bağlamak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-2')"><span class="quiz-option-key">D</span><span>Mümkün değil</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q7-2-ok">✓ Doğru! UE5 hazır olarak destekler — Max Jump Count'u 2 yapmak yeterli. Hiç kod gerekmez.</div>
+        <div class="quiz-feedback fail" id="q7-2-fail">✗ Yanlış. En kolay yol Max Jump Count = 2. CharacterMovement bu özelliği hazır taşır.</div>
+      </div>
+
+      <div class="quiz-question" id="q7-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Kamerayı doğrudan Character'a değil de Spring Arm'a bağlamanın amacı nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q7-3')"><span class="quiz-option-key">A</span><span>Spring Arm zorunludur, başka yol yok</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q7-3')"><span class="quiz-option-key">B</span><span>Kamera duvara/engele sıkışınca Spring Arm otomatik kısalır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-3')"><span class="quiz-option-key">C</span><span>Performans için</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-3')"><span class="quiz-option-key">D</span><span>Görsel olarak güzel</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q7-3-ok">✓ Doğru! Spring Arm engele çarpınca otomatik kısalır — kamera duvarın içine girmez. Bu yüzden karaktere doğrudan bağlamayız.</div>
+        <div class="quiz-feedback fail" id="q7-3-fail">✗ Yanlış. Spring Arm'ın işi: engele rastlayınca otomatik kısalmak. Kameranın duvarın içine girmesini engeller.</div>
+      </div>
+
+      <div class="quiz-question" id="q7-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Karakter sahnede yürümüyor. Önce nereyi kontrol edersin?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q7-4')"><span class="quiz-option-key">A</span><span>Bilgisayarımı yeniden başlatırım</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q7-4')"><span class="quiz-option-key">B</span><span>GameMode → Default Pawn Class doğru atanmış mı</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-4')"><span class="quiz-option-key">C</span><span>Bilgisayarımın klavyesini değiştiririm</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-4')"><span class="quiz-option-key">D</span><span>Karakteri silip yeniden çizerim</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q7-4-ok">✓ Doğru! En yaygın sebep: GameMode'da Default Pawn Class yanlış veya boş. Önce orayı kontrol et.</div>
+        <div class="quiz-feedback fail" id="q7-4-fail">✗ Yanlış. İlk şüphe GameMode'a düşmeli — Default Pawn Class doğru BP atanmamış olabilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q7-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Shift'e basıldığında karakterin hızı 2 katına çıksın istiyorsun. Hangi yaklaşım doğrudur?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q7-5')"><span class="quiz-option-key">A</span><span>Karakteri silip 2 kat büyük yenisini yapmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q7-5')"><span class="quiz-option-key">B</span><span>Shift Pressed → Set Max Walk Speed = 1200; Released → 600</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-5')"><span class="quiz-option-key">C</span><span>Tick'te koordinatları 2 kat fazla artırmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q7-5')"><span class="quiz-option-key">D</span><span>Yeni bir karakter BP'si yapmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q7-5-ok">✓ Doğru! CharacterMovement → Max Walk Speed'i değiştirmek = anında hız değişimi. Pressed'de artır, Released'de eski değere döndür.</div>
+        <div class="quiz-feedback fail" id="q7-5-fail">✗ Yanlış. Hızlı/yavaş hareket için Max Walk Speed'i Set ederek değiştirmek doğru yöntem. Tick'te konum oynamak yerçekimini bozar.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s7"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="06-variable-turleri.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 06</div><div class="page-nav-title">Variable Türleri</div></div>
+      </a>
+      <a href="08-ses-vfx.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 08</div><div class="page-nav-title">Ses & VFX</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

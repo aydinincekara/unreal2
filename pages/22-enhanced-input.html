@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 22: Enhanced Input (Derin) — UnrealAkademi</title>
+  <meta name="description" content="Modifier, Trigger, Mapping Context, Player Mappable Config.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 22: Enhanced Input (Derin) — UnrealAkademi">
+  <meta property="og:description" content="Modifier, Trigger, Mapping Context, Player Mappable Config.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 22: Enhanced Input (Derin) — UnrealAkademi">
+  <meta name="twitter:description" content="Modifier, Trigger, Mapping Context, Player Mappable Config.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link active" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 İleri</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Enhanced Input (Derin)</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 22</span>
+        <span class="page-category">UE5 İleri</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 90 dakika</span>
+        <span class="difficulty difficulty-medium">Orta-İleri</span>
+      </div>
+      <h1 class="page-title">Enhanced Input — Modifier, Trigger ve Mapping Context</h1>
+      <p class="page-lead">
+        Bölüm 7'de Enhanced Input'a tanıştık. Bu bölümde derine iniyoruz: <strong>Modifier</strong>'lar (girdiyi dönüştürme — Negate, Swizzle, Dead Zone, Scalar), <strong>Trigger</strong>'lar (girdiyi koşullara bağlama — Hold, Tap, Double Tap, Chord, Pulse), birden çok <strong>Mapping Context</strong> ile durum bazlı kontroller. Sonunda sektör seviyesinde input mimarisi kurabileceksin.
+      </p>
+    </header>
+
+    <!-- 22.1 HATIRLATMA -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.1</div>
+        <h2 class="topic-title">Enhanced Input'un 3 katmanı — Hatırlatma</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Enhanced Input mimarisi üç asset türünden oluşur. Her birinin görevini ayırt etmek tüm sistemin temelidir.
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-target-arrow"></i></div>
+            <h4>Input Action (IA)</h4>
+            <p>Soyut bir <strong>niyet</strong>: "Jump", "Move", "Look". Hangi tuş olduğunu bilmez — sadece "ne yapılmak isteniyor"u temsil eder. Value Type'ı belirler (Bool/Axis1D/Axis2D/Axis3D).</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-keyboard"></i></div>
+            <h4>Input Mapping Context (IMC)</h4>
+            <p>Hangi <strong>tuş veya tuş kombinasyonunun</strong> hangi Action'ı tetikleyeceğini söyler. Birden çok IMC olur — örn. "OnFoot", "InVehicle", "InMenu". Aktif olan(lar) okunur.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-rocket"></i></div>
+            <h4>Enhanced Input Subsystem</h4>
+            <p>Oyun açılışında IMC'leri <strong>ekleyen/çıkaran</strong> Subsystem. Player Controller veya Character Blueprint'inde BeginPlay'de IMC eklenir.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Niye soyutlama? — Aynı IA, farklı tuş</div>
+            <p>
+              Bir oyunda "Jump" eylemi bir kez kodlanır (IA_Jump). Klavyede Space, kontrolcüde A, mobile'da ekran butonu — hepsi <em>aynı IA_Jump</em>'ı tetikler. Karakter Blueprint hiç değişmez. Yeni cihaz desteklemek = yeni IMC eklemek. Sektör standardı tasarım budur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.2 IA value type -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.2</div>
+        <h2 class="topic-title">Input Action'da Value Type seçimi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Yeni bir IA oluştururken Details'te <strong>Value Type</strong> ayarlanır. Bu, IA'nın "ne tür veri taşıdığını" belirler ve sonraki Modifier'lar/Blueprint'te okuma şeklini etkiler.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Value Type</th><th>Veri</th><th>Tipik kullanım</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Digital (Bool)</strong></td><td>true / false</td><td>Jump, Fire, Interact — basıldı/basılmadı</td></tr>
+            <tr><td><strong>Axis1D (Float)</strong></td><td>Tek eksenli (-1 ↔ 1)</td><td>Throttle, Brake, ileri-geri yatma</td></tr>
+            <tr><td><strong>Axis2D (Vector2)</strong></td><td>İki eksenli (XY)</td><td>WASD hareket, Stick yönü</td></tr>
+            <tr><td><strong>Axis3D (Vector3)</strong></td><td>Üç eksenli (XYZ)</td><td>3D motion controller, VR el konumu</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">WASD için Axis2D doğru seçim</div>
+            <p>
+              Eskiden W/A/S/D ayrı axis'lerdi ve Blueprint'te toplama yapılırdı. Enhanced Input'ta tek bir IA_Move (Axis2D) yeterlidir. IMC'de her tuşa Swizzle/Negate Modifier'larıyla doğru yön verilir. Blueprint'te tek event, tek Vector2 — temiz mimari.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.3 MODIFIERS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.3</div>
+        <h2 class="topic-title">Modifier'lar — Girdiyi şekillendir</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir tuşa basıldığında ham değer üretilir (örn. W tuşu → 1.0). <strong>Modifier</strong>, bu değer Action'a varmadan önce dönüşüm uygular. Bir IMC mapping'inde tek tuşa <em>birden çok Modifier</em> üst üste eklenebilir; sırasıyla uygulanırlar.
+        </p>
+
+        <h4>En sık kullanılan 6 Modifier</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(239,68,68,.12);color:#fca5a5;"><i class="ti ti-arrows-vertical"></i></div>
+            <h4>Negate</h4>
+            <p>Değeri <strong>×-1</strong> yapar. W = +Y, S = +Y ile başlar; S'ye Negate koyarsan S = -Y olur. Geri yön için klasik.</p>
+            <span class="tag-small">çıkış = -giriş</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-arrows-shuffle"></i></div>
+            <h4>Swizzle Input Axis</h4>
+            <p>Eksenleri <strong>yer değiştirir</strong>. Klavye tuşu tek boyutlu girdi üretir (X eksenli). Vector2'nin Y eksenine yazmak için XYZ → YXZ ile swizzle yaparsın.</p>
+            <span class="tag-small">eksen takası</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-resize"></i></div>
+            <h4>Scalar</h4>
+            <p>Değeri sabit çarpanla <strong>ölçekler</strong>. Mouse hassasiyeti, joystick speed ayarı, sprint çarpanı için.</p>
+            <span class="tag-small">değer × N</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-circle-half-2"></i></div>
+            <h4>Dead Zone</h4>
+            <p>Belirli bir eşik altındaki değerleri <strong>0 yapar</strong>. Joystick'in nötr konumda küçük titreşim üretmesini engeller (analog stick drift). Lower/Upper eşik ayarlanır.</p>
+            <span class="tag-small">< threshold → 0</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-waves-electricity"></i></div>
+            <h4>Smooth</h4>
+            <p>Ham değeri <strong>yumuşatır</strong> — ani değişimleri eğri haline getirir. Mouse veya joystick için kamera oynaklığını azaltır.</p>
+            <span class="tag-small">smoothing</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-curve-up"></i></div>
+            <h4>Response Curve</h4>
+            <p>Girdi-çıktı arasında bir <strong>eğri</strong> tanımlar. Joystick'in ortada hassas, kenarda hızlı tepki vermesi gibi non-linear cevap kurabilirsin.</p>
+            <span class="tag-small">FCurve mapping</span>
+          </div>
+        </div>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-keyboard-show"></i> WASD için IMC Modifier zinciri</span>
+            <span>Vector2D üretmek</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 740 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WASD modifier zinciri">
+              <rect x="0" y="0" width="740" height="240" rx="8" fill="#0d0d1a"/>
+
+              <!-- W -->
+              <g transform="translate(20,30)"><rect width="60" height="36" rx="4" fill="#2a1a4e" stroke="#a78bfa"/><text x="30" y="22" fill="#c4b5fd" font-family="monospace" font-size="13" text-anchor="middle">W</text></g>
+              <text x="50" y="80" fill="#9898b0" font-family="monospace" font-size="9" text-anchor="middle">(no modifier)</text>
+              <line x1="80" y1="48" x2="280" y2="48" stroke="#a78bfa" stroke-width="2"/>
+              <text x="180" y="40" fill="#a78bfa" font-family="monospace" font-size="9" text-anchor="middle">(1, 0, 0)</text>
+
+              <!-- S -->
+              <g transform="translate(20,90)"><rect width="60" height="36" rx="4" fill="#2a1a4e" stroke="#a78bfa"/><text x="30" y="22" fill="#c4b5fd" font-family="monospace" font-size="13" text-anchor="middle">S</text></g>
+              <text x="50" y="140" fill="#fb923c" font-family="monospace" font-size="9" text-anchor="middle">Negate</text>
+              <line x1="80" y1="108" x2="280" y2="108" stroke="#fb923c" stroke-width="2"/>
+              <text x="180" y="100" fill="#fb923c" font-family="monospace" font-size="9" text-anchor="middle">(-1, 0, 0)</text>
+
+              <!-- D -->
+              <g transform="translate(20,150)"><rect width="60" height="36" rx="4" fill="#2a1a4e" stroke="#a78bfa"/><text x="30" y="22" fill="#c4b5fd" font-family="monospace" font-size="13" text-anchor="middle">D</text></g>
+              <text x="50" y="200" fill="#67e8f9" font-family="monospace" font-size="9" text-anchor="middle">Swizzle YXZ</text>
+              <line x1="80" y1="168" x2="280" y2="168" stroke="#67e8f9" stroke-width="2"/>
+              <text x="180" y="160" fill="#67e8f9" font-family="monospace" font-size="9" text-anchor="middle">(0, 1, 0)</text>
+
+              <!-- A -->
+              <g transform="translate(20,210)"><rect width="60" height="20" rx="4" fill="#2a1a4e" stroke="#a78bfa"/><text x="30" y="14" fill="#c4b5fd" font-family="monospace" font-size="11" text-anchor="middle">A</text></g>
+              <text x="120" y="222" fill="#34d399" font-family="monospace" font-size="9" text-anchor="middle">Swizzle YXZ + Negate</text>
+              <line x1="80" y1="220" x2="280" y2="220" stroke="#34d399" stroke-width="2"/>
+              <text x="220" y="212" fill="#34d399" font-family="monospace" font-size="9" text-anchor="middle">(0,-1, 0)</text>
+
+              <!-- IA_Move -->
+              <rect x="290" y="80" width="200" height="120" rx="8" fill="#0a3a44" stroke="#67e8f9" stroke-width="2"/>
+              <text x="390" y="105" fill="#67e8f9" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">IA_Move</text>
+              <text x="390" y="125" fill="#5a8a95" font-family="monospace" font-size="10" text-anchor="middle">Vector2D</text>
+              <line x1="310" y1="135" x2="470" y2="135" stroke="#22223a"/>
+              <text x="390" y="155" fill="#a78bfa" font-family="monospace" font-size="9" text-anchor="middle">W → +X, S → -X</text>
+              <text x="390" y="170" fill="#a78bfa" font-family="monospace" font-size="9" text-anchor="middle">D → +Y, A → -Y</text>
+              <text x="390" y="190" fill="#67e8f9" font-family="monospace" font-size="9" text-anchor="middle">(forward, right)</text>
+
+              <!-- Blueprint -->
+              <rect x="540" y="80" width="180" height="120" rx="8" fill="#1f1f30" stroke="#34d399" stroke-width="2"/>
+              <text x="630" y="105" fill="#34d399" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Blueprint Event</text>
+              <line x1="560" y1="115" x2="700" y2="115" stroke="#22223a"/>
+              <text x="630" y="138" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle">EnhancedInputAction</text>
+              <text x="630" y="152" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle">IA_Move (Triggered)</text>
+              <text x="630" y="172" fill="#9898b0" font-family="monospace" font-size="8" text-anchor="middle">Action Value (Vec3)</text>
+              <text x="630" y="188" fill="#9898b0" font-family="monospace" font-size="8" text-anchor="middle">↓</text>
+
+              <!-- arrow to BP -->
+              <line x1="490" y1="140" x2="540" y2="140" stroke="#a78bfa" stroke-width="2"/>
+              <path d="M 540 140 L 532 136 L 532 144 Z" fill="#a78bfa"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Custom Modifier yazma</div>
+            <p>
+              Built-in modifier'lar ihtiyacını karşılamazsa <strong>UInputModifier</strong>'dan türeyen kendi C++ class'ını yazabilirsin. Karmaşık eğriler, conditional response, oyun durumuna göre dinamik ölçekleme gibi şeyler için kullanılır. Bu, motorun en uzatılabilir noktalarından biridir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.4 TRIGGERS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.4</div>
+        <h2 class="topic-title">Trigger'lar — Girdi nasıl Action'a dönüşür?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Modifier girdiyi <em>şekillendirir</em>; Trigger ise "bu girdi geçerli bir Action olarak sayılır mı?" sorusunu yanıtlar. Bir IMC mapping'inde tuşa Trigger eklersin — Trigger şartı sağlanmazsa Blueprint event tetiklenmez.
+        </p>
+
+        <h4>5 ana Trigger</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-clock"></i></div>
+            <h4>Hold</h4>
+            <p>Tuş <strong>en az N saniye basılı</strong> tutulursa tetikler. "Etkileşim için E'yi 1 saniye bas". Duration ayarlanır.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-hand-finger"></i></div>
+            <h4>Tap</h4>
+            <p>Tuş <strong>kısa süre içinde bırakılırsa</strong> tetikler. Hold ile birlikte aynı tuşa kullanılır — kısa basış vs uzun basış.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-keyboard-show"></i></div>
+            <h4>Pressed</h4>
+            <p>Tuş <strong>basıldığı anda</strong> bir kez tetikler. Klasik "key down" davranışı. Varsayılan başlangıç noktası.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-repeat"></i></div>
+            <h4>Pulse</h4>
+            <p>Tuş basılı tutulduğu sürece <strong>belirli aralıkla tekrar tetikler</strong>. Inventory'de uzun basışla hızlı kaydırma için.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-link"></i></div>
+            <h4>Chord (Combo)</h4>
+            <p><strong>Başka bir Action aktif iken</strong> tetikler. "Shift + W = Sprint" gibi kombolar için. Chord Action olarak Shift IA'sı seçilir, asıl tuş W olur.</p>
+          </div>
+        </div>
+
+        <h4>Trigger Event türleri (Blueprint event pin)</h4>
+        <p>
+          Bir IA'yı Blueprint'te çağırdığında çıkan event'in birden çok pin'i vardır. Hangisini kullanacağın Trigger'a göre değişir:
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Pin</th><th>Anlamı</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Triggered</strong></td><td>Action başarıyla tetiklendi (en sık kullanılan)</td></tr>
+            <tr><td><strong>Started</strong></td><td>Trigger süreç başladı (örn. Hold sayım başladı)</td></tr>
+            <tr><td><strong>Ongoing</strong></td><td>Hold tutuluyor ama henüz threshold'a varmadı</td></tr>
+            <tr><td><strong>Canceled</strong></td><td>Trigger iptal oldu (Hold tamamlanmadan bırakıldı)</td></tr>
+            <tr><td><strong>Completed</strong></td><td>Tuş bırakıldı (genelde Triggered'dan sonra)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hold + Tap aynı tuşa</div>
+            <p>
+              "E" tuşuna iki ayrı IA bağlayabilirsin: IA_Interact (Tap) ve IA_HoldInteract (Hold). Aynı E tuşu — kısa basışla etkileşim, uzun basışla farklı eylem (kapıyı yavaşça aç, eşyayı incele). Modern oyunlardaki "press to do X / hold to do Y" pattern'ı bu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.5 ÇOKLU MAPPING CONTEXT -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.5</div>
+        <h2 class="topic-title">Çoklu Mapping Context — Durum bazlı kontroller</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Oyununda karakter farklı durumlarda farklı tuşlara cevap verir. Yürürken Space = zıpla, arabadayken Space = el freni, menüdeyken Space = onay. <strong>Birden çok IMC</strong> oluşturup oyun durumuna göre ekle/çıkar — temiz mimari budur.
+        </p>
+
+        <h4>Önerilen yapı</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">IMC_OnFoot</div><div class="info-item-value">Yürüme, koşma, zıplama, etkileşim</div></div>
+          <div class="info-item"><div class="info-item-label">IMC_InVehicle</div><div class="info-item-value">Gaz, fren, direksiyon, korna</div></div>
+          <div class="info-item"><div class="info-item-label">IMC_InMenu</div><div class="info-item-value">Navigasyon, onay, geri, kapat</div></div>
+          <div class="info-item"><div class="info-item-label">IMC_InInventory</div><div class="info-item-value">Item seçme, kullanma, atma</div></div>
+          <div class="info-item"><div class="info-item-label">IMC_Cutscene</div><div class="info-item-value">Sadece skip ve pause</div></div>
+        </div>
+
+        <h4>Subsystem üzerinden ekle/çıkar</h4>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Vehicle'a geçiş — IMC değiştir</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">Custom Event: EnterVehicle</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>exec ▸</span><span class="pin-triangle pin-exec"></span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Get Enhanced Input Local Player Subsystem</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>Subsystem ▶</span><span class="pin pin-object"></span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Remove Mapping Context (IMC_OnFoot)</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin pin-object"></span><span>Target</span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Add Mapping Context (IMC_InVehicle, Priority 0)</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin pin-object"></span><span>MappingContext</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Priority — Çakışmaları çöz</div>
+            <p>
+              Birden çok IMC aynı anda aktif olabilir. Bir tuş iki IMC'de farklı Action'lara bağlıysa <strong>Priority</strong> kazanır: yüksek priority önce işlenir. Örnek: IMC_Cutscene priority 100 olur, oyuncu cutscene'de oyun kontrollerini etkilemeden Skip basabilir.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Consume Input</div>
+            <p>
+              IMC details'te <strong>Block Lower Priority Actions</strong> tikini açarsan, bu IMC bir tuşu işlerse aşağıdaki IMC'ler aynı tuşu görmez. Menü açıkken oyun kontrolünün durması için bu önemli.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.6 PRATİK SENARYO -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.6</div>
+        <h2 class="topic-title">Pratik senaryo — Sprint sistemi (Chord)</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Shift basılı iken W = sprint, sadece W = yürüme. Chord Trigger ile yapımı:
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Action'ları oluştur</div>
+              <p><code>IA_Move</code> (Vector2D, varolan), <code>IA_Sprint</code> (Bool — yardımcı Action olarak), <code>IA_SprintModifier</code> (yine Bool — Shift için ham yakalama). Üçü ayrı asset.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">IMC'ye Shift mapping ekle</div>
+              <p>IMC_OnFoot'a <strong>Left Shift → IA_SprintModifier</strong>. Bu, Shift'i "açık/kapalı" durumda tutar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">IMC'ye W mapping + Chord ekle</div>
+              <p>W → IA_Sprint. Bu mapping'in Trigger'larına <strong>Chord Action</strong> ekle, Chord Action olarak IA_SprintModifier seç. Artık W sadece Shift basılı iken IA_Sprint'i tetikler.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Blueprint'te hızı ayarla</div>
+              <p>IA_Sprint Triggered → <strong>Set Max Walk Speed (Character Movement)</strong> = 900. IA_Sprint Completed → 400'e geri al. Veya IA_Move event'inde Sprint bool'ünü kontrol et.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22.7 TIPS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">22.7</div>
+        <h2 class="topic-title">İyi pratikler ve sık hatalar</h2>
+      </div>
+      <div class="topic-body">
+        <h4>Doğru yaklaşımlar</h4>
+        <ul style="margin:0;padding-left:24px;color:var(--text-secondary);line-height:1.8;">
+          <li><strong>Naming convention:</strong> Action'lar <code>IA_</code>, Context'ler <code>IMC_</code> prefix'iyle.</li>
+          <li><strong>IA'lar gameplay terimiyle</strong> isimlendir (IA_Jump, IA_Interact), tuş ismiyle değil (IA_SpaceKey ❌).</li>
+          <li><strong>Aynı tuşu iki IA'ya bağlıyorsan</strong> mutlaka farklı Trigger kullan (Tap vs Hold).</li>
+          <li><strong>Tek bir IMC çok büyürse parçala</strong> — UI, gameplay, debug ayrı.</li>
+          <li><strong>Player Controller'da değil Character'da</strong> IMC ekleme alışkanlığı yaygın ama Controller daha doğrudur (Possession değişikliğinde tutarlı).</li>
+        </ul>
+
+        <h4>Sık hatalar</h4>
+        <table class="compare-table">
+          <thead><tr><th>Hata</th><th>Düzeltme</th></tr></thead>
+          <tbody>
+            <tr><td>Tuşa bastığımda hiçbir şey olmuyor</td><td>BeginPlay'de IMC eklendi mi kontrol et; IMC priority doğru mu</td></tr>
+            <tr><td>WASD ters yönlere gidiyor</td><td>Swizzle ve Negate sırasını kontrol et</td></tr>
+            <tr><td>Joystick orta noktada hareket ediyor</td><td>Dead Zone Modifier ekle (eşik 0.15-0.20)</td></tr>
+            <tr><td>Aynı Action 2 kez tetikleniyor</td><td>Birden çok IMC'de aynı mapping olabilir; Block Lower Priority kullan</td></tr>
+            <tr><td>Hold çalışmıyor</td><td>Trigger Pressed default'tur — Hold eklediğinden emin ol</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Player Mappable Config (Rebind UI)</div>
+            <p>
+              Oyuncunun tuşları kendi seçtiği bir rebind menüsü için <strong>Player Mappable Key Settings</strong> kullanılır. IMC mapping'lerine Player Mappable Options eklersin, çalışma anında Subsystem üzerinden <code>AddPlayerMappedKey</code> ile değiştirebilirsin. Sektör standardı UX'in temeli.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>IA = niyet, IMC = tuş bağlama, Subsystem = aç/kapa</strong> — üç ayrı katman.</li>
+        <li><strong>Value Type'ı doğru seç:</strong> Bool, Axis1D, Axis2D, Axis3D.</li>
+        <li><strong>Negate:</strong> değeri ×-1, geri yön için.</li>
+        <li><strong>Swizzle:</strong> eksen yer değişimi (XYZ → YXZ ile X'i Y'ye taşı).</li>
+        <li><strong>Scalar:</strong> sabit çarpan, hassasiyet için.</li>
+        <li><strong>Dead Zone:</strong> joystick drift'ini engeller — eşik altı 0.</li>
+        <li><strong>Smooth:</strong> ham değeri yumuşat, kamera oynaklığı düşer.</li>
+        <li><strong>Trigger'lar:</strong> Pressed, Hold, Tap, Pulse, Chord.</li>
+        <li><strong>Hold + Tap aynı tuşa</strong> → kısa/uzun basış ayrı Action'lar.</li>
+        <li><strong>Chord:</strong> bir Action başka Action aktif iken tetiklenir (Shift+W = Sprint).</li>
+        <li><strong>Triggered/Started/Ongoing/Canceled/Completed</strong> Blueprint event pin'leri.</li>
+        <li><strong>Çoklu IMC + Priority + Block Lower</strong> ile durum bazlı kontroller.</li>
+        <li><strong>IMC ekleme/çıkarma</strong> Subsystem üzerinden, BeginPlay veya custom event'lerde.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Modifier, Trigger ve çoklu IMC ile sektör düzeyi input</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span></div>
+            <div class="project-title">Proje 1: Hold ile etkileşim sistemi</div>
+            <p class="project-desc">Mevcut karakter projesinde <code>IA_Interact</code> (Bool) oluştur. IMC_OnFoot'a <strong>E tuşu → IA_Interact</strong> mapping ekle. Trigger'a <strong>Hold (1 saniye)</strong> ekle. Blueprint'te Triggered pin'ine "Print: Etkileşim tamamlandı!" bağla. Ongoing pin'ine progress yüzdesi yazdır. <strong>E'ye kısa basışta bir şey olmasın, 1 saniye basılı tutunca tetiklensin.</strong></p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>IA_Interact oluşturuldu</li><li>E tuşuna Hold (1.0 saniye) trigger eklendi</li><li>Kısa basışta hiçbir şey olmuyor</li><li>1 saniye basılı tutmak gerekiyor</li><li>Ongoing pin'iyle progress görünüyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Trigger'ların temel mantığını ve event pin'lerini içselleştirmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~45 dk</span></div>
+            <div class="project-title">Proje 2: Sprint sistemi + Mouse smooth</div>
+            <p class="project-desc">Bölüm 22.6'daki Chord ile Sprint sistemini gerçekleştir: Shift+W = sprint. Buna ek olarak <strong>IA_Look</strong> mapping'ine <strong>Smooth Modifier</strong> ekle (mouse). Sahnede koş, kamera oynat — sprint çalıştığını ve mouse hareketinin yumuşadığını test et. <strong>Bonus:</strong> Sprint sırasında FOV'u 90 → 100'e yumuşakça artır (Lerp), bırakınca geri al.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>IA_SprintModifier ve IA_Sprint oluşturuldu</li><li>Chord Trigger W tuşuna eklendi</li><li>Shift+W ile MaxWalkSpeed = 900</li><li>Sadece Shift veya sadece W basılı iken sprint çalışmıyor</li><li>IA_Look'a Smooth Modifier eklendi, kamera daha akıcı</li><li>Bonus: FOV sprint'te değişiyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Chord Trigger ve Modifier zincirlerini gerçek bir mekanikte birleştirmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~75 dk</span></div>
+            <div class="project-title">Proje 3: 3 IMC'li durum sistemi (OnFoot + Vehicle + Menu)</div>
+            <p class="project-desc">3 IMC oluştur: <code>IMC_OnFoot</code> (hareket, etkileşim), <code>IMC_InVehicle</code> (gaz=W, fren=S, korna=H), <code>IMC_InMenu</code> (Close=Esc, Confirm=Enter). Sahnede bir araç (basit Pawn olabilir) bulunsun. F ile araca bin/in → IMC'leri Subsystem üzerinden değiştir. Tab tuşuyla menü aç/kapa → IMC_InMenu eklendiğinde Block Lower Priority açık olsun ki oyun kontrolleri durdurulsun. <strong>Tüm geçişler yumuşak çalışmalı.</strong></p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>3 IMC oluşturuldu ve bağımsız mapping'leri var</li><li>F ile araç binme/inme IMC değişimi yapıyor</li><li>Araçta WASD farklı davranıyor (gaz/fren)</li><li>Tab ile menü açılınca oyun kontrolleri çalışmıyor</li><li>Menü kapanınca eski IMC geri geliyor</li><li>Priority + Block Lower doğru kuruldu</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Durum-bazlı input mimarisi — modern AAA oyunların kontrol omurgası.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q22-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>WASD ile Vector2D hareket için S tuşuna en uygun Modifier kombinasyonu nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q22-1')"><span class="quiz-option-key">A</span><span>Sadece Scalar 2x</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q22-1')"><span class="quiz-option-key">B</span><span>Negate (W ileri ise S geri için)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-1')"><span class="quiz-option-key">C</span><span>Dead Zone</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-1')"><span class="quiz-option-key">D</span><span>Smooth + Pulse</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q22-1-ok">✓ Doğru! W ileri yön +1 üretirken S'ye Negate ekleyerek -1 elde edilir; aynı eksende ters yön.</div>
+        <div class="quiz-feedback fail" id="q22-1-fail">✗ Yanlış. Geri yön için Negate kullanılır. Scalar büyütür, Dead Zone küçük titremeleri kesir, Smooth yumuşatır.</div>
+      </div>
+
+      <div class="quiz-question" id="q22-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>"Shift + W = Sprint" mekaniği için en uygun Trigger türü hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q22-2')"><span class="quiz-option-key">A</span><span>Hold</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-2')"><span class="quiz-option-key">B</span><span>Pulse</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q22-2')"><span class="quiz-option-key">C</span><span>Chord Action</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-2')"><span class="quiz-option-key">D</span><span>Tap</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q22-2-ok">✓ Doğru! Chord Action, başka bir Action aktif iken tetiklenir — Shift IA aktif iken W'nin Sprint'i çalışması için ideal.</div>
+        <div class="quiz-feedback fail" id="q22-2-fail">✗ Yanlış. İki tuşun birlikte basılması = Chord Trigger. Hold süreye bağlı, Tap kısa basışa, Pulse periyodik tekrar içindir.</div>
+      </div>
+
+      <div class="quiz-question" id="q22-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Joystick'in orta konumda hafifçe titremesi sonucu karakterin yavaşça hareket etmesini engellemek için hangi Modifier kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q22-3')"><span class="quiz-option-key">A</span><span>Smooth</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q22-3')"><span class="quiz-option-key">B</span><span>Dead Zone</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-3')"><span class="quiz-option-key">C</span><span>Negate</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-3')"><span class="quiz-option-key">D</span><span>Swizzle</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q22-3-ok">✓ Doğru! Dead Zone, eşik altındaki küçük girdileri 0'a yuvarlar — analog stick drift'inin standart çözümü.</div>
+        <div class="quiz-feedback fail" id="q22-3-fail">✗ Yanlış. Drift'in çözümü Dead Zone'dur. Smooth yumuşatır ama küçük değerleri elemez; Negate ve Swizzle ters/takas amaçlı.</div>
+      </div>
+
+      <div class="quiz-question" id="q22-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Menü açıldığında oyun kontrollerinin çalışmasını engellemek için ne yapılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q22-4')"><span class="quiz-option-key">A</span><span>Tüm Action'ları silmek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-4')"><span class="quiz-option-key">B</span><span>Karakter Blueprint'ini devre dışı bırakmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q22-4')"><span class="quiz-option-key">C</span><span>IMC_InMenu eklemek + Block Lower Priority Actions açık olmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-4')"><span class="quiz-option-key">D</span><span>Tüm Modifier'ları kapatmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q22-4-ok">✓ Doğru! Yüksek priority'li IMC_InMenu eklemek ve Block Lower Priority açık tutmak, alt IMC'lerin aynı tuşları görmesini engeller.</div>
+        <div class="quiz-feedback fail" id="q22-4-fail">✗ Yanlış. Doğru yöntem yeni bir IMC'yi yüksek priority ile eklemek ve Block Lower Priority açmaktır — temiz mimari.</div>
+      </div>
+
+      <div class="quiz-question" id="q22-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Bir Hold Trigger'ın eşiğine ulaşmadan tuş bırakıldığında çalışan Blueprint event pin'i hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q22-5')"><span class="quiz-option-key">A</span><span>Triggered</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-5')"><span class="quiz-option-key">B</span><span>Completed</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q22-5')"><span class="quiz-option-key">C</span><span>Canceled</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q22-5')"><span class="quiz-option-key">D</span><span>Started</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q22-5-ok">✓ Doğru! Canceled, Hold süreci tamamlanmadan bırakıldığında çalışır — "yarım kalmış etkileşim" durumunu yakalamak için.</div>
+        <div class="quiz-feedback fail" id="q22-5-fail">✗ Yanlış. Hold tamamlanmadan iptal edilirse Canceled tetiklenir. Triggered ancak eşik dolduğunda çalışır.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s22"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="21-lumen-nanite.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 21</div><div class="page-nav-title">Lumen & Nanite</div></div>
+      </a>
+      <a href="23-save-menu.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 23</div><div class="page-nav-title">Save & Menü</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

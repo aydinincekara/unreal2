@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 01: Kurulum — UnrealAkademi</title>
+  <meta name="description" content="UE5 indirme ve kurulum, Epic Games Launcher, ilk proje açma.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 01: Kurulum — UnrealAkademi">
+  <meta property="og:description" content="UE5 indirme ve kurulum, Epic Games Launcher, ilk proje açma.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 01: Kurulum — UnrealAkademi">
+  <meta name="twitter:description" content="UE5 indirme ve kurulum, Epic Games Launcher, ilk proje açma.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link active" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i>
+      <span>Başlangıç</span>
+      <i class="ti ti-chevron-right"></i>
+      <span style="color: var(--primary-light);">Kurulum</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 01</span>
+        <span class="page-category">Başlangıç</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 45 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">Kurulum — İlk Adımı At</h1>
+      <p class="page-lead">
+        UE5'i bilgisayarına kurmak, hesap açmak, doğru sürümü seçmek ve ilk projeni
+        oluşturmak. Bittiğinde Unreal Engine açılıp seni karşılayacak.
+      </p>
+    </header>
+
+    <!-- TOPIC 1.1 - Önce: Ne yapıyoruz? -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">1.1</div>
+        <h2 class="topic-title">Önce kafanı netleştir — Ne yapıyoruz?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5 öğrenmek isteyen çoğu kişi ilk hatayı burada yapar: <strong>Doğrudan UE5'i indirmeye çalışır.</strong>
+          Ama UE5 internette tek başına bir <code>.exe</code> dosyası olarak yayınlanmıyor. Önce başka bir
+          program kurman gerekiyor.
+        </p>
+
+        <p>
+          Bu program <strong>Epic Games Launcher</strong> adında bir "yönetici". Görevi:
+          UE5'i indirmen, güncelle­men, açman, ücretsiz hazır içerikler (asset) alman için bir kapı görevi
+          görmek. Sen Launcher'ı kurarsın, Launcher da UE5'i kurar.
+        </p>
+
+        <!-- Benzetme -->
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-building-store"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              <strong>Epic Games Launcher = AVM girişi.</strong> Unreal Engine ise içerideki dev mağaza.
+              Önce girişten geçiyorsun (Launcher'ı kuruyorsun), sonra içindeki mağazaya giriyorsun
+              (UE5'i Launcher üzerinden açıyorsun). Launcher tek başına bir oyun motoru DEĞİL — sadece
+              kapı görevi görüyor.
+            </p>
+          </div>
+        </div>
+
+        <!-- Akış: Launcher → UE5 -->
+        <div class="arrow-flow">
+          <div class="arrow-flow-step">
+            <i class="ti ti-world-download"></i>
+            <span>epicgames.com</span>
+          </div>
+          <span class="arrow-big">→</span>
+          <div class="arrow-flow-step">
+            <i class="ti ti-app-window"></i>
+            <span>Epic Launcher</span>
+          </div>
+          <span class="arrow-big">→</span>
+          <div class="arrow-flow-step">
+            <i class="ti ti-flame" style="color: var(--accent-light);"></i>
+            <span>Unreal Engine 5</span>
+          </div>
+        </div>
+
+        <p>
+          Toplam süre: ortalama <strong>30 dakika – 2 saat</strong>. İnternet hızına ve disk performansına
+          göre değişir. UE5 ~30 GB indireceği için sabırlı ol. İndirme arka planda devam ederken
+          başka iş yapabilirsin.
+        </p>
+      </div>
+    </section>
+
+    <!-- TOPIC 1.2 - Sistem gereksinimleri -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">1.2</div>
+        <h2 class="topic-title">Bilgisayarın UE5'i kaldırır mı?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5 ağır bir program. Düşük bilgisayarlarda da çalışır ama yavaş olur. Aşağıdaki tabloda
+          "öğrenmek için yeterli" ve "rahat çalışmak için ideal" değerleri göreceksin.
+        </p>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Bileşen</th>
+              <th>Minimum (zorlanır ama çalışır)</th>
+              <th>Önerilen (rahat)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>İşletim Sistemi</strong></td>
+              <td>Windows 10 (64-bit)</td>
+              <td>Windows 11</td>
+            </tr>
+            <tr>
+              <td><strong>İşlemci (CPU)</strong></td>
+              <td>4 çekirdek, 3.0+ GHz</td>
+              <td>8 çekirdek, 3.5+ GHz (Ryzen 5/7 veya Intel i5/i7)</td>
+            </tr>
+            <tr>
+              <td><strong>RAM</strong></td>
+              <td>8 GB</td>
+              <td>16-32 GB</td>
+            </tr>
+            <tr>
+              <td><strong>Ekran kartı (GPU)</strong></td>
+              <td>GTX 1060, RX 580 (4 GB VRAM)</td>
+              <td>RTX 3060+ veya RX 6600+ (Lumen için RTX iyi)</td>
+            </tr>
+            <tr>
+              <td><strong>Disk</strong></td>
+              <td>100 GB HDD (yavaş açılır)</td>
+              <td>250+ GB <strong>SSD</strong> (çok önemli)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">SSD önemli!</div>
+            <p>
+              HDD'de UE5 çalışır ama açılış 5-10 dakika sürer, asset'leri açmak yavaşlar. Eğer HDD
+              kullanmak zorundaysan en azından <strong>projeyi</strong> SSD'ye koy, motor HDD'de kalabilir.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Mac kullanıcısı mısın?</div>
+            <p>
+              UE5 Mac'te de çalışır ama Windows kadar kararlı değildir. Bazı özellikler (Nanite tam, bazı plugin'ler)
+              eksiktir. Eğer Mac'in M1/M2/M3 ise daha iyi durumda olursun.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOPIC 1.3 - Adım adım kurulum -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">1.3</div>
+        <h2 class="topic-title">Adım adım kurulum</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Şimdi gerçek işe geçiyoruz. Aşağıdaki 6 adımı sırayla yap. Her adım bittikten sonra bir sonrakine geç.
+        </p>
+
+        <div class="steps">
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">1</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">Epic Games Launcher'ı indir</div>
+              <p>
+                Tarayıcında <code>epicgames.com</code> adresine git. Sağ üstte <strong>"Indir Epic Games"</strong>
+                (veya İngilizce sitede "Get Epic Games") butonu var. Tıkla. Dosya yaklaşık 50-70 MB.
+              </p>
+              <div class="step-note">
+                <i class="ti ti-info-circle"></i>
+                Türkçe site otomatik açılırsa sorun yok. İngilizce açılırsa da panik yapma, butonlar aynı yerde.
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">2</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">Launcher'ı kur ve hesap aç</div>
+              <p>
+                İndirilen <code>.msi</code> dosyasını çalıştır. Kurulum sihirbazını takip et (Next, Install).
+                Kurulum bitince Launcher açılır ve seni karşılar. <strong>Ücretsiz Epic Games hesabı</strong>
+                açman istenir.
+              </p>
+              <p>
+                E-posta + şifre yeterli. Kredi kartı bilgisi <strong>İSTENMEZ</strong>. Eğer ister gibi
+                görünüyorsa yanlış sayfadasın — yine epicgames.com kontrolü yap.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">3</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">Launcher'da Unreal Engine sekmesini aç</div>
+              <p>
+                Launcher açıldığında <strong>sol menüde</strong> bir sürü sekme var: Store, Library, Unreal Engine,
+                Fortnite, Rocket League... Sen <strong>"Unreal Engine"</strong> sekmesine tıkla.
+              </p>
+              <p>
+                Açılan sayfada üst kısımda yatay sekmeler var: <strong>News / Samples / Marketplace / Library / Twinmotion</strong>.
+                <strong>"Library"</strong> sekmesini seç.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">4</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">UE5'i kur</div>
+              <p>
+                Library sayfasında <strong>"ENGINE VERSIONS"</strong> başlığı altında bir <strong>sarı + butonu</strong>
+                göreceksin. Tıkla — yeni bir slot eklenir ve "5.x" sürümleri açılır liste olarak çıkar.
+              </p>
+              <p>
+                <strong>En güncel sürümü seç</strong> (yazdığım anda 5.4, sen okuduğunda muhtemelen daha yenisi olacak).
+                Sonra <strong>"Install"</strong> butonuna tıkla. Kurulum klasörü sorulur.
+              </p>
+              <div class="callout callout-danger" style="margin-top: var(--space-3);">
+                <div class="callout-icon"><i class="ti ti-alert-octagon"></i></div>
+                <div class="callout-body">
+                  <div class="callout-title">Kurulum yolu önemli!</div>
+                  <p>
+                    Türkçe karakter (ç, ş, ü, ö, ğ, ı) ve boşluk içeren bir yola <strong>KURMA</strong>.
+                    Doğru örnek: <code>D:\UnrealEngine_5.4</code>. Yanlış örnek: <code>C:\Belgelerim\Oyun Geliştirme\UE5</code>.
+                  </p>
+                </div>
+              </div>
+              <div class="step-note">
+                <i class="ti ti-clock"></i>
+                İndirme 20-30 GB. İnternet hızına göre 30 dk - 2 saat.
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">5</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">UE5'i başlat — "Launch"</div>
+              <p>
+                Kurulum bitince Library sayfasındaki UE5 satırında butonun adı <strong>"Install"</strong>'dan
+                <strong>"Launch"</strong>'a döner. Tıkla. UE5 açılır — ilk açılış 1-3 dakika sürer (shader hazırlanır).
+              </p>
+              <p>
+                Ekrana <strong>Unreal Project Browser</strong> gelir. Burada yeni proje açıyor veya mevcut açıyorsun.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-marker">
+              <div class="step-number">6</div>
+              <div class="step-line"></div>
+            </div>
+            <div class="step-body">
+              <div class="step-title">İlk projeni oluştur</div>
+              <p>
+                Project Browser'da soldan <strong>"GAMES"</strong> kategorisini seç. Karşına 6-7 hazır şablon gelir.
+                Şu ayarları kullan:
+              </p>
+
+              <div class="info-grid" style="margin: var(--space-4) 0;">
+                <div class="info-item">
+                  <div class="info-item-label">Kategori</div>
+                  <div class="info-item-value">Games</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Şablon</div>
+                  <div class="info-item-value">Blank (Boş)</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Proje türü</div>
+                  <div class="info-item-value">Blueprint</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Quality Preset</div>
+                  <div class="info-item-value">Maximum</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Starter Content</div>
+                  <div class="info-item-value">✓ Include</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-item-label">Raytracing</div>
+                  <div class="info-item-value">RTX kart varsa ✓</div>
+                </div>
+              </div>
+
+              <p>
+                <strong>Proje adı:</strong> sadece İngilizce harf ve rakam kullan. Örn: <code>IlkOyunum</code>,
+                <code>MyFirstGame</code>. Yanlış: <code>Oyun Çalışması</code> (Türkçe karakter + boşluk).
+              </p>
+              <p>
+                <strong>"Create"</strong> butonuna bas. UE5 1-3 dakika içinde projeni oluşturur ve seni
+                editöre alır. Büyük gri bir ekran gördüysen kurulumu doğru yaptın — tebrikler! 🎉
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TOPIC 1.4 - Yaygın hatalar -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">1.4</div>
+        <h2 class="topic-title">Yaygın hatalar ve çözümleri</h2>
+      </div>
+      <div class="topic-body">
+        <p>Kurulum sırasında bu hatalara çok rastlanır. Eğer karşılaşırsan paniklemeden çözüme bak.</p>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hata: "Insufficient disk space"</div>
+            <p>
+              Disk dolu demek. UE5'i kurmak için en az <strong>50 GB boş alan</strong> gerekir (kurulum + ilk proje + cache).
+              Diskini temizle veya başka bir diske kur.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hata: "Unable to start. Error code: II-E1003"</div>
+            <p>
+              Launcher çalışmıyor demek. Çözüm: Launcher'ı <strong>yönetici olarak çalıştır</strong> (sağ tık → Yönetici Olarak Çalıştır).
+              Hâlâ olmuyorsa Launcher'ı kaldırıp yeniden kur.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hata: UE5 açılıyor ama 30 saniye sonra siyah ekran / kapanıyor</div>
+            <p>
+              Ekran kartı driver'ı eski demek. NVIDIA için <strong>GeForce Experience</strong>'ı,
+              AMD için <strong>AMD Adrenalin</strong>'i aç ve driver'ı güncelle. Restart sonrası tekrar dene.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hata: Proje açılırken donuyor (5+ dakika)</div>
+            <p>
+              <strong>İlk kez</strong> açıyorsan normal — shader compile ediyor. Output Log'a bak,
+              "Compiling Shaders (X/Y)" yazıyorsa beklemende sorun yok. Eğer hiç ilerlemiyorsa
+              UE5'i kapat ve tekrar aç.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-bug"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hata: Türkçe karakter sorunu</div>
+            <p>
+              Eğer proje yolun veya kullanıcı klasörünün adı Türkçe karakter içeriyorsa (örn. <code>Ömer</code>)
+              UE5 bazen sessizce kapanır. Yeni bir Windows kullanıcısı (sadece İngilizce harf) açıp orada
+              çalışmak en temiz çözüm.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP BİLGİ -->
+    <div class="hap-box">
+      <div class="hap-header">
+        <i class="ti ti-capsule"></i>
+        <h4>Hap Bilgiler — Hızlı not</h4>
+      </div>
+      <ul class="hap-list">
+        <li><strong>Launcher ≠ UE5.</strong> Launcher sadece kapıdır, UE5 ayrı bir programdır.</li>
+        <li><strong>Tek bilgisayarda birden fazla UE sürümü</strong> olabilir. Launcher Library'de yan yana dururlar.</li>
+        <li><strong>Starter Content</strong>'i her zaman dahil et — öğrenirken kullanacaksın.</li>
+        <li><strong>Proje yolunda Türkçe karakter ve boşluk yasak.</strong> Bu kuralı asla unutma.</li>
+        <li><strong>İlk proje açılışı uzun</strong> sürer (shader cache). Sonraki açılışlar 10-30 saniye.</li>
+        <li><strong>İlk projeyi Blueprint olarak başlat.</strong> C++ projesi Visual Studio kurulumu ister, sonra konuşacağız.</li>
+        <li><strong>Quality = Maximum</strong> seç. Sonra yavaş gelirse arayüzden düşürürsün.</li>
+      </ul>
+    </div>
+
+    <!-- Pratik Projeler -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div>
+          <h3>Pratik Projeler</h3>
+          <span>Kurulumu doğrulamak ve UE5 ile ilk dokunuşları yapmak için</span>
+        </div>
+      </div>
+
+      <div class="project-list">
+
+        <!-- Project 1 -->
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span>
+              <span style="font-size: var(--fs-xs); color: var(--text-tertiary);">~10 dakika</span>
+            </div>
+            <div class="project-title">Proje 1: "Merhaba UE5" — İlk sahne testi</div>
+            <p class="project-desc">
+              Blank proje aç. Sol üstteki <strong>Place Actors</strong> panelinden bir <strong>Cube</strong>
+              (küp) bul. Sahneye sürükle bırak. Klavyeden <kbd>P</kbd> tuşuna bas — oyun moduna geçersin.
+              Sonra tekrar <kbd>P</kbd> ile dur. <kbd>Ctrl</kbd> + <kbd>S</kbd> ile kaydet. Bitti!
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>Blank proje açıldı ve sahneye girildi</li>
+                <li>Place Actors panelinden küp sahneye eklendi</li>
+                <li>P tuşuyla play/dur döngüsü çalıştı</li>
+                <li>Ctrl+S ile kaydedildi</li>
+              </ul>
+            </div>
+            <div class="project-goal">
+              <i class="ti ti-target"></i>
+              <span>UE5'in açılıp düzgün çalıştığını ve temel iş akışını doğrulamak.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span>
+              <span style="font-size: var(--fs-xs); color: var(--text-tertiary);">~20 dakika</span>
+            </div>
+            <div class="project-title">Proje 2: Kalite ayarlarını karşılaştır</div>
+            <p class="project-desc">
+              Bir Starter Content sahnesi aç (Content Browser → StarterContent → Maps → StarterMap'i çift tıkla).
+              Viewport'un sol üstündeki <strong>"Lit"</strong> dropdown'unun yanındaki ayarlar menüsünden kalite preset'lerini değiştir:
+              <strong>Low → Medium → High → Epic → Cinematic</strong>. Her birinde FPS göstergesini gözlemle
+              (<kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> ile FPS aç). Kendi bilgisayarın için
+              "akıcı kalan" en yüksek ayarı belirle.
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>5 farklı kalite preset denendi</li>
+                <li>FPS göstergesi açıldı (Ctrl+Shift+H)</li>
+                <li>Bilgisayarın için en uygun preset belirlendi</li>
+              </ul>
+            </div>
+            <div class="project-goal">
+              <i class="ti ti-target"></i>
+              <span>Performans / kalite dengesini anlamak. Geliştirirken çalışma ortamını optimize etmek.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span>
+              <span style="font-size: var(--fs-xs); color: var(--text-tertiary);">~30 dakika</span>
+            </div>
+            <div class="project-title">Proje 3: İkinci sürüm + Engine versiyonu yönetimi</div>
+            <p class="project-desc">
+              Epic Launcher → Library → <strong>+ butonuna</strong> bas. Aynı sürümü tekrar ekleyemezsin
+              ama farklı bir sürüm (örn. 5.3 veya 5.5) ekleyebilirsin. Kur. Sonra mevcut projeni
+              <strong>sağ tık → "Switch Unreal Engine version..."</strong> ile yeni sürüme taşı. Aç,
+              farkları gözlemle. <strong>Önemli: önce projeni yedekle</strong> (proje klasörünü kopyala).
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>Library'de ikinci bir UE5 sürümü kuruldu</li>
+                <li>Mevcut proje yedeklendi (klasör kopyalama)</li>
+                <li>Proje "Switch Unreal Engine version" ile yeni sürümde açıldı</li>
+                <li>İki sürüm arasında 1-2 farkı not edildi</li>
+              </ul>
+            </div>
+            <div class="project-goal">
+              <i class="ti ti-target"></i>
+              <span>Birden fazla UE5 sürümünü aynı bilgisayarda yönetebilmek — gerçek geliştirme senaryosu.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div>
+          <h3>Bölüm Sonu Quiz</h3>
+          <span>Öğrendiklerini ölç — yanlış yaparsan üst kısma dönüp tekrar oku, sorun değil.</span>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quiz-question" id="q1-1">
+        <div class="quiz-prompt">
+          <span class="quiz-prompt-num">01.</span>
+          <span>Epic Games Launcher ile Unreal Engine 5 arasındaki fark nedir?</span>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this, false, 'q1-1')">
+            <span class="quiz-option-key">A</span>
+            <span>İkisi aynı programdır, isim farkı sadece.</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this, true, 'q1-1')">
+            <span class="quiz-option-key">B</span>
+            <span>Launcher bir indirme/yönetim aracıdır; UE5 asıl oyun motoru yazılımıdır.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-1')">
+            <span class="quiz-option-key">C</span>
+            <span>Launcher ücretlidir, UE5 ücretsizdir.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-1')">
+            <span class="quiz-option-key">D</span>
+            <span>UE5 Launcher'ın içinde çalışır, bağımsız değildir.</span>
+          </div>
+        </div>
+        <div class="quiz-feedback ok" id="q1-1-ok">
+          ✓ Doğru! Launcher sadece UE5'i kurmana ve güncellemenene yarayan bir araçtır.
+          UE5 ise asıl iş yaptığın oyun motoru.
+        </div>
+        <div class="quiz-feedback fail" id="q1-1-fail">
+          ✗ Yanlış. Launcher kapı görevi gören bir yönetim programıdır — içinde oyun motoru çalışmaz.
+          UE5 ondan bağımsız bir programdır, Launcher sadece kurulumu kolaylaştırır.
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-question" id="q1-2">
+        <div class="quiz-prompt">
+          <span class="quiz-prompt-num">02.</span>
+          <span>Proje klasörünü <code>C:\Ömer'in Projeleri\Yeni Oyun</code> yoluna kaydetmek neden hatalıdır?</span>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this, false, 'q1-2')">
+            <span class="quiz-option-key">A</span>
+            <span>Bu yol çok uzun, UE5 desteklemez.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-2')">
+            <span class="quiz-option-key">B</span>
+            <span>C: sürücüsünde kurulum olamaz, başka disk gerekir.</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this, true, 'q1-2')">
+            <span class="quiz-option-key">C</span>
+            <span>Yol içinde Türkçe karakter (ö) ve boşluk var; UE5 bunlardan hata üretir.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-2')">
+            <span class="quiz-option-key">D</span>
+            <span>Kelime aralarında apostrof (') var, bu syntax hatasıdır.</span>
+          </div>
+        </div>
+        <div class="quiz-feedback ok" id="q1-2-ok">
+          ✓ Doğru! UE5 yol dizininde Türkçe karakter ve boşluk olduğunda sessizce hata verebilir.
+          Hep İngilizce ve underscore/tire kullan: <code>C:\Projeler\YeniOyun</code>.
+        </div>
+        <div class="quiz-feedback fail" id="q1-2-fail">
+          ✗ Yanlış. Asıl sorun Türkçe karakter (ö) ve boşluklar. Bunlar UE5'in build sistemini bozar.
+          C: sürücüsü kullanılabilir, yolun uzunluğu yeterli kısa.
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-question" id="q1-3">
+        <div class="quiz-prompt">
+          <span class="quiz-prompt-num">03.</span>
+          <span>İlk proje oluştururken "Starter Content" seçeneğini neden açık bırakman önerilir?</span>
+        </div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this, false, 'q1-3')">
+            <span class="quiz-option-key">A</span>
+            <span>Açık olmazsa proje açılmaz.</span>
+          </div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this, true, 'q1-3')">
+            <span class="quiz-option-key">B</span>
+            <span>Öğrenirken kullanabileceğin örnek mesh, texture, ses ve materyal seti gelir.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-3')">
+            <span class="quiz-option-key">C</span>
+            <span>Projeyi otomatik olarak Steam'e bağlar.</span>
+          </div>
+          <div class="quiz-option" onclick="answer(this, false, 'q1-3')">
+            <span class="quiz-option-key">D</span>
+            <span>Build aldığında EXE boyutunu küçültür.</span>
+          </div>
+        </div>
+        <div class="quiz-feedback ok" id="q1-3-ok">
+          ✓ Doğru! Starter Content içinde hazır küp, küre, materyal, ses gibi öğeler var.
+          Öğrenirken "boş bir sahnede ne kullanayım?" derdine düşmeden pratik yapabilirsin.
+        </div>
+        <div class="quiz-feedback fail" id="q1-3-fail">
+          ✗ Yanlış. Starter Content sadece pratik için hazır asset paketi. Olmadan da proje çalışır
+          ama hiçbir hazır içerik olmaz.
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Tamamla butonu -->
+    <button class="btn-complete" data-section="s1">
+      <i class="ti ti-flag-check"></i>
+      Bu Bölümü Tamamladım
+    </button>
+
+    <!-- Sayfa navigasyonu -->
+    <nav class="page-nav">
+      <a href="../index.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body">
+          <div class="page-nav-label">Önceki</div>
+          <div class="page-nav-title">Ana Sayfa</div>
+        </div>
+      </a>
+      <a href="02-arayuz.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body">
+          <div class="page-nav-label">Sonraki Bölüm · 02</div>
+          <div class="page-nav-title">Arayüz Tanıma</div>
+        </div>
+      </a>
+    </nav>
+
+  
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

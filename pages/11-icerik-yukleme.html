@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 11: İçerik Yükleme — UnrealAkademi</title>
+  <meta name="description" content="FBX/OBJ import, Quixel Bridge, Marketplace, klasör düzeni, prefix sistemi.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 11: İçerik Yükleme — UnrealAkademi">
+  <meta property="og:description" content="FBX/OBJ import, Quixel Bridge, Marketplace, klasör düzeni, prefix sistemi.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 11: İçerik Yükleme — UnrealAkademi">
+  <meta name="twitter:description" content="FBX/OBJ import, Quixel Bridge, Marketplace, klasör düzeni, prefix sistemi.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link active" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>İçerik & Görsel</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">İçerik Yükleme</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 11</span>
+        <span class="page-category">İçerik & Görsel</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 60 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">İçerik Yükleme — Hazır Asset'leri Kullanmak</h1>
+      <p class="page-lead">
+        Her şeyi sıfırdan modellemek zorunda değilsin. UE5'in <strong>Marketplace</strong>'i, <strong>Quixel Bridge</strong>'i ve standart import sistemi sayesinde dışarıdan profesyonel modelleri, sesleri, animasyonları projeye katabilirsin. Bu bölüm "nereden ne alırım, nasıl temiz koyarım" rehberi.
+      </p>
+    </header>
+
+    <!-- 11.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.1</div>
+        <h2 class="topic-title">Asset nedir? — Projedeki her parça</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'te <strong>asset</strong> = projendeki her dosya. Mesh, texture, ses, materyal, Blueprint, animasyon — hepsi asset. Content Browser bunların listesi. Bir oyun yapmak, doğru asset'leri bir araya getirmektir.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Mesh (.uasset)</div><div class="info-item-value">3D model</div></div>
+          <div class="info-item"><div class="info-item-label">Texture</div><div class="info-item-value">Görüntü dosyası</div></div>
+          <div class="info-item"><div class="info-item-label">Material</div><div class="info-item-value">Yüzey reçetesi</div></div>
+          <div class="info-item"><div class="info-item-label">Sound Wave</div><div class="info-item-value">Ses dosyası</div></div>
+          <div class="info-item"><div class="info-item-label">Animation Sequence</div><div class="info-item-value">Karakter animasyonu</div></div>
+          <div class="info-item"><div class="info-item-label">Blueprint</div><div class="info-item-value">Görsel mantık dosyası</div></div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">.uasset uzantısı</div>
+            <p>
+              Tüm UE5 asset'leri diskte <code>.uasset</code> uzantısıyla saklanır. Bir dış dosyayı (örn. .fbx, .png) import ettiğinde UE5 onu <code>.uasset</code>'e dönüştürür ve Content klasörüne yazar. Asıl dış dosyayı silebilirsin, çünkü artık <code>.uasset</code> kullanılır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.2 IMPORT YÖNTEMLERİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.2</div>
+        <h2 class="topic-title">3 ana yükleme yöntemi</h2>
+      </div>
+      <div class="topic-body">
+        <p>UE5'e içerik koymanın 3 yolu var. Hangi durumda hangisi:</p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-drag-drop"></i></div>
+            <h4>1. Sürükle-bırak Import</h4>
+            <p>Dış dosyaları (FBX, OBJ, PNG, WAV) Content Browser'a sürükle. Anında import edilir. En sık kullanacağın yöntem.</p>
+            <span class="tag-small">Sen yapacaksan</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-shopping-cart"></i></div>
+            <h4>2. Marketplace</h4>
+            <p>Epic'in mağazasından ücretsiz/ücretli hazır içerik. Karakterler, çevreler, mekanikler. Tek tıkla projene eklenir.</p>
+            <span class="tag-small">Hazır paket lazım</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-photo"></i></div>
+            <h4>3. Quixel Bridge</h4>
+            <p>UE5'e entegre. Megascans kütüphanesi (gerçek dünya taraması) ücretsiz. Texture, 3D bitki, kaya, beton — sınırsız.</p>
+            <span class="tag-small">Gerçekçi varlık</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.3 MESH IMPORT -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.3</div>
+        <h2 class="topic-title">3D Mesh import — FBX, OBJ</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Blender, Maya, 3ds Max, ZBrush — hepsi <strong>FBX</strong> formatında export eder. UE5'in standart import formatı FBX'tir (OBJ da çalışır ama bilgi azdır).
+        </p>
+
+        <h4>Import iş akışı</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">FBX'i Content Browser'a sürükle</div>
+              <p>İstediğin klasöre sürükle. <strong>FBX Import Options</strong> penceresi açılır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Mesh türünü seç</div>
+              <p>En önemli ayar: <strong>Skeletal Mesh</strong> tikini doğru ayarla.</p>
+              <ul style="margin-top:8px;padding-left:20px;color:var(--text-secondary);font-size:13px;">
+                <li><strong>Tikli</strong>: Karakter, hayvan, iskeletle hareket eden şey</li>
+                <li><strong>Tiksiz</strong>: Statik mesh — bina, sandalye, taş, ağaç gövdesi</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Materyalleri import et</div>
+              <p><strong>Import Materials</strong>: dış programdaki materyalleri de getir (genelde basit kalır, sonra UE5'te yenisini yaparsın). <strong>Import Textures</strong>: dokuları da import et.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Import'a bas</div>
+              <p>"Import All" — birden fazla mesh varsa hepsini at. Bittiğinde Content Browser'da yeni asset'leri görürsün.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-ruler-2"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Ölçek (Scale) sorunu</div>
+            <p>
+              UE5'in birimi <strong>santimetredir.</strong> 1 unit = 1 cm. Blender (metre) veya başka programdan gelen mesh çok küçük/büyük gelebilir. Çözüm: Dış programda export öncesi <strong>Apply Scale</strong> yap, veya UE5'te import sırasında <strong>Import Uniform Scale</strong> değerini ayarla (örn. Blender'dan 100 girilebilir).
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — LOD ve Collision</div>
+            <p>
+              Profesyonel mesh import'unda iki ekstra konu vardır: <strong>LOD (Level of Detail)</strong> — uzaktan basit modeli kullanıp performans kazanmak. <strong>Collision</strong> — UE5 otomatik basit kutu/kapsül üretir, ama karmaşık mesh için "Use Complex Collision as Simple" veya manuel Convex Decomposition yaparsın. Detaylı sahnelerde her ikisi de fark yaratır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.4 TEXTURE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.4</div>
+        <h2 class="topic-title">Texture import — PNG, JPG, TGA</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Texture import'u en basitidir: dosyayı sürükle, biter. Ama bir-iki ayar üretim kalitesini belirler.
+        </p>
+
+        <h4>Texture türüne göre ayarlar</h4>
+        <table class="compare-table">
+          <thead><tr><th>Texture türü</th><th>sRGB</th><th>Compression</th></tr></thead>
+          <tbody>
+            <tr><td>Base Color / Diffuse</td><td>✓ ON</td><td>Default</td></tr>
+            <tr><td>Normal Map</td><td>✗ OFF</td><td>Normalmap</td></tr>
+            <tr><td>Roughness / Metallic / Mask (gri)</td><td>✗ OFF</td><td>Grayscale</td></tr>
+            <tr><td>HDR (gökyüzü)</td><td>(otomatik)</td><td>HDR</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Çözünürlük kuralı: 2'nin kuvvetleri</div>
+            <p>
+              Texture'lar 2'nin kuvvetlerinde olmalı: 256, 512, 1024, 2048, 4096. UE5 başka boyutları da kabul eder ama optimum sıkıştırma için bu boyutlar idealdir. Mip-map'lerin (otomatik küçük versiyonlar) düzgün üretilmesi için de gereklidir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.5 QUIXEL BRIDGE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.5</div>
+        <h2 class="topic-title">Quixel Bridge — Megascans hazinesi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          <strong>Quixel Megascans</strong>, Epic'in satın aldığı bir dev kütüphanedir: dünyanın her yerinden taranmış gerçek doku ve modeller. Taş, ağaç, çim, beton, yosun... Hepsi <strong>UE5 kullanıcılarına ücretsiz</strong>. Bridge, bu kütüphaneye doğrudan UE5 içinden erişim sağlar.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Bridge'i aç</div>
+              <p>Üst menü → <strong>Window → Quixel Bridge</strong>. İlk açılışta Epic hesabınla giriş yapman istenir (ücretsiz).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Bir asset bul</div>
+              <p>Sol kategorilerden seç (3D Assets, Surfaces, 3D Plants...). Arama yap: "rock", "moss", "wood plank". Önizleme gör.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Kalite + indir</div>
+              <p>Sağ panelde <strong>Quality</strong> seç: Low / Medium / High / Nanite. Yeni başlayan için Medium yeterli. <strong>İndir</strong>, sonra <strong>+ Add</strong> butonuna bas — Content/Megascans klasörüne import edilir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sahnede kullan</div>
+              <p>Megascans klasörü açıldı, içinde mesh + materyal hazır. Sahneye sürükle bırak. Tek tıkla profesyonel kalite varlık.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Nanite kalite seçeneği</div>
+            <p>
+              Quality'de <strong>Nanite</strong> seçeneği milyonlarca poligonlu mesh getirir. Performans için Nanite kullanılır (Bölüm 21'de detaylı). RTX olmayan eski PC'lerde de düşük kalitelerle çalışırsın.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.6 MARKETPLACE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.6</div>
+        <h2 class="topic-title">Marketplace — Hazır paketler</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Epic Games Launcher → <strong>Unreal Engine → Marketplace</strong>. Burada ücretsiz/ücretli hazır içerikler bulursun: tam karakter setleri, çevre paketleri, hatta tam oyun mekaniği şablonları.
+        </p>
+
+        <h4>İndirme + Projeye Ekleme</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">"Free For The Month" göz at</div>
+              <p>Her ay Epic 5-7 ücretsiz paket dağıtır. <strong>Edinilmek için</strong> "Add to Cart" → "Checkout" (0 TL). Bir kez edindiğinde sonsuza dek senin olur.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Library'ye git</div>
+              <p>Launcher → Unreal Engine → <strong>Library</strong>. "Vault" bölümünde edindiğin tüm asset'ler var.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">"Add to Project"</div>
+              <p>Asset'in altındaki butona bas, hangi projeye ekleyeceğini sor. Proje aç → Content içinde yeni klasör.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Lisans</div>
+            <p>
+              Marketplace asset'lerinin çoğu <strong>"Standard License"</strong> ile gelir: ticari oyunlarda kullanabilirsin, ama tek başına asset olarak yeniden satamazsın. Bazıları "CC0" veya özel lisansla gelir. Yayın yapacaksan asset'in detay sayfasındaki lisans bölümünü okumak şart.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.7 KLASÖR DÜZENİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.7</div>
+        <h2 class="topic-title">Klasör düzeni — Karmaşadan kurtul</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Yüzlerce asset birikince Content Browser bir çöplüğe döner. Daha başlangıçta bir klasör mimarisi kur — kendi geleceğine iyilik et.
+        </p>
+
+        <h4>Önerilen yapı</h4>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Tipik proje klasör hiyerarşisi</div>
+          <pre style="margin:0;color:var(--text-secondary);font-family:var(--font-mono);font-size:13px;line-height:1.6;">
+Content/
+├── _Game/                    (kendi içeriğin)
+│   ├── Blueprints/
+│   │   ├── Characters/
+│   │   ├── Weapons/
+│   │   └── UI/
+│   ├── Maps/                 (level dosyaları)
+│   ├── Materials/
+│   ├── Meshes/
+│   ├── Textures/
+│   ├── Animations/
+│   └── Audio/
+├── Megascans/                (Quixel'den gelen)
+└── ThirdParty/               (Marketplace asset'leri)</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">_Game prefix neden?</div>
+            <p>
+              Klasör adının başına <code>_</code> koyarsan Content Browser'da en üste çıkar — kendi içeriğine hızla erişirsin, Marketplace/Megascans karışmaz. Bu Epic'in de tavsiye ettiği bir yaklaşımdır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.8 NAMING -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.8</div>
+        <h2 class="topic-title">Adlandırma kuralı — Prefix sistemi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Profesyonel UE5 projelerinde asset isimleri standart bir <strong>prefix (önek)</strong> ile başlar. Bu sayede tek isme bakarak ne olduğunu anlarsın.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Prefix</th><th>Tür</th><th>Örnek</th></tr></thead>
+          <tbody>
+            <tr><td><code>BP_</code></td><td>Blueprint</td><td>BP_PlayerCharacter</td></tr>
+            <tr><td><code>SM_</code></td><td>Static Mesh</td><td>SM_OakTree</td></tr>
+            <tr><td><code>SK_</code></td><td>Skeletal Mesh</td><td>SK_Mannequin</td></tr>
+            <tr><td><code>M_</code></td><td>Material (parent)</td><td>M_PlasticBase</td></tr>
+            <tr><td><code>MI_</code></td><td>Material Instance</td><td>MI_PlasticRed</td></tr>
+            <tr><td><code>MF_</code></td><td>Material Function</td><td>MF_Tiling</td></tr>
+            <tr><td><code>T_</code></td><td>Texture</td><td>T_Brick_BC, T_Brick_N</td></tr>
+            <tr><td><code>S_</code></td><td>Sound</td><td>S_Explosion</td></tr>
+            <tr><td><code>SC_</code></td><td>Sound Cue</td><td>SC_Music_Menu</td></tr>
+            <tr><td><code>NS_</code></td><td>Niagara System</td><td>NS_Fire</td></tr>
+            <tr><td><code>WBP_</code></td><td>Widget Blueprint</td><td>WBP_MainMenu</td></tr>
+            <tr><td><code>AS_</code></td><td>Animation Sequence</td><td>AS_Run</td></tr>
+            <tr><td><code>ABP_</code></td><td>Animation Blueprint</td><td>ABP_Mannequin</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Türkçe karakter ve boşluk yasak</div>
+            <p>
+              Asset isimlerinde Türkçe karakter (ç, ş, ğ, ü, ö, ı) ve boşluk <strong>asla kullanma</strong>. UE5 bazılarını kabul eder ama build sırasında veya başka platforma taşınınca sorun çıkarır. Sadece İngilizce harf, rakam ve alt çizgi (<code>_</code>) güvenlidir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.9 ASSET YÖNETİMİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">11.9</div>
+        <h2 class="topic-title">Asset'leri yönetmek — Move, Rename, Reference</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Asset'leri Content Browser <strong>içinden</strong> yönetirsin — Windows Gezgini'nden değil (referanslar kırılır).
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Taşıma</div><div class="info-item-value">Sürükle başka klasöre, "Move Here"</div></div>
+          <div class="info-item"><div class="info-item-label">Yeniden adlandırma</div><div class="info-item-value">F2 → yeni isim → Enter</div></div>
+          <div class="info-item"><div class="info-item-label">Referansları görme</div><div class="info-item-value">Sağ tık → Reference Viewer</div></div>
+          <div class="info-item"><div class="info-item-label">Kullanan asset'leri bul</div><div class="info-item-value">Sağ tık → Find References / Asset Audit</div></div>
+          <div class="info-item"><div class="info-item-label">Silme</div><div class="info-item-value">Sağ tık → Delete (referanslar kontrol)</div></div>
+          <div class="info-item"><div class="info-item-label">Kullanılmayanlar</div><div class="info-item-value">Window → Project → Asset Audit</div></div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-eye"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Reference Viewer — En değerli araç</div>
+            <p>
+              Bir asset'e sağ tık → <strong>Reference Viewer</strong>. Açılan grafikte solda "bu asset'i kim kullanıyor", sağda "bu asset neyi kullanıyor" görünür. Silmeden önce mutlaka kontrol et — bağlı asset varsa silmeden önce uyarılırsın.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>FBX = standart 3D format.</strong> Blender/Maya/Max → FBX → UE5.</li>
+        <li><strong>Karakter import'unda Skeletal Mesh tikini açık tut,</strong> nesne için kapalı.</li>
+        <li><strong>UE5 birimi cm'dir.</strong> Blender'dan geleni 100x ölçek vermen gerekebilir.</li>
+        <li><strong>Texture çözünürlüğü 2'nin kuvveti olsun</strong> (512, 1024, 2048).</li>
+        <li><strong>Quixel Megascans UE5'te ücretsiz!</strong> Window → Quixel Bridge.</li>
+        <li><strong>Marketplace'in ücretsizleri</strong> ay başında değişir — atlama.</li>
+        <li><strong>_Game/ prefix'iyle</strong> kendi içeriğini ayır, en üste çıksın.</li>
+        <li><strong>Prefix sistemi</strong> şart: BP_, SM_, M_, MI_, T_, NS_, WBP_...</li>
+        <li><strong>İsimlerde Türkçe karakter ve boşluk YASAK.</strong></li>
+        <li><strong>Asset'leri Windows'tan taşıma!</strong> Content Browser içinden.</li>
+        <li><strong>Silmeden önce Reference Viewer'a bak</strong> — referans kırma riski.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Dış içeriği projeye entegre et</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Klasör düzenini kur</div>
+            <p class="project-desc">Yeni veya mevcut projende Content içinde <code>_Game</code> klasörü oluştur. İçine <code>Blueprints</code>, <code>Maps</code>, <code>Materials</code>, <code>Meshes</code>, <code>Textures</code>, <code>Audio</code> klasörlerini aç. Var olan asset'lerini doğru klasörlere taşı (sürükle → Move Here). 4-5 asset'i prefix kuralına göre yeniden adlandır.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>_Game ana klasörü oluşturuldu</li><li>Alt klasörler ayrıştırıldı</li><li>Asset'ler doğru klasörlere taşındı</li><li>En az 4 asset prefix kuralına göre yeniden adlandırıldı</li><li>Hiçbir asset referansı kırılmadı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel klasör mimarisi ve adlandırma alışkanlığını oturtmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Quixel Bridge'den mini orman</div>
+            <p class="project-desc">Window → Quixel Bridge aç. <strong>3D Plants</strong>'tan en az 3 farklı ağaç ve <strong>3D Assets</strong>'tan en az 5 kaya indir (Medium kalite). Bir Landscape boş bir alan oluştur ve bu varlıkları sahneye yerleştir — küçük bir orman manzarası yarat. Yer-gök ışıkları ekle.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Bridge'den en az 3 ağaç + 5 kaya indirildi</li><li>Megascans klasörü oluştu</li><li>Sahnede orman düzeni kuruldu</li><li>Işıklandırma ile manzara doğal görünüyor</li><li>FPS makul (20+ kayıp yok)</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel kalite hazır asset'leri sahnede birleştirmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: Dış FBX karakter import'u</div>
+            <p class="project-desc">Mixamo (ücretsiz) veya başka kaynaktan bir karakter FBX'i ve 1-2 animasyon indir. UE5'e import et: <strong>Skeletal Mesh</strong> tikli, materyaller dahil. Sonra animasyonları aynı skeleton'a import et. Sahnede karakteri yerleştir ve bir <strong>AnimSequence</strong>'i playback yap (Animation Asset'i çift tıkla, oynat). Bonus: Karakteri kendi GameMode'unda Default Pawn yap.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Karakter FBX başarıyla import edildi</li><li>Skeletal Mesh + Skeleton + Materials oluştu</li><li>En az 1 animasyon import edildi (aynı skeleton'a)</li><li>Animation playback çalışıyor</li><li>Karakter sahnede görünüyor (doğru ölçekte)</li><li>Bonus: GameMode'a atandı, Play'de görünüyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Karakter + animasyon import zincirini deneyimlemek — gerçek üretim akışı.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q11-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>UE5'in standart 3D mesh import formatı hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q11-1')"><span class="quiz-option-key">A</span><span>OBJ</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q11-1')"><span class="quiz-option-key">B</span><span>FBX</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-1')"><span class="quiz-option-key">C</span><span>STL</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-1')"><span class="quiz-option-key">D</span><span>BLEND</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q11-1-ok">✓ Doğru! FBX, mesh + materyal + animasyon + skeleton bilgilerini bir arada taşıdığı için UE5'in standart formatıdır.</div>
+        <div class="quiz-feedback fail" id="q11-1-fail">✗ Yanlış. UE5'in standart formatı FBX'tir. OBJ basit ama eksiktir; .blend doğrudan desteklenmez.</div>
+      </div>
+
+      <div class="quiz-question" id="q11-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Quixel Megascans kütüphanesi UE5 kullanıcıları için nasıl bir lisansa sahiptir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q11-2')"><span class="quiz-option-key">A</span><span>Sadece deneme amaçlı</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q11-2')"><span class="quiz-option-key">B</span><span>UE5 projelerinde ücretsiz ve sınırsız kullanılabilir</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-2')"><span class="quiz-option-key">C</span><span>Aylık abonelik gerekir</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-2')"><span class="quiz-option-key">D</span><span>Asset başına ödeme yapılır</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q11-2-ok">✓ Doğru! Epic, Quixel'i satın aldıktan sonra Megascans'ı UE5 kullanıcıları için tamamen ücretsiz açtı.</div>
+        <div class="quiz-feedback fail" id="q11-2-fail">✗ Yanlış. Megascans, UE5 projelerinde ücretsiz ve sınırsızdır. Sadece UE5 dışında kullanmak istersen lisans gerekebilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q11-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Insansı bir karakteri Blender'dan import ederken hangi seçenek doğru ayarlanmalı?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q11-3')"><span class="quiz-option-key">A</span><span>Skeletal Mesh tikini açık tut</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-3')"><span class="quiz-option-key">B</span><span>Skeletal Mesh tikini kapalı tut</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-3')"><span class="quiz-option-key">C</span><span>OBJ formatında import et</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-3')"><span class="quiz-option-key">D</span><span>Static Mesh olarak import et</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q11-3-ok">✓ Doğru! Karakter iskelete bağlı hareket ettiği için Skeletal Mesh olmalıdır; iskelet bilgisi de bu seçenekle aktarılır.</div>
+        <div class="quiz-feedback fail" id="q11-3-fail">✗ Yanlış. Karakter = Skeletal Mesh (animasyonlu, iskeletli). Tik açık olmalı. Static Mesh sadece sabit nesneler içindir.</div>
+      </div>
+
+      <div class="quiz-question" id="q11-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir Static Mesh'in prefix'i ne olmalıdır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q11-4')"><span class="quiz-option-key">A</span><span>M_</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q11-4')"><span class="quiz-option-key">B</span><span>SM_</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-4')"><span class="quiz-option-key">C</span><span>BP_</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-4')"><span class="quiz-option-key">D</span><span>T_</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q11-4-ok">✓ Doğru! SM_ = Static Mesh. M_ materyal, BP_ Blueprint, T_ texture içindir.</div>
+        <div class="quiz-feedback fail" id="q11-4-fail">✗ Yanlış. Static Mesh prefix'i SM_'dir. M_ materyal, BP_ Blueprint, T_ texture.</div>
+      </div>
+
+      <div class="quiz-question" id="q11-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Bir asset'i Content Browser'dan silmeden önce ne yapmalısın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q11-5')"><span class="quiz-option-key">A</span><span>Hiçbir şey, sil gitsin</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q11-5')"><span class="quiz-option-key">B</span><span>Reference Viewer ile bu asset'i kimlerin kullandığını kontrol et</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-5')"><span class="quiz-option-key">C</span><span>Windows Gezgini'nden sil</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q11-5')"><span class="quiz-option-key">D</span><span>Projeyi kapat</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q11-5-ok">✓ Doğru! Reference Viewer (sağ tık menüsünde) ile referansları görürsün — bağlı asset varsa silme ciddi sorunlar yaratabilir.</div>
+        <div class="quiz-feedback fail" id="q11-5-fail">✗ Yanlış. Silmeden önce mutlaka Reference Viewer ile referansları kontrol etmek gerekir; Windows Gezgini'nden silmek ise asla yapılmaz (referanslar kırılır).</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s11"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="10-materyal.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 10</div><div class="page-nav-title">Materyal</div></div>
+      </a>
+      <a href="12-animasyon.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 12</div><div class="page-nav-title">Animasyon</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

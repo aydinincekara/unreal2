@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 27: Yol Haritası — UnrealAkademi</title>
+  <meta name="description" content="Kapanış — ileri konular, kaynaklar, portfolyo, kariyer.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 27: Yol Haritası — UnrealAkademi">
+  <meta property="og:description" content="Kapanış — ileri konular, kaynaklar, portfolyo, kariyer.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 27: Yol Haritası — UnrealAkademi">
+  <meta name="twitter:description" content="Kapanış — ileri konular, kaynaklar, portfolyo, kariyer.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link active" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>İleri Programlama</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Yol Haritası</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 27</span>
+        <span class="page-category">Bitiriş</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 45 dakika</span>
+        <span class="difficulty difficulty-easy">Genel</span>
+      </div>
+      <h1 class="page-title">Yol Haritası — Buradan Sonrası</h1>
+      <p class="page-lead">
+        Tebrikler — UE5'in temellerini, modlarını, ileri sistemlerini ve C++'a girişi tamamladın. Bu son bölüm bir <strong>derleyici</strong> değil, bir <strong>pusula</strong>: bundan sonra hangi konulara dalmalı, hangi kaynaklar değerli, nasıl portfolyo yaparsın, hangi kariyer yolları açık. Burada başlayan yolculuk burada bitmez — şimdi <em>oyun yapma</em> zamanı.
+      </p>
+    </header>
+
+    <!-- 27.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.1</div>
+        <h2 class="topic-title">Neredesin? — Şu ana kadar öğrendiklerin</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Geride bıraktığın 26 bölüm aslında bir <strong>geliştirici eğitiminin omurgası</strong>. Kategorilere göre sahip olduğun bilgiler:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-puzzle"></i></div>
+            <h4>Temel arayüz</h4>
+            <p>Editor anatomisi, sahne yönetimi, Viewport navigasyonu, GameMode ↔ Player Controller ↔ Pawn ↔ Character zinciri.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-circuit-changeover"></i></div>
+            <h4>Blueprint (BP)</h4>
+            <p>Node, pin, event, function, variable türleri, BP iletişim modelleri (Cast, Interface, Event Dispatcher), Behavior Tree.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-photo"></i></div>
+            <h4>İçerik & Görsel</h4>
+            <p>Material/PBR/Material Instance, asset import (FBX, Quixel), Animation Blueprint, State Machine, Blend Space, Montage.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-tools"></i></div>
+            <h4>UE5 modları</h4>
+            <p>Modeling, Animation, Brush, Fracture, Mesh Paint, Landscape, Foliage, Selection — UE5'in 8 modu.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-bolt"></i></div>
+            <h4>Render & İleri</h4>
+            <p>Lumen, Nanite, Enhanced Input (derin), Save sistemi, menü mimarisi, oyunu paketleme ve yayınlama.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(239,68,68,.12);color:#fca5a5;"><i class="ti ti-code"></i></div>
+            <h4>C++</h4>
+            <p>Visual Studio kurulumu, UCLASS/UFUNCTION/UPROPERTY makroları, ilk class, hibrit mimari, BP↔C++ köprüsü.</p>
+          </div>
+        </div>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-mountain"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Şu an neredesin?</div>
+            <p>
+              Bir dağcı analojisi yapalım: <strong>"base camp" seviyesindesin.</strong> Tüm araçların var, ekipmanın hazır, kampını kurabiliyor ve kısa rotalar yapabilirsin. Zirveye çıkmak için <em>kullanmaya</em> başlaman, hata yapman, yeniden denemen lazım. Hiçbir tutorial bunun yerini tutmaz. Sıra <strong>kendi oyununu</strong> yapmakta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27.2 ILERI KONULAR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.2</div>
+        <h2 class="topic-title">Buradan sonra — Spesifik konu derinleşmeleri</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Genel temellerin var; şimdi <strong>ilgi alanına göre</strong> derinleşme zamanı. Hangi konu hangi tür projeler için kritik:
+        </p>
+
+        <h4>1. Multiplayer / Networking</h4>
+        <p>
+          Eğer <strong>online oyun</strong> yapmak istiyorsan UE5'in network mimarisini öğrenmen şart: <strong>Replication</strong>, <strong>RPC (Remote Procedure Call)</strong>, <strong>Server/Client Authority</strong>, Session Management. UE5'in built-in networking sistemi AAA seviyesindedir (Fortnite ile aynı motor) — ama karmaşıktır.
+        </p>
+        <ul class="hap-list" style="margin-top:6px;">
+          <li><strong>Replication:</strong> Variable'ı server'dan client'lara senkron tut.</li>
+          <li><strong>Server RPC:</strong> Client'ın isteğini server'a gönder (örn. ateş et).</li>
+          <li><strong>Multicast RPC:</strong> Server'dan tüm client'lara mesaj at (örn. patlama efekti).</li>
+          <li><strong>Listen Server vs Dedicated Server:</strong> Senin makinen mi sunucu, ayrı bir kutu mu?</li>
+        </ul>
+
+        <h4>2. AI ve Behavior Tree (derinleşme)</h4>
+        <p>
+          Bölüm 25'te giriş yaptın; şimdi derinleş: <strong>EQS (Environment Query System)</strong>, AI Perception (görme/duyma), Smart Object'ler, NavMesh dynamic generation, AI Squad davranışları.
+        </p>
+
+        <h4>3. Optimization & Profiling</h4>
+        <p>
+          Bir oyun yapmak başka, <strong>hızlı çalışan</strong> bir oyun yapmak başka. Bu UE5'in en derin konularından biri:
+        </p>
+        <ul class="hap-list" style="margin-top:6px;">
+          <li><strong>Stat unit, Stat GPU:</strong> Performance bottleneck'in CPU mu GPU mu?</li>
+          <li><strong>Insights:</strong> UE5'in built-in profiler'ı — saniye saniye ne olduğunu görür.</li>
+          <li><strong>Draw calls:</strong> Çok sayıda mesh = çok draw call = yavaşlama. Instancing.</li>
+          <li><strong>LOD, Culling, Occlusion:</strong> Görünmeyeni render etme.</li>
+          <li><strong>Texture streaming:</strong> Sahnedeki texture'ları akıllıca yükle/boşalt.</li>
+        </ul>
+
+        <h4>4. Niagara ve VFX</h4>
+        <p>
+          Bölüm 8'de giriş yaptın. Profesyonel görsel efektler için Niagara'nın derin sularına git: GPU emitter'lar, mesh particle, ribbon, beam, fluid simulation, niagara fluids.
+        </p>
+
+        <h4>5. Cinematic & Virtual Production</h4>
+        <p>
+          UE5 film endüstrisinde de kullanılıyor (Mandalorian, Avatar 2). <strong>Sequencer</strong>'da derinleş, <strong>MetaHuman</strong> ile karakterleri kişiselleştir, <strong>Movie Render Queue</strong> ile film kalitesinde çıkış al.
+        </p>
+
+        <h4>6. UI/UX (UMG derin)</h4>
+        <p>
+          Bölüm 9'da temellerini öğrendin. Modern oyun UI için: animation, transition, slate (C++ UI), localization (çoklu dil), gamepad/controller desteği, accessibility.
+        </p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Hepsini öğrenme — birini seç</div>
+            <p>
+              Bu listenin hepsine "uzman" olmak yıllar alır. Profesyonel geliştiriciler bile genelde 1-2 alanda derinleşir. <strong>Yapmak istediğin oyuna göre seç.</strong> RPG için AI + UI; çok oyunculu shooter için networking + optimization; sinematik proje için Sequencer + MetaHuman.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27.3 KAYNAKLAR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.3</div>
+        <h2 class="topic-title">Kaynaklar — Nereden öğreneceksin?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5 öğrenme ekosistemi muazzam. Resmi ve topluluk kaynaklarından en kıymetlilerini liste hâlinde:
+        </p>
+
+        <h4>Resmi kaynaklar</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Unreal Engine Documentation</div><div class="info-item-value">dev.epicgames.com/documentation — referans</div></div>
+          <div class="info-item"><div class="info-item-label">Unreal Online Learning</div><div class="info-item-value">dev.epicgames.com/community/learning — ücretsiz kurslar</div></div>
+          <div class="info-item"><div class="info-item-label">Unreal Engine YouTube</div><div class="info-item-value">Resmi YouTube kanalı — tutorial + livestream</div></div>
+          <div class="info-item"><div class="info-item-label">Sample Projects</div><div class="info-item-value">Marketplace'te Epic'in ücretsiz örnek projeleri (Lyra, City Sample)</div></div>
+          <div class="info-item"><div class="info-item-label">Documentation Snippets</div><div class="info-item-value">Forum + tutorial linkleri ile zenginleştirilmiş</div></div>
+          <div class="info-item"><div class="info-item-label">Quixel Bridge eğitimleri</div><div class="info-item-value">Megascans nasıl kullanılır + photogrammetry</div></div>
+        </div>
+
+        <h4>Topluluk kaynakları</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(220,52,52,.12);color:#fb7185;"><i class="ti ti-brand-youtube"></i></div>
+            <h4>YouTube kanalları</h4>
+            <p>İngilizce: <strong>Mathew Wadstein</strong> (her node tutorial), <strong>UnrealSensei</strong>, <strong>Smart Poly</strong>, <strong>Ryan Laley</strong>. Türkçe: çeşitli yerli kanallar.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(255,69,0,.12);color:#fb923c;"><i class="ti ti-brand-reddit"></i></div>
+            <h4>r/unrealengine</h4>
+            <p>Reddit topluluğu — günlük soru-cevap, başarılar, troubleshooting. Hata aldığında "stack overflow" gibi başvuru kaynağı.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(88,101,242,.12);color:#a3a8e5;"><i class="ti ti-brand-discord"></i></div>
+            <h4>Discord sunucuları</h4>
+            <p>Unreal Source, Unreal Slackers — büyük UE5 toplulukları. #help kanallarında saatlerde cevap.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,179,255,.12);color:#38bdf8;"><i class="ti ti-brand-twitch"></i></div>
+            <h4>Twitch geliştiriciler</h4>
+            <p>UE5 ile canlı geliştirme yapan streamerlar. Birinin akışına katılıp izleyerek workflow öğrenebilirsin.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-book"></i></div>
+            <h4>Kitaplar</h4>
+            <p>"Mastering Unreal Engine 5", "Unreal Engine 5 Character Creation, Animation & Cinematics", Packt Publishing'in serisi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-school"></i></div>
+            <h4>Udemy / Coursera kursları</h4>
+            <p><strong>Stephen Ulibarri'nin UE5 + C++ kursları</strong> (Udemy) — premium kalite. Resmi Epic kursları da artıyor.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Source code okuma</div>
+            <p>
+              Belirli bir konuda derinleşmek istiyorsan en iyi kaynak <strong>UE5'in kendi C++ source code'u</strong>'dur. Engine source'u GitHub'da açık (Epic Games organizasyonuna bağlanman gerekir). "Character'ın movement'ı tam olarak nasıl çalışıyor?" sorusuna en doğru cevap <code>CharacterMovementComponent.cpp</code>'tedir. AAA programcılar düzenli olarak source'u okur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27.4 PORTFOLYO -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.4</div>
+        <h2 class="topic-title">Portfolyo nasıl yapılır?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir studio'ya başvurmak veya freelance iş bulmak istiyorsan portfolyon CV'nden daha önemlidir. İşveren "ne yapabilirsin?" sorusuna verdiğin görsel cevaptır.
+        </p>
+
+        <h4>İyi bir portfolyonun özellikleri</h4>
+        <ul class="hap-list" style="margin-top:6px;">
+          <li><strong>Az ama özenli proje</strong> &gt; çok ama yarım proje. 3 tamamlanmış mini oyun, 30 yarım denemeden iyidir.</li>
+          <li><strong>Trend olanı değil, <em>tutkulu olduğunu</em> yap.</strong> İçten geliyorsa kalitesi yansır.</li>
+          <li><strong>Her projenin gameplay video'su</strong> olsun (60-90 saniye). YouTube'a yükle.</li>
+          <li><strong>Süreç paylaş.</strong> Sadece bitmiş halini değil, "şu hataya takıldım, böyle çözdüm" tarzı blog/Twitter post'ları paylaş.</li>
+          <li><strong>itch.io profili</strong> kur, ücretsiz oynanabilir build koy.</li>
+          <li><strong>GitHub</strong> hesabı (kod paylaşılabilirse).</li>
+          <li><strong>ArtStation</strong> hesabı — env art, char art için.</li>
+        </ul>
+
+        <h4>Mini-proje önerileri (portfolyoluk)</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-3d-cube-sphere"></i></div>
+            <h4>1. Platformcu (Platformer)</h4>
+            <p>Karakter kontrolü, level tasarımı, fizik puzzle. 5-10 level. <strong>Süre: 1-3 ay.</strong> Her şeyi öğrenirsin.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(239,68,68,.12);color:#fca5a5;"><i class="ti ti-crosshair"></i></div>
+            <h4>2. Mini FPS</h4>
+            <p>Karakter + 2-3 silah + AI düşmanlar (Behavior Tree). 1 küçük arena. <strong>Süre: 2-4 ay.</strong></p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-map-2"></i></div>
+            <h4>3. Walk simulator / Çevre projesi</h4>
+            <p>Megascans + Lumen + Nanite ile küçük bir manzara. Hikâye anlat. <strong>Süre: 1-2 ay.</strong> Görsel skill'ini sergiler.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-clock-bolt"></i></div>
+            <h4>4. Roguelike / Roguelite</h4>
+            <p>Prosedürel level üretimi, item sistemi, progression. <strong>Süre: 3-6 ay.</strong> Sistem tasarımı becerisi gösterir.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-movie"></i></div>
+            <h4>5. Sinematik kısa film</h4>
+            <p>Sequencer + MetaHuman ile 1-2 dakika cinematic. <strong>Süre: 1-2 ay.</strong> Görsel anlatı becerisi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-users"></i></div>
+            <h4>6. Game Jam katılımı</h4>
+            <p>Itch.io'da düzenli Game Jam'lere katıl (48 saat - 1 hafta arası). Hızlı düşünme + bitirme refleksi. Profesyonel deneyim.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Game Jam — En değerli pratik</div>
+            <p>
+              Game Jam'ler (Ludum Dare, GMTK Game Jam, itch.io'nun haftalık jam'leri) <strong>kısa sürede tam bir oyun bitirme</strong> deneyimidir. Her jam sana bir tema verir, sen 48 saatte oyununu yapıp yükler ve dünya kalitesindeki oyuncular oynar/oy verir. Hem portfolyon büyür hem dakikası dakikasına problem çözme refleksi gelişir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27.5 KARIYER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.5</div>
+        <h2 class="topic-title">Kariyer yolları — UE5 bilenler nereye gider?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5 sadece oyun yapımcılarını değil, geniş bir endüstri yelpazesini ilgilendirir. Skills'ine ve ilgi alanına göre seçenekler:
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Pozisyon</th><th>Ana skill</th><th>Sektör</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gameplay Programmer</strong></td><td>C++ + BP, sistem tasarımı</td><td>Oyun stüdyoları (AAA, indie)</td></tr>
+            <tr><td><strong>Technical Designer</strong></td><td>BP, sistem tasarımı, prototip</td><td>Oyun stüdyoları</td></tr>
+            <tr><td><strong>Tools Programmer</strong></td><td>C++, editor extension</td><td>Büyük stüdyolar</td></tr>
+            <tr><td><strong>Tech Artist</strong></td><td>Material, Niagara, shader</td><td>Oyun + Film stüdyoları</td></tr>
+            <tr><td><strong>Environment Artist</strong></td><td>Modeling, Landscape, lighting</td><td>Oyun + Mimari ziyaretler</td></tr>
+            <tr><td><strong>Animator / Rigger</strong></td><td>Animation BP, Control Rig, Sequencer</td><td>Oyun + Film + Reklam</td></tr>
+            <tr><td><strong>Level Designer</strong></td><td>BSP, AI, gameplay scripting</td><td>Oyun stüdyoları</td></tr>
+            <tr><td><strong>VR / AR Developer</strong></td><td>VR template, optimization</td><td>Eğitim, sağlık, simülasyon</td></tr>
+            <tr><td><strong>Virtual Production</strong></td><td>Sequencer, LED wall, MetaHuman</td><td>Film, TV, reklam</td></tr>
+            <tr><td><strong>Architectural Viz</strong></td><td>Lumen, materials, lighting</td><td>Mimari ofisler, gayrimenkul</td></tr>
+            <tr><td><strong>Auto / Endüstri Viz</strong></td><td>Materials, render quality</td><td>Otomotiv, ürün tasarımı</td></tr>
+            <tr><td><strong>Eğitim / Simülasyon</strong></td><td>Gameplay + UI</td><td>Askeri, havacılık, tıp</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Tek başına çalışmak — Indie path</h4>
+        <p>
+          Bir studyo bul/iş başvur dışında, kendi oyununu üretip yayınlamak da geçerli bir yol. <strong>Indie</strong> geliştirici olarak başarı için:
+        </p>
+        <ul class="hap-list" style="margin-top:6px;">
+          <li><strong>Küçük başla, bitirme refleksi geliştir.</strong> İlk oyun 6-12 ayı geçmesin.</li>
+          <li><strong>Tek bir mekanik üzerine kur.</strong> "Buzun üstünde paten" — bunu en iyi sen yap.</li>
+          <li><strong>Topluluk kur</strong> — Devlog'lar, Twitter/X, Discord. Oyunu çıkmadan önce 1000+ kişiye ulaşmış olmak hedef.</li>
+          <li><strong>Pazarlama oyun kadar önemli.</strong> Steam page erken aç (1+ yıl önceden), wishlist topla.</li>
+          <li><strong>Patreon / itch.io</strong> ile sürekli gelir akışı düşün.</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Endüstri sırrı: Network &gt; Skill</div>
+            <p>
+              Yetenek tek başına yeterli değildir. <strong>Bağlantı, görünürlük, topluluk içinde aktif olmak</strong> ondan az değil daha kıymetli olabilir. Game Jam'lere katıl, Discord'larda aktif ol, Twitter/X'te devlog paylaş, konferanslara (GDC, Gamescom) sanal/fiziksel katıl. Çoğu iş ilanlardan değil, tanışıklıktan çıkar.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27.6 SON SOZLER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">27.6</div>
+        <h2 class="topic-title">Son sözler — Yolculuğun başlangıcı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bu kursta öğrendiklerin bir <strong>başlangıç</strong>. Hiçbir 27 bölüm "ben oyun geliştirici oldum" demeni sağlayamaz — bu unvan ancak <em>yapmaya başlayınca</em> hak edilir.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-rocket"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Son benzetme</div>
+            <p>
+              Bir <strong>müzik aleti öğrenmek</strong> gibi düşün. Öğretmen sana akorlari, notaları, teknikleri öğretti. Ama gerçek müzisyen olmak için <em>her gün çalmaya</em> başlaman gerek. İlk yıl kötü olacaksın. İkinci yıl orta. Üçüncü yıl iyi. Beşinci yıl başkalarına öğretecek seviyede. Oyun yapımı tam böyledir — sürekli pratik, sürekli bitirme, sürekli paylaşma. Yetenek değil, <strong>süreklilik</strong> her şeyi belirler.
+            </p>
+          </div>
+        </div>
+
+        <h4>3 altın tavsiye</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-flag-check"></i></div>
+            <h4>1. Bitir.</h4>
+            <p>Yarım kalan 10 proje, bitmiş 1 projeden değersizdir. <strong>Küçük başla, bitir, paylaş.</strong> Bir oyun "bitti"yse — ne kadar küçük olursa olsun — büyük bir başarıdır.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-share-3"></i></div>
+            <h4>2. Paylaş.</h4>
+            <p>Yaptığını kimse görmüyorsa, var olduğunu kimse bilmiyor. <strong>Devlog'lar, sosyal medya, itch.io, Game Jam'ler.</strong> Eleştiri al, yumuşa, gelişme yolun bu.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-refresh"></i></div>
+            <h4>3. Tekrar et.</h4>
+            <p>İlk oyunun kötü olacak. İkincisi daha az kötü. Onuncusu... oynayabilir bir şey olabilir. <strong>İterasyon her şeyi yener.</strong> Sürekli yapan, sürekli gelişir.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info" style="margin-top: 32px;">
+          <div class="callout-icon"><i class="ti ti-confetti"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Tebrikler — UnrealAkademi'yi tamamladın!</div>
+            <p>
+              UE5'in temellerinden ileri programlamaya, 27 bölümde geniş bir alana hâkim oldun. Şimdi sıra <strong>sahnenin merkezine geçmekte</strong>. Bu eğitimi yararlı bulduysan, paylaş; geri bildirim için kaynak ve iletişim butonlarını kullan. <em>Sahnen senin. Oyununu yap.</em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler — Tüm kursun özeti</h4></div>
+      <ul class="hap-list">
+        <li><strong>Base camp'tesin.</strong> Temellerin var, şimdi pratik zamanı.</li>
+        <li><strong>İlgi alanına göre derinleş:</strong> multiplayer, AI, optimization, VFX, cinematic, UI...</li>
+        <li><strong>Resmi kaynaklar:</strong> Epic Documentation, Unreal Online Learning, Sample Projects (Lyra).</li>
+        <li><strong>Topluluk:</strong> r/unrealengine, Discord (Unreal Slackers), YouTube tutorial'ları.</li>
+        <li><strong>Portfolyo &gt; CV.</strong> Az ama bitmiş proje, çok ama yarım projeden iyi.</li>
+        <li><strong>Game Jam'ler</strong> bitirme refleksi geliştirir — en değerli pratik.</li>
+        <li><strong>Kariyer:</strong> Gameplay programmer, Technical designer, Tech artist, Environment artist, Animator, Virtual Production, ArchViz...</li>
+        <li><strong>Indie path:</strong> Küçük, odaklı oyun + topluluk kur + Steam wishlist erken aç.</li>
+        <li><strong>Network &gt; Skill</strong> olabilir — aktif topluluk üyesi ol.</li>
+        <li><strong>3 altın tavsiye:</strong> Bitir, Paylaş, Tekrar et. İterasyon her şeyi yener.</li>
+        <li><strong>İlk yıl kötü olacaksın, beşinci yıl başkalarına öğretirsin.</strong> Süreklilik kazanır.</li>
+        <li><strong>Yolun açık olsun!</strong> 🎮</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-trophy"></i></div>
+        <div><h3>Kapanış Projeleri</h3><span>Gerçek geliştiriciliğe ilk adımların</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~2 hafta</span></div>
+            <div class="project-title">Proje 1: itch.io profili + Game Jam'e katılım</div>
+            <p class="project-desc">Bir <strong>itch.io hesabı aç</strong>, profilini doldur (avatar, bio, sosyal medya linkleri). En yakın <strong>game jam</strong>'i bul (itch.io/jams, Ludum Dare, GMTK). Tek başına veya 1-2 kişilik takımla katıl. 48 saat - 1 hafta arası bir mini oyun yap, bitir, yükle. Diğer katılımcıların oyunlarını oyna, oyla. Bu deneyim yarım yıllık tutorial'dan daha öğretici olabilir.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>itch.io profili hazır (avatar + bio + linkler)</li><li>Bir game jam'e katıldın</li><li>Mini oyun (kısa da olsa) <strong>tamamlandı</strong> ve yüklendi</li><li>En az 5 başka oyunu oynayıp oy verdin</li><li>Jam sonrası kendi oyununa gelen yorumları okudun</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Bitirme refleksi + topluluk içinde varlık göstermek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~1-2 ay</span></div>
+            <div class="project-title">Proje 2: Mini portfolyo projesi</div>
+            <p class="project-desc">Bir <strong>mini-oyun veya çevre projesi</strong> yap (yukarıdaki listeden seç): bir platformcu, mini FPS, walk simulator, ya da sinematik kısa. 1-2 ay süre ayır. Bitirdiğinde: gameplay video çek (60-90 sn), YouTube'a yükle. itch.io'ya windows build koy. Süreci anlatan bir <strong>devlog</strong> yaz (Twitter/X thread, Medium veya kişisel blog). En sonunda gönderilen URL ile bir CV'ye eklenecek bir <strong>portfolyo girişi</strong> tamamlanmış olacak.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Bir mini oyun/çevre projesi tamamlandı</li><li>Gameplay video YouTube'a yüklendi</li><li>itch.io'da oyun sayfası var, indirilebilir build mevcut</li><li>En az bir devlog (yazılı veya video) paylaşıldı</li><li>Bu projeyi bir paragrafla anlatabiliyorsun (mülakata hazırlık)</li><li>Linki bir arkadaşa/mentora gösterip geri bildirim aldın</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel bir portfolyo parçası üretmek — CV'ne ek bir maddedir.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~3-6 ay</span></div>
+            <div class="project-title">Proje 3: Yayınlanabilir vertical slice</div>
+            <p class="project-desc">Hayalindeki oyunun bir <strong>"vertical slice"</strong>'ını yap — yani oyunun "10 dakikalık tam deneyim" parçası. Ana mekanik tam çalışmalı (savaş, çözüm, yarış, ne olursa), arayüz tamam, ses ve müzik yerinde, mini bir level tamamlanmış. <strong>Steam page</strong> aç (Steamworks $100, opsiyonel) veya itch.io'da yayınla. Devlog'larla 3-6 ay boyunca gelişimini paylaş. Çıkışta wishlist veya download topla. Bonus: bir publisher veya mentor ile görüş, geri bildirim al.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>10+ dakikalık tam oynanabilir bir bölüm hazır</li><li>Ana mekanik gerçekten "eğlenceli" hâlde (test edildi)</li><li>Sound, music, UI tamamen yerinde</li><li>Trailer video hazırlandı (1-2 dk)</li><li>Steam page veya itch.io sayfası canlı (görsel/açıklama tam)</li><li>En az 5 devlog paylaşıldı (3-6 ay sürecince)</li><li>En az 10 dış kişi oyunu test etti ve geri bildirim verdi</li><li>Bu deneyim bir CV'ye "yayınlanmış proje" olarak girer</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel yayıncılığa ilk gerçek adım — geliştiriciliğin somut sınavı.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Son Quiz — Yolculuğun özeti</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q27-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>İyi bir portfolyo için en doğru yaklaşım hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q27-1')"><span class="quiz-option-key">A</span><span>Mümkün olduğunca çok proje, bitirilmemiş de olsa</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q27-1')"><span class="quiz-option-key">B</span><span>Az ama tamamlanmış, özenli projeler</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-1')"><span class="quiz-option-key">C</span><span>Sadece tek bir dev AAA klonu</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-1')"><span class="quiz-option-key">D</span><span>Hiç proje, sadece teori bilgisi</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q27-1-ok">✓ Doğru! Bitmiş 3 küçük proje, yarım kalmış 30 projeden çok daha değerlidir. Bitirme refleksi en kritik beceridir.</div>
+        <div class="quiz-feedback fail" id="q27-1-fail">✗ Yanlış. Az ama bitmiş projeler her zaman daha değerlidir. İşveren "ben bunu bitirip yayınladım" diyebileni arar.</div>
+      </div>
+
+      <div class="quiz-question" id="q27-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Game Jam'lerin geliştirici olarak sana kattığı en büyük değer hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q27-2')"><span class="quiz-option-key">A</span><span>Ödül kazanma şansı</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q27-2')"><span class="quiz-option-key">B</span><span>Kısa sürede tam bir oyun bitirme refleksi</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-2')"><span class="quiz-option-key">C</span><span>Para kazanma</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-2')"><span class="quiz-option-key">D</span><span>UE5 lisansı</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q27-2-ok">✓ Doğru! Game Jam'in ana faydası süreyle sınırlı çalışıp tam bitmiş bir oyun yayınlamak — bitirme refleksi geliştirir.</div>
+        <div class="quiz-feedback fail" id="q27-2-fail">✗ Yanlış. Game Jam'in asıl değeri sınırlı süre içinde tam oyun bitirmektir; bu refleks profesyonel geliştirme için çok önemlidir.</div>
+      </div>
+
+      <div class="quiz-question" id="q27-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>UE5 ile çalışılabilen sektörlerden HANGİSİ DEĞİLDİR?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q27-3')"><span class="quiz-option-key">A</span><span>Oyun stüdyoları (AAA + indie)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-3')"><span class="quiz-option-key">B</span><span>Film / TV (Virtual Production)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-3')"><span class="quiz-option-key">C</span><span>Mimari görselleştirme</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q27-3')"><span class="quiz-option-key">D</span><span>UE5 hiçbir sektörle uyumlu değildir</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q27-3-ok">✓ Doğru! UE5 oyun, film, mimari, otomotiv, eğitim, simülasyon dahil pek çok sektörde aktif kullanılır — geniş kariyer yelpazesi.</div>
+        <div class="quiz-feedback fail" id="q27-3-fail">✗ Yanlış. UE5 oyun, film/TV, ArchViz, otomotiv, simülasyon — pek çok sektörde kullanılan endüstri standardı bir araçtır.</div>
+      </div>
+
+      <div class="quiz-question" id="q27-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir geliştirici olarak en yaygın hata türlerinden biri hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q27-4')"><span class="quiz-option-key">A</span><span>Çok fazla bitmiş oyun yayınlamak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q27-4')"><span class="quiz-option-key">B</span><span>Hiçbir projeyi bitirmeden sürekli yenisine başlamak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-4')"><span class="quiz-option-key">C</span><span>Game Jam'lere katılmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-4')"><span class="quiz-option-key">D</span><span>Topluluğa katılmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q27-4-ok">✓ Doğru! "Sürekli yeni başlangıç" sendromu — yarı kalmış projeler dizisi — geliştiricilerin en yaygın tuzağıdır. Bitirme alışkanlığı en kritik becerdir.</div>
+        <div class="quiz-feedback fail" id="q27-4-fail">✗ Yanlış. En yaygın hata projeleri bitirmemektir. Sürekli yenisine başlamak ilerlemenin değil, gerilmenin işaretidir.</div>
+      </div>
+
+      <div class="quiz-question" id="q27-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Bu kursun en önemli kapanış mesajı hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q27-5')"><span class="quiz-option-key">A</span><span>UE5'in her özelliğini ezberle</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-5')"><span class="quiz-option-key">B</span><span>Sadece C++ kullan, Blueprint kötüdür</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q27-5')"><span class="quiz-option-key">C</span><span>Bitir, paylaş, tekrar et — sürekli pratik her şeyi yener</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q27-5')"><span class="quiz-option-key">D</span><span>Sadece AAA stüdyoda çalış</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q27-5-ok">✓ Doğru! "Bitir, paylaş, tekrar et" — üç altın tavsiye. Geliştirici yolculuğu süreklilik ve iterasyon üzerine kuruludur, ezbere değil.</div>
+        <div class="quiz-feedback fail" id="q27-5-fail">✗ Yanlış. Asıl mesaj "Bitir, Paylaş, Tekrar et"tir. Yetenek değil, süreklilik — geliştirici olmanın özüdür.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s27"><i class="ti ti-trophy"></i> KURSU TAMAMLADIM 🎉</button>
+
+    <nav class="page-nav">
+      <a href="26-cpp-giris.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 26</div><div class="page-nav-title">C++ Giriş</div></div>
+      </a>
+      <a href="../index.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-home"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Bitir</div><div class="page-nav-title">Ana Sayfaya Dön</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

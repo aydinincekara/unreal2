@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 02: Arayüz — UnrealAkademi</title>
+  <meta name="description" content="Editor anatomisi, Viewport, Content Browser, Details, Outliner.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 02: Arayüz — UnrealAkademi">
+  <meta property="og:description" content="Editor anatomisi, Viewport, Content Browser, Details, Outliner.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 02: Arayüz — UnrealAkademi">
+  <meta name="twitter:description" content="Editor anatomisi, Viewport, Content Browser, Details, Outliner.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link active" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i>
+      <span>Başlangıç</span>
+      <i class="ti ti-chevron-right"></i>
+      <span style="color: var(--primary-light);">Arayüz Tanıma</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 02</span>
+        <span class="page-category">Başlangıç</span>
+        <span class="badge badge-success"><i class="ti ti-clock"></i> 60 dakika</span>
+        <span class="difficulty difficulty-easy">Kolay</span>
+      </div>
+      <h1 class="page-title">Arayüzü Tanı — Kaybolma</h1>
+      <p class="page-lead">
+        UE5 ilk açıldığında onlarca panel, düğme, sekme görürsün. Panik yapma — hepsini bir günde
+        öğrenmek zorunda değilsin. Bu bölümde 5 temel paneli ve viewport navigasyonunu öyle bir öğreneceksin ki
+        bir daha "kayboldum" demeyeceksin.
+      </p>
+    </header>
+
+    <!-- 2.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.1</div>
+        <h2 class="topic-title">Korkma — Aslında sadece 5 panel var</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5 arayüzü ilk bakışta korkutucudur. Ama o yüzlerce düğmenin <strong>%90'ını başlangıçta
+          kullanmayacaksın.</strong> Profesyoneller bile günlük işte 5-6 panel arasında gezinir. Senin
+          şu an öğrenmen gereken sadece <strong>5 ana alan</strong> var.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-plane"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              UE5 arayüzü bir <strong>uçak kokpiti</strong> gibidir — yüzlerce gösterge, düğme. Ama hiçbir
+              pilot hepsini aynı anda kullanmaz. Kalkış için 5 şey, iniş için 5 şey bilir. Sen de
+              başlangıçta sadece <strong>5 temel paneli</strong> öğreneceksin, gerisi zamanla anlam kazanacak.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye için not</div>
+            <p>
+              Deneyimliysen: UE5'in arayüzü <strong>tamamen dock'lanabilir/serbest bırakılabilir</strong>.
+              Kendi workflow'una göre layout kaydedebilir, hatta birden fazla monitöre dağıtabilirsin.
+              Bunu <strong>2.9</strong>'da göreceğiz.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.2 - GÖRSEL ARAYÜZ HARİTASI -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.2</div>
+        <h2 class="topic-title">Arayüz haritası — Hangi panel nerede?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Aşağıda UE5 editörünün şematik haritası var. Her renkli alan bir paneldir. Ekranını bununla
+          karşılaştır — birebir aynı yerleşim seni karşılayacak.
+        </p>
+
+        <!-- SVG ARAYÜZ ŞEMASI -->
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-layout-dashboard"></i> UE5 Editör — Varsayılan Yerleşim</span>
+            <span>Şematik gösterim</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 800 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UE5 arayüz şeması">
+              <!-- background -->
+              <rect x="0" y="0" width="800" height="460" rx="8" fill="#0d0d1a"/>
+
+              <!-- TOOLBAR (üst) -->
+              <rect x="8" y="8" width="784" height="44" rx="6" fill="#1f1f30" stroke="#7c5cff" stroke-width="1.5"/>
+              <circle cx="40" cy="30" r="11" fill="#10b981"/>
+              <path d="M 35 24 L 35 36 L 46 30 Z" fill="#fff"/>
+              <text x="62" y="34" fill="#10b981" font-family="monospace" font-size="13" font-weight="bold">▶ Play</text>
+              <rect x="140" y="20" width="60" height="20" rx="4" fill="#2a2a3e"/>
+              <text x="170" y="34" fill="#9898b0" font-family="monospace" font-size="11" text-anchor="middle">Save</text>
+              <text x="700" y="34" fill="#7c5cff" font-family="sans-serif" font-size="12" font-weight="bold">⑤ TOOLBAR</text>
+
+              <!-- PLACE ACTORS (sol ince) -->
+              <rect x="8" y="60" width="120" height="320" rx="6" fill="#16161d" stroke="#00d4ff" stroke-width="1.5"/>
+              <text x="68" y="82" fill="#00d4ff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">PLACE</text>
+              <text x="68" y="96" fill="#00d4ff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">ACTORS</text>
+              <rect x="20" y="110" width="96" height="22" rx="3" fill="#22222f"/>
+              <rect x="20" y="138" width="96" height="22" rx="3" fill="#22222f"/>
+              <rect x="20" y="166" width="96" height="22" rx="3" fill="#22222f"/>
+              <rect x="20" y="194" width="96" height="22" rx="3" fill="#22222f"/>
+              <text x="68" y="360" fill="#5a5a72" font-family="sans-serif" font-size="9" text-anchor="middle">⑥ Modes</text>
+
+              <!-- VIEWPORT (orta büyük) -->
+              <rect x="138" y="60" width="420" height="248" rx="6" fill="#0a0a14" stroke="#7c5cff" stroke-width="2"/>
+              <!-- grid lines -->
+              <line x1="138" y1="184" x2="558" y2="184" stroke="#2a2a44" stroke-width="1"/>
+              <line x1="348" y1="60" x2="348" y2="308" stroke="#2a2a44" stroke-width="1"/>
+              <!-- a cube in viewport -->
+              <g transform="translate(310, 150)">
+                <path d="M 0 20 L 30 5 L 60 20 L 60 50 L 30 65 L 0 50 Z" fill="#3a3a5e" stroke="#7c5cff" stroke-width="1.5"/>
+                <path d="M 0 20 L 30 35 L 60 20" fill="none" stroke="#7c5cff" stroke-width="1.5"/>
+                <path d="M 30 35 L 30 65" fill="none" stroke="#7c5cff" stroke-width="1.5"/>
+              </g>
+              <text x="348" y="290" fill="#7c5cff" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">① VIEWPORT (3D Sahne)</text>
+
+              <!-- OUTLINER (sağ üst) -->
+              <rect x="568" y="60" width="224" height="120" rx="6" fill="#16161d" stroke="#10b981" stroke-width="1.5"/>
+              <text x="680" y="80" fill="#10b981" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">② OUTLINER</text>
+              <line x1="580" y1="92" x2="780" y2="92" stroke="#2a2a3e"/>
+              <text x="586" y="108" fill="#9898b0" font-family="monospace" font-size="10">▸ Floor</text>
+              <text x="586" y="126" fill="#9898b0" font-family="monospace" font-size="10">▸ PlayerStart</text>
+              <text x="586" y="144" fill="#9898b0" font-family="monospace" font-size="10">▸ DirectionalLight</text>
+              <text x="586" y="162" fill="#c084fc" font-family="monospace" font-size="10">▸ Cube (seçili)</text>
+
+              <!-- DETAILS (sağ alt) -->
+              <rect x="568" y="188" width="224" height="120" rx="6" fill="#16161d" stroke="#fb923c" stroke-width="1.5"/>
+              <text x="680" y="208" fill="#fb923c" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">③ DETAILS</text>
+              <line x1="580" y1="220" x2="780" y2="220" stroke="#2a2a3e"/>
+              <text x="586" y="238" fill="#9898b0" font-family="monospace" font-size="10">Location  X:0 Y:0 Z:0</text>
+              <text x="586" y="256" fill="#9898b0" font-family="monospace" font-size="10">Rotation  0,0,0</text>
+              <text x="586" y="274" fill="#9898b0" font-family="monospace" font-size="10">Scale     1,1,1</text>
+              <text x="586" y="292" fill="#9898b0" font-family="monospace" font-size="10">Material  M_Basic</text>
+
+              <!-- CONTENT BROWSER (alt geniş) -->
+              <rect x="138" y="316" width="654" height="136" rx="6" fill="#16161d" stroke="#f5c842" stroke-width="1.5"/>
+              <text x="465" y="336" fill="#f5c842" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">④ CONTENT BROWSER (Proje Dosyaları)</text>
+              <line x1="150" y1="346" x2="780" y2="346" stroke="#2a2a3e"/>
+              <!-- file thumbnails -->
+              <rect x="160" y="360" width="60" height="60" rx="4" fill="#22222f" stroke="#3a3a4e"/>
+              <rect x="232" y="360" width="60" height="60" rx="4" fill="#22222f" stroke="#3a3a4e"/>
+              <rect x="304" y="360" width="60" height="60" rx="4" fill="#22222f" stroke="#3a3a4e"/>
+              <rect x="376" y="360" width="60" height="60" rx="4" fill="#22222f" stroke="#3a3a4e"/>
+              <rect x="448" y="360" width="60" height="60" rx="4" fill="#22222f" stroke="#3a3a4e"/>
+              <text x="190" y="436" fill="#5a5a72" font-family="monospace" font-size="8" text-anchor="middle">Mesh</text>
+              <text x="262" y="436" fill="#5a5a72" font-family="monospace" font-size="8" text-anchor="middle">Material</text>
+              <text x="334" y="436" fill="#5a5a72" font-family="monospace" font-size="8" text-anchor="middle">Texture</text>
+              <text x="406" y="436" fill="#5a5a72" font-family="monospace" font-size="8" text-anchor="middle">Blueprint</text>
+              <text x="478" y="436" fill="#5a5a72" font-family="monospace" font-size="8" text-anchor="middle">Sound</text>
+            </svg>
+          </div>
+        </div>
+
+        <p>
+          Renk kodları: <span style="color:#7c5cff;font-weight:600;">Mor → Viewport & Toolbar</span>,
+          <span style="color:#10b981;font-weight:600;">Yeşil → Outliner</span>,
+          <span style="color:#fb923c;font-weight:600;">Turuncu → Details</span>,
+          <span style="color:#f5c842;font-weight:600;">Sarı → Content Browser</span>,
+          <span style="color:#00d4ff;font-weight:600;">Cyan → Place Actors</span>.
+          Şimdi her birini tek tek tanıyalım.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2.3 - 5 ANA PANEL kartları -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.3</div>
+        <h2 class="topic-title">5 ana panel — Ne işe yarar?</h2>
+      </div>
+      <div class="topic-body">
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-eye"></i></div>
+            <h4>① Viewport</h4>
+            <p>Ortadaki büyük 3D pencere. Oyun dünyanı buradan görür, kameranı gezdirir, nesneleri yerleştirirsin. En çok zaman geçireceğin yer.</p>
+            <span class="tag-small">Merkez · 3D Sahne</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-list-tree"></i></div>
+            <h4>② Outliner</h4>
+            <p>Sağ üstte. Sahnedeki <strong>tüm</strong> nesnelerin listesi. Bir nesneye çift tıklayınca viewport ona odaklanır. Karmaşık sahnede can simidi.</p>
+            <span class="tag-small">Sağ üst · Liste</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(251,146,60,.12);color:#fb923c;"><i class="ti ti-adjustments"></i></div>
+            <h4>③ Details</h4>
+            <p>Sağ altta. Seçtiğin nesnenin <strong>tüm özellikleri</strong>: konum, dönüş, ölçek, renk, materyal... Burada değer değiştirerek nesneyi şekillendirirsin.</p>
+            <span class="tag-small">Sağ alt · Özellikler</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-folder"></i></div>
+            <h4>④ Content Browser</h4>
+            <p>Altta. Projenin <strong>dosya sistemi</strong>. Mesh, texture, ses, Blueprint — hepsi burada. Sürükle-bırakla sahneye eklersin.</p>
+            <span class="tag-small">Alt · Dosyalar</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-tools"></i></div>
+            <h4>⑤ Toolbar</h4>
+            <p>Üstte. <strong>Play/Dur</strong>, kaydet, build, ayarlar. En kritik buton: yeşil <strong>Play</strong> — oyununu test edersin.</p>
+            <span class="tag-small">Üst · Komutlar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.4 VIEWPORT navigasyon -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.4</div>
+        <h2 class="topic-title">Viewport'ta gezinme — Kamera kontrolü</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Viewport'ta hareket edemezsen hiçbir şey yapamazsın. Bu yüzden <strong>en önce kamera
+          kontrolünü</strong> kasların ezberleyene kadar tekrar et. 4 temel yöntem var:
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Uçuş modu — Sağ tık + WASD</div>
+              <p>
+                <strong>Sağ fare tuşunu basılı tut</strong>, sonra klavyeden <kbd>W</kbd> <kbd>A</kbd>
+                <kbd>S</kbd> <kbd>D</kbd> ile ileri-sol-geri-sağ uç. <kbd>Q</kbd> aşağı iner,
+                <kbd>E</kbd> yukarı çıkar. Fare tekerleğiyle hız ayarlarsın.
+              </p>
+              <div class="step-note"><i class="ti ti-bulb"></i> Bu, FPS oyunlarındaki uçuş moduna benzer — en sık kullanacağın yöntem.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Odaklan — F tuşu</div>
+              <p>
+                Bir nesneyi seç (tıkla), sonra <kbd>F</kbd> tuşuna bas. Kamera otomatik o nesnenin
+                etrafına konumlanır. <strong>"Nesneyi kaybettim!"</strong> dediğinde ilk refleksin bu olsun.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Yörünge — Alt + sol tık sürükle</div>
+              <p>
+                <kbd>Alt</kbd> basılıyken sol tıkla sürükle — kamera seçili noktanın etrafında döner
+                (orbit). 3D modelleri her açıdan incelemek için ideal.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Yakınlaş/uzaklaş — Fare tekerleği</div>
+              <p>
+                Tekerleği çevir — kamera ileri/geri gider. <kbd>Alt</kbd> + sağ tık sürükle de
+                yumuşak zoom yapar.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h4>Transform araçları — Nesneyi taşı / döndür / ölçekle</h4>
+        <p>Bir nesne seçiliyken şu 3 tuş modunu değiştirir:</p>
+
+        <div class="shortcut-grid">
+          <div class="shortcut">
+            <div class="keys"><kbd>W</kbd></div>
+            <span>Taşı (Move) — renkli oklar çıkar</span>
+          </div>
+          <div class="shortcut">
+            <div class="keys"><kbd>E</kbd></div>
+            <span>Döndür (Rotate) — renkli halkalar</span>
+          </div>
+          <div class="shortcut">
+            <div class="keys"><kbd>R</kbd></div>
+            <span>Ölçekle (Scale) — renkli kutucuklar</span>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-color-swatch"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Eksen renkleri (her yerde aynı)</div>
+            <p>
+              UE5'te eksenler hep aynı renktedir: <span style="color:#ff4444;font-weight:600;">Kırmızı = X</span>,
+              <span style="color:#44ff44;font-weight:600;">Yeşil = Y</span>,
+              <span style="color:#4488ff;font-weight:600;">Mavi = Z</span>. Bu kuralı ezberle — Details panelinde
+              de, Blueprint'te de Vector değerlerinde de bu sıralama geçerli.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.5 Content Browser detay -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.5</div>
+        <h2 class="topic-title">Content Browser — Projenin beyni</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Content Browser, projendeki <strong>her dosyanın</strong> durduğu yerdir. Bir oyunun tüm
+          varlıkları (asset) buradadır: 3D modeller, dokular, sesler, Blueprint'ler, materyaller, animasyonlar.
+          Windows'taki Dosya Gezgini'nin UE5 versiyonu gibi düşün.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-item-label">Sürükle-Bırak</div>
+            <div class="info-item-value">Asset'i viewport'a at</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Sağ Tık</div>
+            <div class="info-item-value">Yeni asset oluştur</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Çift Tık</div>
+            <div class="info-item-value">Asset'i düzenle/aç</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Ctrl+Tık</div>
+            <div class="info-item-value">Çoklu seçim</div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Pro ipucu — Birden fazla Content Browser</div>
+            <p>
+              Üstteki <strong>Window → Content Browser → Content Browser 2</strong> ile ikinci bir pencere
+              açabilirsin. Bir tanesinde Blueprint'ler, diğerinde texture'lar — sürükle-bırak çok hızlanır.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-folder-x"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Asla Windows Gezgini'nden taşıma!</div>
+            <p>
+              Asset'leri <strong>asla</strong> Windows klasöründen elle taşıma/yeniden adlandırma. UE5
+              içindeki referanslar kırılır. Hep Content Browser içinden taşı (sürükle veya sağ tık → Move).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.6 Layout özelleştirme -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.6</div>
+        <h2 class="topic-title">Layout özelleştirme — Kendi düzenini kur</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'in tüm panelleri <strong>taşınabilir</strong>. Bir panelin başlığını tutup sürükleyerek
+          istediğin yere dock'layabilir, serbest pencere yapabilir, hatta ikinci monitöre atabilirsin.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Panel taşı</div>
+              <p>Panelin sekme başlığını tut, sürükle. Mavi yerleştirme alanları belirir — bırakacağın yeri gösterir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Yeni panel aç</div>
+              <p>Üst menüden <strong>Window</strong> → istediğin paneli seç. Kapanan bir paneli de buradan geri açarsın.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Layout kaydet</div>
+              <p><strong>Window → Save Layout → Save Layout As...</strong> ile kendi düzenini kaydet. Bozulursa <strong>Load Layout → Default Editor Layout</strong> ile sıfırlarsın.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Workflow layout'ları</div>
+            <p>
+              Profesyoneller farklı işler için farklı layout kaydeder: "Level Design Layout" (büyük viewport + outliner),
+              "Blueprint Layout" (geniş graph alanı), "Lighting Layout" (details + world settings öne çıkar).
+              İşine göre hızlı geçiş yaparsın.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kısayollar -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">2.7</div>
+        <h2 class="topic-title">Hayat kurtaran kısayollar</h2>
+      </div>
+      <div class="topic-body">
+        <p>Bu kısayolları ezberle — her gün defalarca kullanacaksın.</p>
+        <div class="shortcut-grid">
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>S</kbd></div><span>Kaydet</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>Z</kbd></div><span>Geri al</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>Y</kbd></div><span>İleri al</span></div>
+          <div class="shortcut"><div class="keys"><kbd>P</kbd></div><span>Play / Dur</span></div>
+          <div class="shortcut"><div class="keys"><kbd>F</kbd></div><span>Nesneye odaklan</span></div>
+          <div class="shortcut"><div class="keys"><kbd>G</kbd></div><span>Game View (UI gizle)</span></div>
+          <div class="shortcut"><div class="keys"><kbd>End</kbd></div><span>Yere yapıştır</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>D</kbd></div><span>Çoğalt (Duplicate)</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Alt</kbd><span>+</span>sürükle</div><span>Kopyalayarak taşı</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Delete</kbd></div><span>Sil</span></div>
+          <div class="shortcut"><div class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>Shift</kbd><span>+</span><kbd>H</kbd></div><span>FPS göster</span></div>
+          <div class="shortcut"><div class="keys"><kbd>F11</kbd></div><span>Tam ekran viewport</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>5 panel yeterli:</strong> Viewport, Outliner, Details, Content Browser, Toolbar.</li>
+        <li><strong>F = Focus.</strong> Kaybolduğunda nesne seç + F = anında bulursun.</li>
+        <li><strong>Eksen renkleri sabit:</strong> X kırmızı, Y yeşil, Z mavi — her yerde.</li>
+        <li><strong>W/E/R = taşı/döndür/ölçekle.</strong> Bir nesne seçiliyken bas.</li>
+        <li><strong>Asset'leri Windows'tan taşıma</strong> — referanslar kırılır, hep Content Browser içinden.</li>
+        <li><strong>Layout bozulduysa:</strong> Window → Load Layout → Default ile sıfırla.</li>
+        <li><strong>Sağ tık + WASD</strong> uçuş modunun temelidir; kas hafızasına al.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Arayüzü parmak ucunla tanı</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span>
+              <span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~15 dk</span>
+            </div>
+            <div class="project-title">Proje 1: 5 panel turu</div>
+            <p class="project-desc">
+              Her panelde 3 dakika geçir. Outliner'dan bir nesne seç → Details'te konumunu elle değiştir (X değerini 200 yap) → viewport'ta hareketini izle. Content Browser'da sağ tık → yeni klasör oluştur. Sadece tıkla, incele, alış.
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>5 panelin hepsi bulundu ve incelendi</li>
+                <li>Details'ten konum değiştirildi, viewport'ta görüldü</li>
+                <li>Content Browser'da klasör oluşturuldu</li>
+                <li>F tuşuyla nesneye odaklanıldı</li>
+              </ul>
+            </div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>5 temel panelin yerini ve işlevini ezberlemek.</span></div>
+          </div>
+        </div>
+
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span>
+              <span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~30 dk</span>
+            </div>
+            <div class="project-title">Proje 2: Küçük oda sahnesi</div>
+            <p class="project-desc">
+              Content Browser → StarterContent → Props klasöründen 5-8 farklı nesne al (masa, sandalye, lamba vb.), viewport'a sürükle. W/E/R araçlarıyla bir "oda" düzenle. Bir Point Light ekle (Place Actors → Lights). <kbd>P</kbd> ile içine gir, dolaş.
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>En az 5 prop sahneye eklendi</li>
+                <li>W/E/R araçlarının üçü de kullanıldı</li>
+                <li>Point Light eklendi ve oda aydınlandı</li>
+                <li>Play modunda sahne gezildi</li>
+              </ul>
+            </div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Nesne ekleme, transform araçları ve ışık kullanımını pratiğe dökmek.</span></div>
+          </div>
+        </div>
+
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span>
+              <span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span>
+            </div>
+            <div class="project-title">Proje 3: Kendi layout'unu kur ve kaydet</div>
+            <p class="project-desc">
+              Panelleri taşıyarak kendi çalışma düzenini oluştur: Viewport'u büyüt, Content Browser'ı sağa al, ikinci bir Content Browser aç. 4'lü viewport görünümünü dene (sağ üst Layout butonu → Top/Front/Side/Perspective). Sonra <strong>Window → Save Layout As</strong> ile "BenimDüzenim" olarak kaydet.
+            </p>
+            <div class="project-check">
+              <div class="project-check-title">Tamamlama Kontrolü</div>
+              <ul>
+                <li>En az 2 panel taşındı/yeniden konumlandı</li>
+                <li>İkinci Content Browser açıldı</li>
+                <li>4'lü viewport görünümü denendi</li>
+                <li>Özel layout kaydedildi</li>
+                <li>Default layout'a geri dönülüp tekrar özel layout yüklendi</li>
+              </ul>
+            </div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Arayüzü kendi workflow'una göre şekillendirebilmek — profesyonel alışkanlık.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>4 soru — yanlışta yukarı dönüp tekrar oku.</span></div>
+      </div>
+
+      <div class="quiz-question" id="q2-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Sahnede bir nesneyi kaybettin. Onu hızla bulmak için ne yaparsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q2-1')"><span class="quiz-option-key">A</span><span>G tuşuna basarım</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-1')"><span class="quiz-option-key">B</span><span>Sahneyi yeniden açarım</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q2-1')"><span class="quiz-option-key">C</span><span>Outliner'dan nesneyi seçer, F tuşuna basarım</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-1')"><span class="quiz-option-key">D</span><span>Ctrl+Z ile geri alırım</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q2-1-ok">✓ Doğru! Outliner'dan seç + F (Focus) = kamera anında nesneye odaklanır.</div>
+        <div class="quiz-feedback fail" id="q2-1-fail">✗ Yanlış. Doğru yöntem: Outliner'dan nesneyi seç, sonra F tuşuna bas. G tuşu UI gizler, odaklanma yapmaz.</div>
+      </div>
+
+      <div class="quiz-question" id="q2-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>UE5'te Z ekseni hangi renkle gösterilir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q2-2')"><span class="quiz-option-key">A</span><span>Kırmızı</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-2')"><span class="quiz-option-key">B</span><span>Yeşil</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q2-2')"><span class="quiz-option-key">C</span><span>Mavi</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-2')"><span class="quiz-option-key">D</span><span>Sarı</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q2-2-ok">✓ Doğru! X=Kırmızı, Y=Yeşil, Z=Mavi. Bu kural UE5'in her yerinde geçerli.</div>
+        <div class="quiz-feedback fail" id="q2-2-fail">✗ Yanlış. Z mavidir. Hatırlatma: X kırmızı, Y yeşil, Z mavi (RGB → XYZ sırası).</div>
+      </div>
+
+      <div class="quiz-question" id="q2-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Bir nesneyi ölçeklemek (büyütmek/küçültmek) için hangi tuşa basarsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q2-3')"><span class="quiz-option-key">A</span><span>W</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-3')"><span class="quiz-option-key">B</span><span>E</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q2-3')"><span class="quiz-option-key">C</span><span>R</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-3')"><span class="quiz-option-key">D</span><span>F</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q2-3-ok">✓ Doğru! W=Taşı, E=Döndür, R=Ölçekle (Resize/Scale).</div>
+        <div class="quiz-feedback fail" id="q2-3-fail">✗ Yanlış. R = ölçekle. W taşır, E döndürür, F odaklanır.</div>
+      </div>
+
+      <div class="quiz-question" id="q2-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Asset'lerini neden Windows Dosya Gezgini'nden taşımamalısın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q2-4')"><span class="quiz-option-key">A</span><span>Windows daha yavaştır</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q2-4')"><span class="quiz-option-key">B</span><span>UE5 içindeki asset referansları kırılır, proje bozulur</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-4')"><span class="quiz-option-key">C</span><span>Dosya boyutu artar</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q2-4')"><span class="quiz-option-key">D</span><span>Sorun yok, taşıyabilirsin</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q2-4-ok">✓ Doğru! UE5 asset'leri birbirine referansla bağlıdır. Dışarıdan taşıyınca bu bağlar kopar. Hep Content Browser içinden taşı.</div>
+        <div class="quiz-feedback fail" id="q2-4-fail">✗ Yanlış. Asıl sebep: referanslar kırılır. UE5 asset'leri iç referanslarla bağlıdır, Windows'tan taşımak bunları bozar.</div>
+      </div>
+    </section>
+
+    <!-- Tamamla -->
+    <button class="btn-complete" data-section="s2">
+      <i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım
+    </button>
+
+    <!-- Nav -->
+    <nav class="page-nav">
+      <a href="01-kurulum.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 01</div><div class="page-nav-title">Kurulum</div></div>
+      </a>
+      <a href="03-gamemode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 03</div><div class="page-nav-title">GameMode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

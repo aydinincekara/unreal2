@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 05: Actor &amp; Event — UnrealAkademi</title>
+  <meta name="description" content="Actor sınıfı, eventler, functionlar, BeginPlay/Tick.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 05: Actor &amp; Event — UnrealAkademi">
+  <meta property="og:description" content="Actor sınıfı, eventler, functionlar, BeginPlay/Tick.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 05: Actor &amp; Event — UnrealAkademi">
+  <meta name="twitter:description" content="Actor sınıfı, eventler, functionlar, BeginPlay/Tick.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link active" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>Blueprint Temelleri</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Actor & Event</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 05</span>
+        <span class="page-category">Blueprint Temelleri</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 75 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Actor, Event & Function — Oyunun Hayatı</h1>
+      <p class="page-lead">
+        Blueprint'in dilini öğrendin. Şimdi onu hayata geçiren üç kavram: <strong>Actor</strong> (sahnedeki
+        her şey), <strong>Event</strong> (ne zaman tetiklenir), <strong>Function</strong> (tekrar kullanılan iş).
+        Bu üçünü bağlayınca oyunun "canlanır". Tick performans tuzağına da özellikle değineceğiz.
+      </p>
+    </header>
+
+    <!-- 5.1 ACTOR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.1</div>
+        <h2 class="topic-title">Actor nedir? — Sahnedeki her şey</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'te bir seviyeye (level) koyabildiğin <strong>her şey</strong> bir Actor'dür. Bir küp, bir ışık,
+          bir karakter, bir kamera, bir ses kaynağı, hatta görünmez bir tetikleyici kutu — hepsi Actor.
+          Actor, "dünyada var olabilen ve bir konumu olan nesne" demektir.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-movie"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir <strong>film setini</strong> düşün. Sahnedeki her nesne bir "aktör"dür — oyuncular,
+              mobilyalar, lambalar, kameralar. Bazıları konuşur (karakter), bazıları sadece durur (masa),
+              bazıları görünmezdir (ışık yönlendirici). UE5'te de "Actor" tam olarak budur: sahnede
+              <em>yer kaplayan, rol üstlenen</em> her şey.
+            </p>
+          </div>
+        </div>
+
+        <h4>Actor'ün parçaları — Components</h4>
+        <p>
+          Bir Actor tek başına genelde boştur; içine <strong>Component</strong>'ler eklersin. Component,
+          Actor'e yetenek katan parçalardır. Bir araba Actor'ünü düşün:
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-cube"></i></div>
+            <h4>Static Mesh Component</h4>
+            <p>Görünen 3D model. Arabanın gövdesi, tekerlekleri. "Bu Actor neye benziyor?" sorusunun cevabı.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-box"></i></div>
+            <h4>Collision Component</h4>
+            <p>Çarpışma alanı. "Bu Actor'e neresi dokunulabilir?" Görünmez ama fiziksel sınır çizer.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-volume"></i></div>
+            <h4>Audio Component</h4>
+            <p>Ses kaynağı. Motor sesi, fren sesi. Actor'e bağlı çalan sesler.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-bulb"></i></div>
+            <h4>Light Component</h4>
+            <p>Işık. Arabanın farları. Actor'e ışık yayma yeteneği katar.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-hierarchy"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Root Component ve hiyerarşi</div>
+            <p>
+              Her Actor'ün bir <strong>Root (kök)</strong> component'i vardır. Diğer component'ler ona bağlanır.
+              Root'u hareket ettirirsen, ona bağlı her şey birlikte hareket eder — tıpkı arabayı sürünce
+              tekerleklerin de gitmesi gibi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.2 EVENT -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.2</div>
+        <h2 class="topic-title">Event nedir? — "Ne zaman" olur</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          <strong>Event</strong> (olay), bir şey gerçekleştiğinde Blueprint'i harekete geçiren tetikleyicidir.
+          "Oyun başladığında", "her karede", "biri bana dokunduğunda"... Event'ler oyununun
+          <em>"ne zaman bir şey yapacağını"</em> belirler. Hatırla — event node'ları <strong>kırmızıdır</strong>.
+        </p>
+
+        <p>En sık kullanacağın event'ler:</p>
+
+        <table class="compare-table">
+          <thead><tr><th>Event</th><th>Ne zaman tetiklenir?</th><th>Sıklık</th><th>Tipik kullanım</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>BeginPlay</code></td>
+              <td>Oyun/Actor başladığı an</td>
+              <td><span class="badge badge-success">1 kez</span></td>
+              <td>Başlangıç ayarları, değer atama</td>
+            </tr>
+            <tr>
+              <td><code>Tick</code></td>
+              <td>Her görüntü karesinde</td>
+              <td><span class="badge badge-danger">Saniyede 60+</span></td>
+              <td>Sürekli hareket, takip, sayaç</td>
+            </tr>
+            <tr>
+              <td><code>OnActorBeginOverlap</code></td>
+              <td>Bir Actor çarpışma alanına girince</td>
+              <td><span class="badge badge-warning">Olayla</span></td>
+              <td>Tetikleyici, toplama, kapı açma</td>
+            </tr>
+            <tr>
+              <td><code>OnActorEndOverlap</code></td>
+              <td>Actor çarpışma alanından çıkınca</td>
+              <td><span class="badge badge-warning">Olayla</span></td>
+              <td>Bölge terk etme, kapı kapama</td>
+            </tr>
+            <tr>
+              <td><code>OnHit</code></td>
+              <td>Fiziksel çarpışma olunca</td>
+              <td><span class="badge badge-warning">Olayla</span></td>
+              <td>Hasar, sekme, kırılma</td>
+            </tr>
+            <tr>
+              <td><code>Custom Event</code></td>
+              <td>Sen çağırdığında</td>
+              <td><span class="badge badge-info">İsteğe bağlı</span></td>
+              <td>Kendi tetikleyicilerin</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>BeginPlay vs Tick — En önemli ikili</h4>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">BeginPlay (bir kez) vs Tick (her kare)</div>
+          <div style="display:flex; gap:24px; flex-wrap:wrap;">
+            <div class="bp-flow">
+              <div class="bp-node event">
+                <div class="bp-node-title">Event BeginPlay</div>
+                <div class="bp-node-body"><div class="bp-node-row output"><span>▸</span><span class="pin-triangle pin-exec"></span></div></div>
+              </div>
+              <span class="bp-comment">// Oyun başında 1 kez. "Hazırlık" anı.</span>
+            </div>
+            <div class="bp-flow">
+              <div class="bp-node event">
+                <div class="bp-node-title">Event Tick</div>
+                <div class="bp-node-body">
+                  <div class="bp-node-row output"><span>▸</span><span class="pin-triangle pin-exec"></span></div>
+                  <div class="bp-node-row output"><span>Delta Seconds</span><span class="pin pin-float"></span></div>
+                </div>
+              </div>
+              <span class="bp-comment">// Her karede tekrar tekrar. "Sürekli kontrol" anı.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-clock-play"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Delta Seconds nedir?</div>
+            <p>
+              Tick'in çıkışındaki <strong>Delta Seconds</strong>, "son kareden bu yana kaç saniye geçti"
+              bilgisidir. Bilgisayardan bilgisayara FPS değişir — bu yüzden hareketi Delta Seconds ile
+              çarparsan, oyun her cihazda <strong>aynı hızda</strong> akar. Yoksa hızlı bilgisayarda
+              karakterin uçar gider.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.3 TICK TUZAĞI -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.3</div>
+        <h2 class="topic-title">⚠️ Tick tuzağı — Performansın baş düşmanı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Yeni başlayanların en büyük hatası: <strong>her şeyi Tick'e koymak.</strong> Tick saniyede
+          60+ kez çalışır. İçine ağır işlemler koyarsan oyun kasmaya başlar. 100 tane Actor'ün hepsi
+          her karede karmaşık hesap yapıyorsa, FPS yere çakılır.
+        </p>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-flame"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Kötü örnek</div>
+            <p>
+              "Düşman oyuncuyu görüyor mu?" kontrolünü Tick'te yapmak. 50 düşman × saniyede 60 kontrol =
+              saniyede 3000 hesap. Oysa bu kontrolü saniyede 2-3 kez yapmak yeterli.
+            </p>
+          </div>
+        </div>
+
+        <h4>Tick yerine ne kullanmalı?</h4>
+        <div class="tips-list">
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-clock"></i></div>
+            <p><strong>Timer:</strong> Belirli aralıklarla çalışan iş için <code>Set Timer by Event</code> kullan. "Her 0.5 saniyede kontrol et" gibi. Tick'ten çok daha hafif.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-bell"></i></div>
+            <p><strong>Event-driven:</strong> "Bir şey olunca" mantığı kur. Overlap, OnHit gibi event'ler sadece gerektiğinde tetiklenir — sürekli kontrol gerekmez.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-toggle-right"></i></div>
+            <p><strong>Tick'i kapat:</strong> Gerekmiyorsa Class Defaults'tan <strong>"Start with Tick Enabled"</strong> işaretini kaldır. İhtiyaç anında <code>Set Actor Tick Enabled</code> ile aç/kapat.</p>
+          </div>
+          <div class="tip-item">
+            <div class="tip-icon"><i class="ti ti-gauge"></i></div>
+            <p><strong>Tick Interval:</strong> Tick şart ise, <strong>Tick Interval</strong>'i artır (örn. 0.1 sn). Saniyede 60 yerine 10 kez çalışır.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye altın kural</div>
+            <p>
+              Profesyonel kuralı: <strong>"Tick'e koymadan önce, gerçekten her karede mi gerekli diye sor."</strong>
+              Çoğu zaman cevap hayır. Hareket/animasyon gibi gerçekten her kare gereken şeyler Tick'te kalır;
+              mantık kontrolleri Timer veya event'lere taşınır. Bu alışkanlık seni "kasmayan oyun" yapan
+              geliştirici yapar.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.4 FUNCTION -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.4</div>
+        <h2 class="topic-title">Function nedir? — Tekrar kullanılan iş paketi</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Aynı node grubunu defalarca yazmak yerine, onu bir <strong>Function</strong>'a paketlersin.
+          Sonra tek bir node ile çağırırsın. Function, "bir işi yapan, isimlendirilmiş, tekrar
+          kullanılabilir kod paketi"dir.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-tools-kitchen-2"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Bir <strong>yemek tarifi</strong> gibi. "Soğan doğra" dediğinde, her seferinde "bıçağı al,
+              soğanı tut, kes, kes, kes..." demezsin — "soğan doğra" tek komutu yeterli. Function da öyle:
+              karmaşık adımları bir isim altında toplar, sonra o ismi çağırırsın. <strong>"TakeDamage"</strong>
+              dediğinde arkada 10 node çalışır ama sen tek node görürsün.
+            </p>
+          </div>
+        </div>
+
+        <h4>Function'ın yapısı: Input ve Output</h4>
+        <p>Bir function'a veri verebilir (input), ondan veri alabilirsin (output). Örnek: hasar fonksiyonu.</p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Function örneği — "TakeDamage"</div>
+          <div class="bp-flow">
+            <div class="bp-node function">
+              <div class="bp-node-title">Take Damage</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div>
+                <div class="bp-node-row input"><span class="pin pin-float"></span><span>Damage Amount (input)</span></div>
+                <div class="bp-node-row output"><span>exec ▸</span><span class="pin-triangle pin-exec"></span></div>
+                <div class="bp-node-row output"><span>Is Dead? (output)</span><span class="pin pin-bool"></span></div>
+              </div>
+            </div>
+            <span class="bp-comment">// "Şu kadar hasar al" → içeride canı azaltır → "öldü mü?" cevabını döner</span>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Input (Girdi)</div><div class="info-item-value">Function'a verdiğin veri</div></div>
+          <div class="info-item"><div class="info-item-label">Output (Çıktı)</div><div class="info-item-value">Function'ın döndürdüğü sonuç</div></div>
+          <div class="info-item"><div class="info-item-label">Nasıl oluşturulur</div><div class="info-item-value">My Blueprint → Functions → +</div></div>
+          <div class="info-item"><div class="info-item-label">Nasıl çağrılır</div><div class="info-item-value">Graph'ta ismini ara</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.5 FUNCTION vs MACRO vs EVENT -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.5</div>
+        <h2 class="topic-title">Function mı, Macro mu, Custom Event mi?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Üçü de "iş paketler" ama farklı durumlarda kullanılır. Bu tablo kafandaki karışıklığı giderecek:
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Özellik</th><th>Function</th><th>Macro</th><th>Custom Event</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Renk</strong></td><td>Mavi</td><td>Camgöbeği</td><td>Kırmızı</td></tr>
+            <tr><td><strong>Çıktı (return) verir mi?</strong></td><td>✓ Evet</td><td>✓ Evet (birden çok)</td><td>✗ Hayır</td></tr>
+            <tr><td><strong>Gecikme (Delay) içerebilir mi?</strong></td><td>✗ Hayır</td><td>✓ Evet</td><td>✓ Evet</td></tr>
+            <tr><td><strong>Birden çok exec çıkışı?</strong></td><td>✗ Tek</td><td>✓ Olabilir</td><td>✗ Tek</td></tr>
+            <tr><td><strong>Uzaktan çağrılabilir mi?</strong></td><td>✓ Evet</td><td>✗ Hayır (sadece kopyalanır)</td><td>✓ Evet</td></tr>
+            <tr><td><strong>Ne zaman kullan?</strong></td><td>Değer dönen temiz işler</td><td>Tekrarlı node grupları</td><td>Gecikmeli/tetiklenen işler</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">En sık karışan nokta: Delay</div>
+            <p>
+              Bir <strong>Function içine Delay (gecikme) node'u koyamazsın</strong> — UE5 izin vermez. Eğer
+              "2 saniye bekle sonra yap" gibi bir şey gerekiyorsa <strong>Custom Event</strong> veya
+              <strong>Macro</strong> kullan. Bu kural çok kafa karıştırır, not al.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Pratik seçim rehberi</div>
+            <p>
+              Değer döndüren temiz bir hesap mı? → <strong>Function</strong>. Gecikme/zamanlama var mı? →
+              <strong>Custom Event</strong>. Aynı node grubunu kısayol yapmak mı istiyorsun? → <strong>Macro</strong>.
+              Başlangıçta %80 Function ve Custom Event kullanacaksın.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5.6 OVERLAP ÖRNEĞİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">5.6</div>
+        <h2 class="topic-title">Pratikte: Overlap ile toplama mekaniği</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Event'leri gerçek bir örnekte görelim: bir altın parçasına dokununca toplanması. Bu, oyunlardaki
+          en temel mekaniktir ve <code>OnComponentBeginOverlap</code> event'ini kullanır.
+        </p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Altın toplama mantığı</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">OnComponentBeginOverlap</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row output"><span>▸</span><span class="pin-triangle pin-exec"></span></div>
+                <div class="bp-node-row output"><span>Other Actor</span><span class="pin pin-object"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Add Score (+10)</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Destroy Actor</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Mantık şöyle akıyor: <strong>1)</strong> Bir Actor altına dokundu (overlap event tetiklendi) →
+          <strong>2)</strong> Skoru 10 artır → <strong>3)</strong> Altını yok et (toplandı). Üç node, çalışan
+          bir mekanik. Beyaz teller sırayı, mantık net.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">"Other Actor" pinini neden kontrol etmeli?</div>
+            <p>
+              Overlap event'i <em>herhangi bir şey</em> dokununca tetiklenir — düşman, mermi, başka altın...
+              Gerçek oyunda "dokunan oyuncu mu?" diye kontrol edersin (Cast To karakterin, Bölüm 04'teki cast).
+              Yoksa düşman bile altına dokununca skor artar. Detayını Bölüm 07'de göreceğiz.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Actor = sahnedeki her şey.</strong> Component'ler ona yetenek katar.</li>
+        <li><strong>BeginPlay 1 kez, Tick her kare</strong> çalışır.</li>
+        <li><strong>Delta Seconds ile çarp</strong> → hareket her cihazda aynı hızda olur.</li>
+        <li><strong>Tick'i kötüye kullanma!</strong> Mantık kontrolleri için Timer/event kullan.</li>
+        <li><strong>Function değer döndürür, Delay içeremez.</strong> Gecikme gerekiyorsa Custom Event.</li>
+        <li><strong>Macro = node grubu kısayolu</strong>, kopyalanır; Function uzaktan çağrılır.</li>
+        <li><strong>Overlap = dokunma event'i.</strong> "Other Actor" pinini kontrol etmeyi unutma.</li>
+        <li><strong>Root component'i hareket ettirince</strong> bağlı her şey birlikte gider.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Event ve Function'ı gerçek mekaniklerde kullan</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: Renk değiştiren tetikleyici</div>
+            <p class="project-desc">Bir Actor BP oluştur: Static Mesh (Cube) + Box Collision component. <code>OnComponentBeginOverlap</code> event'inde mesh'in materyalini değiştir (Set Material). <code>OnComponentEndOverlap</code>'ta eski haline döndür. Sahneye at, karakterinle içine girip çık — renk değişsin.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Box Collision component eklendi</li><li>BeginOverlap'ta renk değişti</li><li>EndOverlap'ta eski renge döndü</li><li>Karakterle test edildi</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Overlap event çiftini ve component kullanımını öğrenmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~35 dk</span></div>
+            <div class="project-title">Proje 2: TakeDamage fonksiyonu</div>
+            <p class="project-desc">Bir karakter/hedef BP'de <strong>Health</strong> (Float) variable oluştur, başlangıç 100. <strong>TakeDamage</strong> adında bir Function yap: input olarak DamageAmount (Float) alsın, Health'ten düşsün, output olarak IsDead (Bool) döndürsün (Health ≤ 0 ise true). BeginPlay'de test için 30 hasar uygula, sonucu Print String ile yazdır.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Health variable oluşturuldu (Float, 100)</li><li>TakeDamage function yazıldı (input + output)</li><li>Health düşüş mantığı çalışıyor</li><li>IsDead doğru hesaplanıyor</li><li>Print String ile sonuç doğrulandı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Input/output'lu Function yazmayı ve variable manipülasyonunu öğrenmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~50 dk</span></div>
+            <div class="project-title">Proje 3: Tick'siz nabız atan ışık (Timer + Custom Event)</div>
+            <p class="project-desc">Point Light'lı bir Actor. <strong>Tick KULLANMADAN</strong>, bir Custom Event ("Pulse") oluştur: ışığın yoğunluğunu (Intensity) artırıp azaltsın. BeginPlay'de <code>Set Timer by Event</code> ile bu Custom Event'i her 0.5 saniyede tetikle. Sonra performansı karşılaştırmak için aynısını Tick'le yapıp Stat FPS ile farkı gözlemle.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Custom Event ("Pulse") oluşturuldu</li><li>Set Timer by Event ile tetiklendi (Tick yok)</li><li>Işık yoğunluğu periyodik değişiyor</li><li>Tick'li versiyonla performans karşılaştırıldı</li><li>Timer'ın neden daha verimli olduğu anlaşıldı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Tick tuzağından kaçınmayı, Timer ve Custom Event ile performanslı kod yazmayı öğrenmek.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q5-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>BeginPlay ve Tick event'leri arasındaki temel fark nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q5-1')"><span class="quiz-option-key">A</span><span>BeginPlay sadece karakterlerde, Tick her Actor'de çalışır</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q5-1')"><span class="quiz-option-key">B</span><span>BeginPlay başta bir kez, Tick her görüntü karesinde çalışır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-1')"><span class="quiz-option-key">C</span><span>İkisi de aynı anda çalışır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-1')"><span class="quiz-option-key">D</span><span>Tick başta bir kez, BeginPlay sürekli çalışır</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q5-1-ok">✓ Doğru! BeginPlay = başlangıç (1 kez), Tick = her kare (saniyede 60+).</div>
+        <div class="quiz-feedback fail" id="q5-1-fail">✗ Yanlış. BeginPlay oyun/Actor başında bir kez; Tick her karede tekrar tekrar çalışır.</div>
+      </div>
+
+      <div class="quiz-question" id="q5-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Hareketi neden Delta Seconds ile çarpmalısın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q5-2')"><span class="quiz-option-key">A</span><span>Daha hızlı olsun diye</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q5-2')"><span class="quiz-option-key">B</span><span>Hareket her bilgisayarda (FPS fark etse de) aynı hızda olsun diye</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-2')"><span class="quiz-option-key">C</span><span>UE5 zorunlu kıldığı için</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-2')"><span class="quiz-option-key">D</span><span>Renk değişimi için</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q5-2-ok">✓ Doğru! Delta Seconds, FPS farklarını dengeler — hareket her cihazda tutarlı hızda akar.</div>
+        <div class="quiz-feedback fail" id="q5-2-fail">✗ Yanlış. Delta Seconds ile çarpmak, farklı FPS'lerde hareketin aynı hızda kalmasını sağlar.</div>
+      </div>
+
+      <div class="quiz-question" id="q5-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>50 düşmanın "oyuncuyu görüyor mu?" kontrolünü en verimli nasıl yaparsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q5-3')"><span class="quiz-option-key">A</span><span>Her düşmanın Tick'inde sürekli kontrol</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q5-3')"><span class="quiz-option-key">B</span><span>Timer ile saniyede birkaç kez kontrol (Tick yerine)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-3')"><span class="quiz-option-key">C</span><span>BeginPlay'de bir kez kontrol</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-3')"><span class="quiz-option-key">D</span><span>Hiç kontrol etme</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q5-3-ok">✓ Doğru! Tick'te 3000 hesap/sn yerine Timer ile saniyede 2-3 kontrol yeterli ve çok daha hafif.</div>
+        <div class="quiz-feedback fail" id="q5-3-fail">✗ Yanlış. Tick'te sürekli kontrol performansı öldürür. Timer ile periyodik kontrol doğru yaklaşımdır.</div>
+      </div>
+
+      <div class="quiz-question" id="q5-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir Function'ın içine neden Delay (gecikme) node'u koyamazsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q5-4')"><span class="quiz-option-key">A</span><span>Delay çok yavaş olduğu için</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q5-4')"><span class="quiz-option-key">B</span><span>Function'lar gecikme/zaman içeremez; bunun için Custom Event veya Macro kullanılır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-4')"><span class="quiz-option-key">C</span><span>Koyabilirsin, sorun yok</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-4')"><span class="quiz-option-key">D</span><span>Delay sadece Tick'te çalışır</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q5-4-ok">✓ Doğru! Function'lar zaman gerektiren (latent) node içeremez. Gecikme için Custom Event veya Macro kullan.</div>
+        <div class="quiz-feedback fail" id="q5-4-fail">✗ Yanlış. Function içine Delay konamaz — UE5 latent node'lara izin vermez. Custom Event veya Macro gerekir.</div>
+      </div>
+
+      <div class="quiz-question" id="q5-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Bir Actor'ün görünen 3D modelini hangi component sağlar?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q5-5')"><span class="quiz-option-key">A</span><span>Audio Component</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-5')"><span class="quiz-option-key">B</span><span>Collision Component</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q5-5')"><span class="quiz-option-key">C</span><span>Static Mesh Component</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q5-5')"><span class="quiz-option-key">D</span><span>Light Component</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q5-5-ok">✓ Doğru! Static Mesh Component, Actor'ün görünen 3D modelini sağlar.</div>
+        <div class="quiz-feedback fail" id="q5-5-fail">✗ Yanlış. Görünen model = Static Mesh Component. Audio ses, Collision çarpışma, Light ışık verir.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s5"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="04-blueprint-temelleri.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 04</div><div class="page-nav-title">Blueprint Sistemi</div></div>
+      </a>
+      <a href="06-variable-turleri.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 06</div><div class="page-nav-title">Variable Türleri</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

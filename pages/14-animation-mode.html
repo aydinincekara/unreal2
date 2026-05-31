@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 14: Animation Mode — UnrealAkademi</title>
+  <meta name="description" content="Sequencer, Control Rig, keyframe, Cine Camera, bake.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 14: Animation Mode — UnrealAkademi">
+  <meta property="og:description" content="Sequencer, Control Rig, keyframe, Cine Camera, bake.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 14: Animation Mode — UnrealAkademi">
+  <meta name="twitter:description" content="Sequencer, Control Rig, keyframe, Cine Camera, bake.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link active" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Animation Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 14</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 75 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Animation Mode — Editör İçi Animasyon</h1>
+      <p class="page-lead">
+        Modeling Mode "DCC'siz model" sunduğu gibi, Animation Mode da "DCC'siz animasyon" sunar. Karakter pozları kurmak,
+        Control Rig kullanmak, Sequencer ile sinematik kaydetmek — Maya'ya ihtiyaç duymadan UE5 içinde mümkün.
+      </p>
+    </header>
+
+    <!-- 14.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.1</div>
+        <h2 class="topic-title">Animation Mode nedir, ne işe yarar?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Animation Mode, UE5'in editörü içinde karakterleri ve animasyonları üzerinde çalışmana izin veren modüldür.
+          Klasik animasyon editörü bağımsız bir pencere açar — Animation Mode ise <strong>sahnenin üstünde</strong>
+          çalışır. Karakter level'da, sen onu hemen orada poz veriyor veya animasyon kaydediyorsun.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-video"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Animation Mode bir <strong>sahne yönetmenliği koltuğudur.</strong> Oyuncuyu sahneye getirip "şimdi
+              elini kaldır, başını çevir, kaydet" diyorsun. Animasyonu ayrı bir stüdyoda yapıp sonra sahneye
+              taşımak yerine, doğrudan sahnede çalışırsın. Sinematik (cutscene) yapmanın doğal yolu budur.
+            </p>
+          </div>
+        </div>
+
+        <h4>Ne yapabilirsin?</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-user-edit"></i></div>
+            <h4>Poz oluşturma</h4>
+            <p>Karakterin kemiklerini elle döndür, kaydet. Statik pozlar (resim/promo için) veya animasyon keyframe'leri.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-bone"></i></div>
+            <h4>Control Rig</h4>
+            <p>Karakter için manipülatör (kontrol şekilleri) sistemi. Kemikleri tek tek değil, IK/FK kontrolleriyle yönet.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-film"></i></div>
+            <h4>Sequencer entegrasyonu</h4>
+            <p>Karakterleri timeline'a ekle, hareket animasyonlarını burada kaydet, sinematik üret.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-key"></i></div>
+            <h4>Keyframe ekleme</h4>
+            <p>Timeline'da belli zamanlarda kemik pozlarını sabitle, motor aradaki kareleri otomatik dolduracak (interpolation).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.2 GİRİŞ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.2</div>
+        <h2 class="topic-title">Animation Mode'a giriş</h2>
+      </div>
+      <div class="topic-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sahnede bir karakter olmalı</div>
+              <p>Sahneye bir Skeletal Mesh Actor sürükle (örn. SK_Mannequin). Veya kendi karakterini koy.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Mode değiştir</div>
+              <p>Sol üstteki Selection Mode dropdown'undan <strong>Animation</strong>'ı seç (veya <kbd>Shift</kbd>+<kbd>6</kbd>).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Karakteri seç</div>
+              <p>Outliner'dan veya viewport'tan karakteri seç. Sol panelde Animation Mode'un komutları aktif olur.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sequencer'ı aç</div>
+              <p>Üstte <strong>Sequencer</strong> butonu veya Window menüsünden açılır. Karakteri Sequencer'a ekleyerek üzerinde animasyon yapacaksın.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Pose Tools</div><div class="info-item-value">Hazır pozları kaydet/uygula</div></div>
+          <div class="info-item"><div class="info-item-label">Skeleton Tree</div><div class="info-item-value">Kemikleri tek tek seç</div></div>
+          <div class="info-item"><div class="info-item-label">Control Rig</div><div class="info-item-value">Manipülatör kontroller</div></div>
+          <div class="info-item"><div class="info-item-label">Sequencer</div><div class="info-item-value">Zaman çizelgesi + keyframe</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.3 SEQUENCER -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.3</div>
+        <h2 class="topic-title">Sequencer — Sinematik timeline</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Sequencer, UE5'in <strong>zaman çizelgesi tabanlı animasyon ve sinematik aracıdır.</strong> Bir film
+          editöründe gördüğün gibi track'ler, keyframe'ler, kameralar var. Karakterleri, ışıkları, kameraları
+          aynı zamanda yönetip kayıt aldığında sinematik bir cutscene çıkar.
+        </p>
+
+        <h4>Sequencer arayüzünün ana parçaları</h4>
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-film"></i> Sequencer — Yerleşim</span>
+            <span>Zaman çizelgesi tabanlı sinematik editör</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequencer şeması">
+              <rect x="0" y="0" width="780" height="320" rx="8" fill="#0d0d1a"/>
+
+              <!-- toolbar -->
+              <rect x="8" y="8" width="764" height="36" rx="6" fill="#1f1f30" stroke="#7c5cff" stroke-width="1.5"/>
+              <circle cx="35" cy="26" r="9" fill="#34d399"/>
+              <path d="M 31 22 L 31 30 L 39 26 Z" fill="#0d0d1a"/>
+              <text x="60" y="30" fill="#9898b0" font-family="monospace" font-size="10">▮▮</text>
+              <text x="100" y="30" fill="#9898b0" font-family="monospace" font-size="10">|◀</text>
+              <text x="125" y="30" fill="#9898b0" font-family="monospace" font-size="10">▶|</text>
+              <text x="200" y="30" fill="#67e8f9" font-family="monospace" font-size="10">[00:00:00] / [00:05:00]</text>
+              <text x="680" y="30" fill="#a78bfa" font-family="sans-serif" font-size="11" font-weight="bold">TOOLBAR</text>
+
+              <!-- Track listesi (sol) -->
+              <rect x="8" y="52" width="220" height="260" rx="6" fill="#16161d" stroke="#00d4ff" stroke-width="1.5"/>
+              <text x="118" y="72" fill="#67e8f9" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">TRACK LIST</text>
+              <line x1="20" y1="82" x2="216" y2="82" stroke="#2a2a3e"/>
+              <text x="20" y="100" fill="#9898b0" font-family="monospace" font-size="10">▾ SK_Mannequin</text>
+              <text x="32" y="116" fill="#a78bfa" font-family="monospace" font-size="9">▸ Transform</text>
+              <text x="32" y="132" fill="#c084fc" font-family="monospace" font-size="9">▸ ControlRig</text>
+              <text x="32" y="148" fill="#f5c842" font-family="monospace" font-size="9">▸ Animation</text>
+              <text x="20" y="170" fill="#9898b0" font-family="monospace" font-size="10">▾ CineCamera</text>
+              <text x="32" y="186" fill="#67e8f9" font-family="monospace" font-size="9">▸ Transform</text>
+              <text x="32" y="202" fill="#67e8f9" font-family="monospace" font-size="9">▸ Focal Length</text>
+              <text x="20" y="224" fill="#9898b0" font-family="monospace" font-size="10">▾ Lighting</text>
+              <text x="32" y="240" fill="#34d399" font-family="monospace" font-size="9">▸ Intensity</text>
+
+              <!-- Track içerikleri (sağ) -->
+              <rect x="236" y="52" width="536" height="260" rx="6" fill="#0d0d18" stroke="#7c5cff" stroke-width="1.5"/>
+              <!-- ruler -->
+              <line x1="236" y1="80" x2="772" y2="80" stroke="#2a2a3e"/>
+              <text x="270" y="74" fill="#5a5a72" font-family="monospace" font-size="8">0s</text>
+              <text x="370" y="74" fill="#5a5a72" font-family="monospace" font-size="8">1s</text>
+              <text x="470" y="74" fill="#5a5a72" font-family="monospace" font-size="8">2s</text>
+              <text x="570" y="74" fill="#5a5a72" font-family="monospace" font-size="8">3s</text>
+              <text x="670" y="74" fill="#5a5a72" font-family="monospace" font-size="8">4s</text>
+              <text x="765" y="74" fill="#5a5a72" font-family="monospace" font-size="8">5s</text>
+
+              <!-- Animation track strip -->
+              <rect x="250" y="138" width="450" height="16" rx="3" fill="#3a3010" stroke="#f5c842"/>
+              <text x="475" y="150" fill="#fde68a" font-family="monospace" font-size="9" text-anchor="middle">AS_Walk (Animation Section)</text>
+
+              <!-- Transform keyframes -->
+              <circle cx="270" cy="116" r="4" fill="#a78bfa"/>
+              <circle cx="380" cy="116" r="4" fill="#a78bfa"/>
+              <circle cx="560" cy="116" r="4" fill="#a78bfa"/>
+              <circle cx="680" cy="116" r="4" fill="#a78bfa"/>
+              <line x1="270" y1="116" x2="680" y2="116" stroke="#a78bfa" stroke-width="1" stroke-dasharray="2 2"/>
+
+              <!-- Camera keyframes -->
+              <circle cx="270" cy="190" r="4" fill="#67e8f9"/>
+              <circle cx="500" cy="190" r="4" fill="#67e8f9"/>
+              <circle cx="700" cy="190" r="4" fill="#67e8f9"/>
+              <line x1="270" y1="190" x2="700" y2="190" stroke="#67e8f9" stroke-width="1" stroke-dasharray="2 2"/>
+
+              <!-- Playhead -->
+              <line x1="400" y1="80" x2="400" y2="312" stroke="#ef4444" stroke-width="2"/>
+              <polygon points="395,80 405,80 400,90" fill="#ef4444"/>
+
+              <text x="504" y="305" fill="#7c5cff" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">TIMELINE & KEYFRAMES</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Track List (sol)</div><div class="info-item-value">Sahnedeki actor'lar ve property'leri</div></div>
+          <div class="info-item"><div class="info-item-label">Timeline (sağ)</div><div class="info-item-value">Zaman çizgisi + keyframe noktaları</div></div>
+          <div class="info-item"><div class="info-item-label">Playhead (kırmızı)</div><div class="info-item-value">Mevcut zamanı gösteren çubuk</div></div>
+          <div class="info-item"><div class="info-item-label">Animation Section</div><div class="info-item-value">Sürüklenip uzatılan animasyon parçası</div></div>
+        </div>
+
+        <h4>İlk Sequencer iş akışı</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Level Sequence oluştur</div>
+              <p>Content Browser → sağ tık → <strong>Cinematics → Level Sequence</strong>. İsim: <code>LS_Sahne01</code>. Çift tıkla, Sequencer açılır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Actor'ı Sequencer'a ekle</div>
+              <p>Sahnedeki karakteri seç → Sequencer'da <strong>+ Track</strong> butonu → <strong>Actor To Sequencer → SK_Mannequin</strong>. Track listede belirir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Animation track ekle</div>
+              <p>Track'in altında + butonuna bas → <strong>Animation → AS_Walk</strong> seç. Timeline'da animasyon dilimi belirir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Oynat</div>
+              <p>Yeşil Play butonuna bas — karakter sahnede yürür. Playhead timeline'da ilerler. Bu artık bir sinematik!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.4 KEYFRAME -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.4</div>
+        <h2 class="topic-title">Keyframe sistemi — Zaman içinde değer kaydetmek</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir property (örn. Actor Location) için belli bir zamanda bir değer kaydedersin = <strong>keyframe</strong>. Sequencer, iki keyframe arasındaki kareleri otomatik interpolate eder (akıcı geçiş).
+        </p>
+
+        <h4>Keyframe ekleme</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Property track'i aç</div>
+              <p>Actor track'inin altında Transform → Location'a tıkla. Sağ tarafta o property'nin timeline'ı belirir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Playhead'i zamanı sürükle</div>
+              <p>Kırmızı playhead'i 0. saniyeye götür. Karakter başlangıç pozisyonunda olsun.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Keyframe ekle</div>
+              <p>Property track'in solundaki <strong>+</strong> (anahtar ikonu) butonuna bas. Bir nokta belirir = keyframe.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İleri git, karakteri taşı, tekrar key</div>
+              <p>Playhead'i 3. saniyeye götür. Karakteri sahnede başka noktaya taşı. <strong>S</strong> tuşuna bas (Set Key kısayolu) veya + butonu — ikinci keyframe.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">5</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Oynat</div>
+              <p>Karakter 3 saniyede ilk noktadan ikinciye akıcı şekilde kayar. Çünkü Sequencer aradaki tüm kareleri interpolate etti.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Interpolation tipi</div>
+            <p>
+              Keyframe'e sağ tık → <strong>Cubic / Linear / Constant</strong> interpolation seçebilirsin. Linear
+              = düz hız, Cubic = yumuşak ivmeli (varsayılan ve gerçekçi), Constant = hiç interpolate etme, ani
+              değişim. Çoğu animasyonda Cubic kullanılır.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.5 CONTROL RIG -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.5</div>
+        <h2 class="topic-title">Control Rig — Akıllı manipülatörler</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir karakterin omurgasında 30+ kemik vardır. Hepsini tek tek seçip döndürmek zahmetlidir. <strong>Control Rig</strong>,
+          karaktere sanal kontrol şekilleri (manipülatörler) ekler — el için bir küre, omuz için bir küp gibi. Sen küreyi
+          döndürürsün, Control Rig altındaki kemikleri otomatik akıllıca ayarlar (IK = Inverse Kinematics).
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-puzzle"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Control Rig, kuklacıdaki <strong>ip sistemine</strong> benzer. Doğrudan kuklayı kemik kemik
+              hareket ettirmezsin — yukarıdan iplere asılmış el/baş/dizleri çekersin, kukla onlara doğal şekilde
+              uyum sağlar. Animatörler için bu büyük zaman kazancıdır.
+            </p>
+          </div>
+        </div>
+
+        <h4>IK vs FK</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-arrow-back"></i></div>
+            <h4>FK (Forward Kinematics)</h4>
+            <p>Omuz → dirsek → bilek → el sırayla döndürürsün. Tek tek kemik kontrolü. Doğal salınım için iyi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-target"></i></div>
+            <h4>IK (Inverse Kinematics)</h4>
+            <p>Sadece eli sürüklersin, dirsek ve omuz <strong>matematik hesaplarla otomatik</strong> bükülür. Eli "şu noktaya getir" demek için ideal.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">UE5 Mannequin hazır Control Rig ile gelir</div>
+            <p>
+              UE5'in standart Mannequin karakteri için <strong>CR_Mannequin_Body</strong> adlı hazır Control Rig
+              mevcuttur. Sequencer'da karakterin Control Rig track'ini ekleyince otomatik manipülatörler ekrana
+              gelir — kullanmak için sadece tıkla, sürükle, key bas.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Control Rig kendi karakterin için</div>
+            <p>
+              Kendi karakterin için Control Rig oluşturmak ileri seviye bir konudur: Content Browser → Animation
+              → Control Rig oluştur, Setup Graph'ta kemik atamaları yap, Forwards Solve'da hareket mantığını
+              yaz. UE5'in IK Rig + IK Retargeter sistemiyle birleşince farklı karakterlere animasyon aktarmak
+              da kolaylaşır. Bu konunun derinliği başlı başına bir kitaba sığar.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.6 ANIM TO SEQUENCE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.6</div>
+        <h2 class="topic-title">Bake — Sequencer'dan Animation Sequence'e</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Sequencer'da kurduğun keyframe'li bir animasyonu <strong>kalıcı bir Animation Sequence asset'ine
+          dönüştürmek</strong> için "bake" işlemi yaparsın. Bu sayede gameplay'de (Animation Blueprint'te) o
+          animasyonu normal bir AS gibi kullanabilirsin.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Karakter track'ine sağ tık</div>
+              <p>Sequencer'da SK_Mannequin track'ine sağ tık → <strong>Bake Animation Sequence</strong>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Ayarlar</div>
+              <p>Skeleton seç, frame rate (30/60 fps), iterate over keyframes ayarları. Genelde varsayılan iyi.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Save Path</div>
+              <p>Kaydedileceği klasör. İsim ver: <code>AS_Sahne01_Walk</code>. Yeni bir AnimSequence asset'i oluşur.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Gameplay'de kullan</div>
+              <p>Artık bu AnimSequence Animation Blueprint, Montage veya direkt karakter component'inde kullanılabilir. Sequencer'da kurduğun animasyon "asset" oldu.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-arrows-exchange"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Sinematik vs Gameplay</div>
+            <p>
+              Sequencer doğrudan sinematik için (cutscene, intro, outro) zaten yeterlidir — Play Sequence node'u
+              ile oyunda oynatabilirsin. Ama gameplay'de karakter Animation Blueprint'inde State Machine veya
+              Blend Space'te kullanmak istiyorsan bake etmek gerekir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14.7 CAMERA -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">14.7</div>
+        <h2 class="topic-title">Cine Camera ve sinematik kamera hareketleri</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Sequencer ile gerçek film kameraları kullanırsın: <strong>Cine Camera Actor</strong>. Klasik kameradan
+          farkı: gerçek lens (focal length), apertür, focus distance, depth of field gibi sinematik ayarlar
+          taşır.
+        </p>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Focal Length</div><div class="info-item-value">Lens uzunluğu — geniş açı/zoom</div></div>
+          <div class="info-item"><div class="info-item-label">Aperture (f-stop)</div><div class="info-item-value">Diyafram — alan derinliği</div></div>
+          <div class="info-item"><div class="info-item-label">Focus Distance</div><div class="info-item-value">Hangi mesafeye odaklı</div></div>
+          <div class="info-item"><div class="info-item-label">Sensor Size</div><div class="info-item-value">Sensör boyutu (16mm, Full Frame...)</div></div>
+        </div>
+
+        <h4>Kamera animasyon iş akışı</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Cine Camera Actor ekle</div>
+              <p>Place Actors → Cinematics → <strong>Cine Camera Actor</strong>. Sahneye sürükle, başlangıç noktasına koy.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Sequencer'a ekle</div>
+              <p>Kamerayı Sequencer'a Actor To Sequencer ile ekle. <strong>Camera Cuts</strong> track'i de ekle — hangi anda hangi kamera gösteriliyor.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Hareket keyframe'leri ekle</div>
+              <p>0. saniyede kameranın başlangıç konumunu keyle. Playhead'i ilerle, kamerayı taşı, tekrar key. Birden çok noktada keyleyerek kamera yolu yarat.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Pilot mode</div>
+              <p>Outliner'da kameraya sağ tık → <strong>Pilot</strong>. Kamera ile dünyada gezinerek doğal kamera hareketleri kaydedersin (FPS gibi kontrol).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Camera Rig Rail</div>
+            <p>
+              Pürüzsüz kamera hareketi için <strong>Camera Rig Rail</strong> Actor'ını kullanırsın: kameranı bir
+              spline boyunca hareket ettirir. Rail Position 0→1 değerini keylersin, kamera spline'da akıcı şekilde
+              kayar. Gerçek filmlerdeki "dolly" hareketinin dijital karşılığıdır. Kavanozun içinde dönen kamera,
+              karakterin etrafında orbit gibi cinematic efektler için ideal.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Shift+6</strong> Animation Mode'a geçirir.</li>
+        <li><strong>Sequencer = zaman çizelgesi tabanlı sinematik editör.</strong> Track + keyframe = animasyon.</li>
+        <li><strong>Level Sequence</strong> asset'i sinematik dosyandır.</li>
+        <li><strong>+ butonu / S tuşu</strong> ile keyframe eklenir.</li>
+        <li><strong>Cubic interpolation</strong> = yumuşak ivmeli geçiş (varsayılan ve gerçekçi).</li>
+        <li><strong>Control Rig = manipülatör sistemi.</strong> Kemikleri tek tek yerine IK/FK kontrolleriyle yönet.</li>
+        <li><strong>UE5 Mannequin hazır Control Rig'le gelir:</strong> CR_Mannequin_Body.</li>
+        <li><strong>IK</strong> = el sürükle, kol otomatik bükülür. <strong>FK</strong> = omuz→dirsek→bilek sırayla.</li>
+        <li><strong>Bake Animation Sequence</strong> ile Sequencer animasyonunu kalıcı AS asset'ine çevir.</li>
+        <li><strong>Cine Camera Actor</strong> = gerçek film kamerası ayarları (Focal Length, Aperture, DoF).</li>
+        <li><strong>Camera Cuts track</strong> = hangi anda hangi kamera aktif.</li>
+        <li><strong>Pilot mode</strong> ile kamerayı oyun kontrolü gibi sahneyi gezinerek hareket ettir.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Sinematik ve karakter pozları</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~20 dk</span></div>
+            <div class="project-title">Proje 1: İlk Sequencer — yürüyen karakter</div>
+            <p class="project-desc">Yeni Level Sequence (LS_Test). Sahneye SK_Mannequin koy, Sequencer'a ekle. Animation track olarak AS_Walk ata. Karakter Transform'a 0. saniyede başlangıç, 5. saniyede sahnenin diğer ucu olacak şekilde iki keyframe ekle. Play'le karakteri yürüyerek geçişini izle.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Level Sequence oluşturuldu</li><li>Karakter ve animasyon track'i eklendi</li><li>2 Transform keyframe'i</li><li>Sequencer Play çalışıyor</li><li>Karakter yürüyerek hareket ediyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Sequencer'ın temel keyframe iş akışını içselleştirmek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~45 dk</span></div>
+            <div class="project-title">Proje 2: Sinematik kamera çekim — 3 kesme</div>
+            <p class="project-desc">Önceki sahneye 3 ayrı Cine Camera Actor ekle: <strong>wide shot</strong> (uzak çekim), <strong>close-up</strong> (yakın), <strong>tracking shot</strong> (karakteri takip). Camera Cuts track'i ekle, 3 kameranın hangi zaman aralığında aktif olduğunu key'le. Her kamerada farklı Focal Length kullan (24mm, 50mm, 85mm).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>3 Cine Camera Actor sahnede</li><li>Camera Cuts track kuruldu</li><li>3 kesme arasında geçişler çalışıyor</li><li>Focal Length farklı her kamerada</li><li>Tracking shot karakterle hareket ediyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Çoklu kamera + cut sistemiyle sinematik kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~70 dk</span></div>
+            <div class="project-title">Proje 3: Control Rig ile el sallayan karakter + bake</div>
+            <p class="project-desc">Mannequin'i Sequencer'a ekle, <strong>Control Rig track</strong>'i bağla (CR_Mannequin_Body). Sağ el için <strong>IK manipülatörü</strong>nü kullanarak 5 farklı pozda key bas (0sn, 0.5, 1, 1.5, 2sn — el yukarıda, sağa, yukarıda, sola, aşağıda). El sallama animasyonu çıksın. Sonra <strong>Bake Animation Sequence</strong> ile bunu <code>AS_ElSalla</code> olarak kaydet. Bonus: Bu AS'i karakterin Animation Blueprint'inde Slot üzerinden Montage olarak çalıştır.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Control Rig track Sequencer'a eklendi</li><li>5 farklı el pozu key'lendi</li><li>Sequencer'da el sallama akıcı oynanıyor</li><li>Bake Animation Sequence yapıldı</li><li>AS_ElSalla asset'i Content Browser'da</li><li>Bonus: ABP/Montage'tan oynatılabiliyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Control Rig + keyframe + bake zincirini deneyimlemek — gerçek custom animasyon üretimi.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q14-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Sequencer'da iki keyframe arasındaki kareler nasıl doldurulur?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q14-1')"><span class="quiz-option-key">A</span><span>Manuel tek tek girersin</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q14-1')"><span class="quiz-option-key">B</span><span>Sequencer otomatik interpolate eder</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-1')"><span class="quiz-option-key">C</span><span>Sadece son keyframe'in değeri tüm arayı kapsar</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-1')"><span class="quiz-option-key">D</span><span>Boş kalır, kare kayıp olur</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q14-1-ok">✓ Doğru! Sequencer iki keyframe arasını otomatik interpolate eder (varsayılan Cubic). Animasyonun temel mantığı budur.</div>
+        <div class="quiz-feedback fail" id="q14-1-fail">✗ Yanlış. Aradaki kareleri Sequencer otomatik hesaplar (interpolation). Sen sadece keyframe noktalarını koyarsın.</div>
+      </div>
+
+      <div class="quiz-question" id="q14-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>El'i belli bir noktaya götürürken kol kemiklerinin otomatik bükülmesini sağlayan sistem hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q14-2')"><span class="quiz-option-key">A</span><span>FK (Forward Kinematics)</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q14-2')"><span class="quiz-option-key">B</span><span>IK (Inverse Kinematics)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-2')"><span class="quiz-option-key">C</span><span>Boolean</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-2')"><span class="quiz-option-key">D</span><span>Camera Cuts</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q14-2-ok">✓ Doğru! IK = sadece son halkanı (el) sürüklersin, motor zinciri (kol) matematik ile otomatik çözer.</div>
+        <div class="quiz-feedback fail" id="q14-2-fail">✗ Yanlış. Hedef noktaya götürdüğünde zincirin otomatik çözümü = IK. FK ise omuzdan başlayıp tek tek döndürmeyi gerektirir.</div>
+      </div>
+
+      <div class="quiz-question" id="q14-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Sequencer'da kurduğun animasyonu Animation Blueprint'te kullanmak için ne yaparsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q14-3')"><span class="quiz-option-key">A</span><span>Direkt çalışır</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q14-3')"><span class="quiz-option-key">B</span><span>Bake Animation Sequence ile AS asset'ine dönüştürürsün</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-3')"><span class="quiz-option-key">C</span><span>FBX export edersin</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-3')"><span class="quiz-option-key">D</span><span>Sequencer içinden çağrılamaz</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q14-3-ok">✓ Doğru! Bake Animation Sequence ile AS asset'i üretirsin; sonra Animation Blueprint State/Montage'larında kullanırsın.</div>
+        <div class="quiz-feedback fail" id="q14-3-fail">✗ Yanlış. Sequencer animasyonunu ABP'de kullanmak için bake ederek AS asset'ine dönüştürmen gerekir.</div>
+      </div>
+
+      <div class="quiz-question" id="q14-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Cine Camera Actor'da "alan derinliği" (depth of field) etkisini değiştiren ana parametre hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q14-4')"><span class="quiz-option-key">A</span><span>Focal Length</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q14-4')"><span class="quiz-option-key">B</span><span>Aperture (f-stop)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-4')"><span class="quiz-option-key">C</span><span>Sensor Size</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-4')"><span class="quiz-option-key">D</span><span>Camera Cuts</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q14-4-ok">✓ Doğru! Aperture (f-stop) — düşük (f/1.8) güçlü bokeh, yüksek (f/16) net her şey.</div>
+        <div class="quiz-feedback fail" id="q14-4-fail">✗ Yanlış. Alan derinliği = Aperture. Focal Length lens uzunluğunu, Sensor Size sensör boyutunu değiştirir.</div>
+      </div>
+
+      <div class="quiz-question" id="q14-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Hangi keyframe interpolation tipi keskin (anlık) geçiş üretir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q14-5')"><span class="quiz-option-key">A</span><span>Cubic</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-5')"><span class="quiz-option-key">B</span><span>Linear</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q14-5')"><span class="quiz-option-key">C</span><span>Constant</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q14-5')"><span class="quiz-option-key">D</span><span>Auto</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q14-5-ok">✓ Doğru! Constant = interpolate etme, ani değişim. Açık/kapalı, görünür/görünmez gibi sıçramalar için.</div>
+        <div class="quiz-feedback fail" id="q14-5-fail">✗ Yanlış. Anlık keskin geçiş = Constant. Linear düz hız, Cubic yumuşak ivmelidir.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s14"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="13-modeling-mode.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 13</div><div class="page-nav-title">Modeling Mode</div></div>
+      </a>
+      <a href="15-brush-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 15</div><div class="page-nav-title">Brush Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

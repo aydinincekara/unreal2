@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheat Sheet — UnrealAkademi</title>
+  <meta name="description" content="UE5 hızlı başvuru — kısayollar, prefix kuralları, PBR değerleri, sık kullanılan node&#x27;lar.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Cheat Sheet — UnrealAkademi">
+  <meta property="og:description" content="UE5 hızlı başvuru — kısayollar, prefix kuralları, PBR değerleri, sık kullanılan node&#x27;lar.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Cheat Sheet — UnrealAkademi">
+  <meta name="twitter:description" content="UE5 hızlı başvuru — kısayollar, prefix kuralları, PBR değerleri, sık kullanılan node&#x27;lar.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra active" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Cheat Sheet</span>
+    </nav>
+
+    <header class="helper-page-header">
+      <h1><i class="ti ti-list-details"></i> Cheat Sheet — Hızlı Başvuru</h1>
+      <p>UE5'te en sık ihtiyaç duyacağın bilgileri tek sayfada toplayan referans. Çalışırken yanında açık tut.</p>
+    </header>
+
+    <div class="simple-page">
+
+      <!-- VIEWPORT KISAYOLLARI -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-3d-cube-sphere"></i> Viewport Navigasyonu</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><kbd>Sağ tık + WASD</kbd><span>FPS-style uçma (yön)</span></div>
+            <div class="cheat-row"><kbd>Sağ tık + QE</kbd><span>Yukarı/aşağı uçma</span></div>
+            <div class="cheat-row"><kbd>Sağ tık + Scroll</kbd><span>Uçma hızını ayarla</span></div>
+            <div class="cheat-row"><kbd>Sol tık + sürükle</kbd><span>Yörünge kamera</span></div>
+            <div class="cheat-row"><kbd>Orta tık + sürükle</kbd><span>Pan (yatay kayma)</span></div>
+            <div class="cheat-row"><kbd>Alt + sol tık</kbd><span>Pivot etrafında dön</span></div>
+            <div class="cheat-row"><kbd>F</kbd><span>Seçili objeye odaklan (focus)</span></div>
+            <div class="cheat-row"><kbd>End</kbd><span>Objeyi yere düşür (snap to floor)</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSFORM -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-arrows-move"></i> Transform Araçları</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><kbd>W</kbd><span>Move (taşı)</span></div>
+            <div class="cheat-row"><kbd>E</kbd><span>Rotate (döndür)</span></div>
+            <div class="cheat-row"><kbd>R</kbd><span>Scale (ölçeklendir)</span></div>
+            <div class="cheat-row"><kbd>Space</kbd><span>Move/Rotate/Scale arasında geçiş</span></div>
+            <div class="cheat-row"><kbd>Alt + sürükle</kbd><span>Kopyalayarak taşı (duplicate + move)</span></div>
+            <div class="cheat-row"><kbd>V</kbd><span>Vertex snap (köşeye yapıştır)</span></div>
+            <div class="cheat-row"><kbd>Ctrl + D</kbd><span>Duplicate</span></div>
+            <div class="cheat-row"><kbd>Delete</kbd><span>Sil</span></div>
+            <div class="cheat-row"><kbd>Ctrl + Z / Y</kbd><span>Geri al / yeniden yap</span></div>
+            <div class="cheat-row"><kbd>Ctrl + S</kbd><span>Mevcut level'ı kaydet</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BP -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-circuit-changeover"></i> Blueprint Editor</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><kbd>Sağ tık (boş alan)</kbd><span>Node ekleme menüsü</span></div>
+            <div class="cheat-row"><kbd>Ctrl + sol tık (pin)</kbd><span>Pin bağlantısını kopar</span></div>
+            <div class="cheat-row"><kbd>Alt + sol tık (pin)</kbd><span>Pin bağlantısını sil</span></div>
+            <div class="cheat-row"><kbd>C</kbd><span>Seçili node'lara comment kutusu</span></div>
+            <div class="cheat-row"><kbd>Q</kbd><span>Seçili node'ları hizala</span></div>
+            <div class="cheat-row"><kbd>F</kbd><span>Seçili node'a odaklan</span></div>
+            <div class="cheat-row"><kbd>B + sol tık</kbd><span>Branch node hızlı ekle</span></div>
+            <div class="cheat-row"><kbd>S + sol tık</kbd><span>Sequence node hızlı ekle</span></div>
+            <div class="cheat-row"><kbd>D + sol tık</kbd><span>Delay node hızlı ekle</span></div>
+            <div class="cheat-row"><kbd>P + sol tık</kbd><span>Print String node</span></div>
+            <div class="cheat-row"><kbd>Ctrl + W</kbd><span>Seçili node'ları duplicate</span></div>
+            <div class="cheat-row"><kbd>F7</kbd><span>Compile</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MATERIAL EDITOR -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-palette"></i> Material Editor</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><kbd>1 + sol tık</kbd><span>Constant (Scalar)</span></div>
+            <div class="cheat-row"><kbd>2 + sol tık</kbd><span>Constant2Vector</span></div>
+            <div class="cheat-row"><kbd>3 + sol tık</kbd><span>Constant3Vector (renk)</span></div>
+            <div class="cheat-row"><kbd>4 + sol tık</kbd><span>Constant4Vector</span></div>
+            <div class="cheat-row"><kbd>T + sol tık</kbd><span>Texture Sample</span></div>
+            <div class="cheat-row"><kbd>S + sol tık</kbd><span>Scalar Parameter</span></div>
+            <div class="cheat-row"><kbd>V + sol tık</kbd><span>Vector Parameter</span></div>
+            <div class="cheat-row"><kbd>U + sol tık</kbd><span>TexCoord</span></div>
+            <div class="cheat-row"><kbd>O + sol tık</kbd><span>One Minus</span></div>
+            <div class="cheat-row"><kbd>M + sol tık</kbd><span>Multiply</span></div>
+            <div class="cheat-row"><kbd>A + sol tık</kbd><span>Add</span></div>
+            <div class="cheat-row"><kbd>D + sol tık</kbd><span>Divide</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PBR DEĞERLERİ -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-paint"></i> PBR Tipik Değerleri</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <table class="cheat-table">
+              <thead><tr><th>Malzeme</th><th>Metallic</th><th>Roughness</th></tr></thead>
+              <tbody>
+                <tr><td>Pürüzsüz metal (yeni)</td><td>1.0</td><td>0.1 — 0.2</td></tr>
+                <tr><td>Pas metal</td><td>1.0</td><td>0.5 — 0.7</td></tr>
+                <tr><td>Altın / Bakır</td><td>1.0</td><td>0.2 — 0.3</td></tr>
+                <tr><td>Cila ahşap</td><td>0.0</td><td>0.3 — 0.4</td></tr>
+                <tr><td>Mat ahşap</td><td>0.0</td><td>0.7 — 0.85</td></tr>
+                <tr><td>Plastik (parlak)</td><td>0.0</td><td>0.2 — 0.4</td></tr>
+                <tr><td>Plastik (mat)</td><td>0.0</td><td>0.6 — 0.8</td></tr>
+                <tr><td>Cilt</td><td>0.0</td><td>0.4 — 0.6</td></tr>
+                <tr><td>Lastik</td><td>0.0</td><td>0.85 — 0.95</td></tr>
+                <tr><td>Beton</td><td>0.0</td><td>0.8 — 0.95</td></tr>
+                <tr><td>Cam (Translucent)</td><td>0.0</td><td>0.0 — 0.05</td></tr>
+                <tr><td>Su</td><td>0.0</td><td>0.0 — 0.1</td></tr>
+                <tr><td>Kumaş</td><td>0.0</td><td>0.7 — 0.95</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREFIX -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-text-size"></i> Asset Prefix Standartları</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <table class="cheat-table">
+              <thead><tr><th>Prefix</th><th>Tür</th><th>Örnek</th></tr></thead>
+              <tbody>
+                <tr><td><code>BP_</code></td><td>Blueprint</td><td>BP_PlayerCharacter</td></tr>
+                <tr><td><code>SM_</code></td><td>Static Mesh</td><td>SM_OakTree</td></tr>
+                <tr><td><code>SK_</code></td><td>Skeletal Mesh</td><td>SK_Mannequin</td></tr>
+                <tr><td><code>M_</code></td><td>Material (parent)</td><td>M_PlasticBase</td></tr>
+                <tr><td><code>MI_</code></td><td>Material Instance</td><td>MI_PlasticRed</td></tr>
+                <tr><td><code>MF_</code></td><td>Material Function</td><td>MF_Tiling</td></tr>
+                <tr><td><code>T_</code></td><td>Texture</td><td>T_Brick_BC, T_Brick_N</td></tr>
+                <tr><td><code>S_</code></td><td>Sound</td><td>S_Explosion</td></tr>
+                <tr><td><code>SC_</code></td><td>Sound Cue</td><td>SC_Music_Menu</td></tr>
+                <tr><td><code>NS_</code></td><td>Niagara System</td><td>NS_Fire</td></tr>
+                <tr><td><code>NE_</code></td><td>Niagara Emitter</td><td>NE_Sparks</td></tr>
+                <tr><td><code>WBP_</code></td><td>Widget Blueprint (UMG)</td><td>WBP_MainMenu</td></tr>
+                <tr><td><code>AS_</code></td><td>Animation Sequence</td><td>AS_Run</td></tr>
+                <tr><td><code>ABP_</code></td><td>Animation Blueprint</td><td>ABP_Mannequin</td></tr>
+                <tr><td><code>BS_</code></td><td>Blend Space</td><td>BS_Locomotion</td></tr>
+                <tr><td><code>AM_</code></td><td>Animation Montage</td><td>AM_Attack</td></tr>
+                <tr><td><code>BT_</code></td><td>Behavior Tree</td><td>BT_Enemy</td></tr>
+                <tr><td><code>BB_</code></td><td>Blackboard</td><td>BB_Enemy</td></tr>
+                <tr><td><code>DT_</code></td><td>Data Table</td><td>DT_Items</td></tr>
+                <tr><td><code>E_</code></td><td>Enum</td><td>E_WeaponType</td></tr>
+                <tr><td><code>F_</code></td><td>Struct</td><td>F_ItemData</td></tr>
+                <tr><td><code>LVL_</code></td><td>Level / Map</td><td>LVL_MainMenu</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUILD CONFIG -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-package-export"></i> Packaging — Build Türleri</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <table class="cheat-table">
+              <thead><tr><th>Build</th><th>Boyut</th><th>Hız</th><th>Kullanım</th></tr></thead>
+              <tbody>
+                <tr><td>Debug</td><td>En büyük</td><td>En yavaş</td><td>Motor seviyesi C++ debug</td></tr>
+                <tr><td>DebugGame</td><td>Büyük</td><td>Yavaş</td><td>Game kodu debug</td></tr>
+                <tr><td>Development</td><td>Orta</td><td>Hızlı</td><td>Test build, dahili dağıtım</td></tr>
+                <tr><td><strong>Shipping ⭐</strong></td><td>En küçük</td><td>En hızlı</td><td><strong>Yayın</strong> — kullanıcıya verilen</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMON NODES -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-bolt"></i> Sık Kullanılan BP Node'lar</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><code>BeginPlay</code><span>Aktör doğduğunda çalışır</span></div>
+            <div class="cheat-row"><code>Event Tick</code><span>Her kare çalışır (Delta Seconds verir)</span></div>
+            <div class="cheat-row"><code>Print String</code><span>Ekrana / log'a yaz (debug)</span></div>
+            <div class="cheat-row"><code>Branch</code><span>If/else</span></div>
+            <div class="cheat-row"><code>Sequence</code><span>Sıralı çoklu çıkış</span></div>
+            <div class="cheat-row"><code>Delay</code><span>Belirtilen saniye bekle</span></div>
+            <div class="cheat-row"><code>Cast To</code><span>Tür dönüşümü</span></div>
+            <div class="cheat-row"><code>Get All Actors of Class</code><span>Belli sınıftaki tüm aktörleri al</span></div>
+            <div class="cheat-row"><code>Spawn Actor from Class</code><span>Sahneye yeni aktör doğur</span></div>
+            <div class="cheat-row"><code>Destroy Actor</code><span>Aktörü yok et</span></div>
+            <div class="cheat-row"><code>Line Trace by Channel</code><span>Çizgi atış / raycast</span></div>
+            <div class="cheat-row"><code>Apply Damage</code><span>Hedefe hasar uygula</span></div>
+            <div class="cheat-row"><code>Set Timer by Event</code><span>Bir event'i belli aralıkla çağır</span></div>
+            <div class="cheat-row"><code>Get Player Controller</code><span>Aktif oyuncuyu al</span></div>
+            <div class="cheat-row"><code>Get Player Character</code><span>Aktif karakteri al</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C++ MAKROLARI -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-code"></i> C++ UE5 Makroları</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><code>UCLASS()</code><span>Class'ı UE5 sistemine kaydet</span></div>
+            <div class="cheat-row"><code>UFUNCTION(BlueprintCallable)</code><span>BP'den çağrılabilir node</span></div>
+            <div class="cheat-row"><code>UFUNCTION(BlueprintPure)</code><span>Yan etkisiz, exec pin'siz</span></div>
+            <div class="cheat-row"><code>UFUNCTION(BlueprintImplementableEvent)</code><span>C++ ilan, BP implement</span></div>
+            <div class="cheat-row"><code>UFUNCTION(BlueprintNativeEvent)</code><span>C++ default, BP override</span></div>
+            <div class="cheat-row"><code>UPROPERTY(EditAnywhere)</code><span>Details panelinde her örnekte düzenlenir</span></div>
+            <div class="cheat-row"><code>UPROPERTY(BlueprintReadWrite)</code><span>BP'den okuma/yazma</span></div>
+            <div class="cheat-row"><code>UPROPERTY(VisibleAnywhere)</code><span>Görünür ama düzenlenemez</span></div>
+            <div class="cheat-row"><code>UPROPERTY(Replicated)</code><span>Multiplayer senkron</span></div>
+            <div class="cheat-row"><code>Category = "X"</code><span>Details panelinde grup</span></div>
+            <div class="cheat-row"><code>GENERATED_BODY()</code><span>Class header'da zorunlu</span></div>
+            <div class="cheat-row"><code>UE_LOG(LogTemp, Warning, TEXT(""))</code><span>Konsola log</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONSOLE COMMANDS -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-terminal-2"></i> Konsol Komutları (~ tuşu)</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <div class="cheat-row"><code>stat fps</code><span>FPS göster</span></div>
+            <div class="cheat-row"><code>stat unit</code><span>CPU/GPU darboğaz analizi</span></div>
+            <div class="cheat-row"><code>stat gpu</code><span>GPU detaylı stats</span></div>
+            <div class="cheat-row"><code>stat memory</code><span>Bellek kullanımı</span></div>
+            <div class="cheat-row"><code>r.ScreenPercentage 75</code><span>Çözünürlüğü %75'e düşür (FPS artar)</span></div>
+            <div class="cheat-row"><code>r.Lumen.DiffuseIndirect.Allow 0</code><span>Lumen GI kapat (test)</span></div>
+            <div class="cheat-row"><code>r.NaniteEnabled 0</code><span>Nanite kapat (test)</span></div>
+            <div class="cheat-row"><code>show collision</code><span>Collision görsellerini aç</span></div>
+            <div class="cheat-row"><code>fly / ghost / walk</code><span>Karakter kontrol modu</span></div>
+            <div class="cheat-row"><code>open LevelName</code><span>Level'a geç</span></div>
+            <div class="cheat-row"><code>quit / exit</code><span>Çık</span></div>
+            <div class="cheat-row"><code>slomo 0.5</code><span>Yarım hız (0.5x slow-mo)</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5 ALTIN KURAL -->
+      <section class="cheat-section">
+        <h2 class="cheat-section-title"><i class="ti ti-star"></i> 5 Altın Kural</h2>
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <ol style="margin:0;padding-left:24px;color:var(--text-secondary);line-height:1.9;">
+              <li><strong>Sık Ctrl+S yap.</strong> UE5 çökme bahanesi bilmez.</li>
+              <li><strong>Asset isimlerinde Türkçe karakter ve boşluk yok.</strong> Sadece İngilizce harf, rakam, alt çizgi.</li>
+              <li><strong>Prefix sistemini ilk günden uygula.</strong> Sonra düzeltmek 10x zordur.</li>
+              <li><strong>Asset'i Windows'tan değil Content Browser'dan taşı.</strong> Referans kırma riski.</li>
+              <li><strong>Silmeden önce Reference Viewer'a bak.</strong> Bağlı asset varsa proje patlar.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="page-nav">
+      <a href="../index.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Geri</div><div class="page-nav-title">Ana Sayfa</div></div>
+      </a>
+      <a href="sss.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Devam</div><div class="page-nav-title">SSS</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

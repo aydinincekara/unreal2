@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 12: Animasyon — UnrealAkademi</title>
+  <meta name="description" content="Skeleton, Animation Blueprint, State Machine, Blend Space, Montage, Root Motion.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 12: Animasyon — UnrealAkademi">
+  <meta property="og:description" content="Skeleton, Animation Blueprint, State Machine, Blend Space, Montage, Root Motion.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 12: Animasyon — UnrealAkademi">
+  <meta name="twitter:description" content="Skeleton, Animation Blueprint, State Machine, Blend Space, Montage, Root Motion.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link active" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>İçerik & Görsel</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Animasyon</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 12</span>
+        <span class="page-category">İçerik & Görsel</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 85 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Animasyon — Karakteri Canlandır</h1>
+      <p class="page-lead">
+        Bir karakteri "yaşayan" yapan animasyondur. Bu bölümde Skeleton kavramından Animation Blueprint'e, State Machine'den Blend Space'e ve Montage'a kadar UE5'in animasyon sistemini öğreneceksin. Sonunda WASD'de doğru yürüyen/koşan/zıplayan karakterin olacak.
+      </p>
+    </header>
+
+    <!-- 12.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.1</div>
+        <h2 class="topic-title">Animasyon nasıl çalışır? — Skeleton + Skinning</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir 3D karakter, görünür mesh'in (deri) altında bir <strong>iskelet (Skeleton)</strong> taşır. Skeleton, isimlendirilmiş kemiklerden (bone) oluşur: head, spine_01, hand_l, foot_r... Mesh'in her vertex'i bir veya birden çok kemiğe <strong>ağırlıkla bağlanır</strong> (skinning). Kemikler hareket edince mesh onlarla birlikte deforme olur.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-skeleton"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Tıpkı insan vücudu gibi: <strong>iskelet</strong> hareket eder, <strong>deri</strong> takip eder. Bir animatör skeleton'ın kemiklerini her karede farklı pozda kaydeder (keyframe), motor bunları akıcı şekilde oynatır. Animasyon, kemiklerin zaman içindeki dönüş/konum kaydıdır — mesh kendiliğinden uyum sağlar.
+            </p>
+          </div>
+        </div>
+
+        <h4>UE5'te animasyonla ilgili 4 ana asset</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-bone"></i></div>
+            <h4>Skeleton</h4>
+            <p>Kemik hiyerarşisi. Birden fazla karakter aynı skeleton'ı paylaşabilir — animasyonlar paylaşılabilir. UE5 Mannequin'in skeleton'ı yaygındır.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-user"></i></div>
+            <h4>Skeletal Mesh</h4>
+            <p>Skeleton'a bağlı deri (mesh + skinning). Karakterin "vücudu".</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-player-play"></i></div>
+            <h4>Animation Sequence</h4>
+            <p>Tek bir animasyon kaydı — koşma, zıplama, saldırı. Skeleton'a bağlıdır.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-circuit-changeover"></i></div>
+            <h4>Animation Blueprint (ABP)</h4>
+            <p>Animasyonların ne zaman çalışacağına karar veren beyin. Karakterin hızına, durumuna göre uygun anim seçer.</p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Retargeting nedir?</div>
+            <p>
+              Farklı oranlardaki iki karakter farklı skeleton'lara sahip olabilir. Bir animasyonu başka skeleton'a uyarlamaya <strong>Retargeting</strong> denir. UE5'in <strong>IK Retargeter</strong> sistemi Mixamo gibi farklı kaynaklardan animasyonları kendi karakterine uyarlamana izin verir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.2 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.2</div>
+        <h2 class="topic-title">Animation Sequence — Tek animasyonu izle</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          En basit asset: <strong>Animation Sequence</strong>. Tek bir hareket kaydı. Aç → oyna → bir kez veya döngüde izle. Buradan başlayalım.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Bir animasyonu aç</div>
+              <p>Karakter projesinde Content Browser'da bir <code>AS_*</code> dosyası (örn. AS_Run) çift tıkla. Animation Editor açılır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Editör panelleri</div>
+              <p><strong>Viewport:</strong> karakter oynar. <strong>Timeline (alt):</strong> kareler, oynat/duraklat. <strong>Asset Browser (sağ):</strong> aynı skeleton'a bağlı diğer animasyonlar. <strong>Details:</strong> ayarlar (Loop, Rate Scale, vb.).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Notify (etiket) ekle</div>
+              <p>Timeline'da belli bir karede <strong>Notify</strong> ekleyebilirsin: "Adım sesi çal" veya "Toz partikülü oluştur". Animation Blueprint dinler, tetiklenir. Yürüme ses senkronu böyle yapılır.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Loop tikini doğru ayarla</div>
+            <p>
+              Yürüme/koşma/idle gibi devam eden animasyonlar için Details'te <strong>Loop</strong> tikini AÇIK tut. Zıplama, saldırı gibi tek seferlik animasyonlar için KAPALI olmalı. Yanlış ayarlanırsa karakter sürekli aynı zıplamayı tekrar eder.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.3 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.3</div>
+        <h2 class="topic-title">Animation Blueprint — Animasyon beyni</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Karakter hareketsiz olduğunda Idle, hareket edince Run, havada ise Jump çalmalı. Bunu kim karar veriyor? <strong>Animation Blueprint (ABP)</strong>. Bu, karakterin "şu an hangi animasyon oynamalı?" sorusunu cevaplayan özel bir Blueprint.
+        </p>
+
+        <h4>İki ana graph</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-clock-bolt"></i></div>
+            <h4>Event Graph</h4>
+            <p>"Karakter'in mevcut durumu nedir?" — her kare karakterin hızını, havada mı, çömeliyor mu okur. <strong>Update Animation</strong> event'i burada çalışır. Değerleri variable'lara yazar.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-affiliate"></i></div>
+            <h4>Anim Graph</h4>
+            <p>"Bu değerlere göre hangi animasyon oynamalı?" — değişkenleri okur, State Machine'i veya Blend Space'leri sürer. Sonunda <strong>Output Pose</strong>'a bağlanır.</p>
+          </div>
+        </div>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Tipik ABP veri akışı</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">Update Animation</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>her kare ▸</span><span class="pin-triangle pin-exec"></span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Get Velocity Length</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div>
+                <div class="bp-node-row output"><span>Speed</span><span class="pin pin-float"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow"></span>
+            <div class="bp-node variable">
+              <div class="bp-node-title">Set Speed</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin pin-float"></span><span>value</span></div></div>
+            </div>
+            <span class="bp-comment">// Anim Graph bu Speed değerini okuyup hangi anim'i oynatacağına karar verir</span>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Try Get Pawn Owner</div>
+            <p>
+              ABP içinden Pawn'a (karakter Blueprint'ine) erişmek için <strong>Try Get Pawn Owner</strong> kullanılır. Burada Cast to BP_Character ile karaktere özel değişkenlere ulaşırsın. Bu, ABP ↔ Character iletişiminin köprüsüdür.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.4 STATE MACHINE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.4</div>
+        <h2 class="topic-title">State Machine — Durum geçiş diyagramı</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir karakterin <strong>"durumları"</strong> vardır: duruyor (Idle), yürüyor/koşuyor (Locomotion), havada (Falling), çömelmiş (Crouch). State Machine, bu durumlar arasında <strong>otomatik geçişleri</strong> yöneten bir grafiktir. Her durum farklı bir animasyon oynatır.
+        </p>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-affiliate"></i> Basit State Machine</span>
+            <span>Idle ↔ Run ↔ Jump</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="State machine şeması">
+              <rect x="0" y="0" width="700" height="320" rx="8" fill="#0d0d1a"/>
+
+              <!-- Entry -->
+              <ellipse cx="80" cy="160" rx="50" ry="22" fill="#1a4a2e" stroke="#34d399" stroke-width="2"/>
+              <text x="80" y="165" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">ENTRY</text>
+
+              <!-- IDLE -->
+              <rect x="180" y="120" width="120" height="80" rx="12" fill="#2a1a4e" stroke="#a78bfa" stroke-width="2"/>
+              <text x="240" y="155" fill="#c4b5fd" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Idle</text>
+              <text x="240" y="175" fill="#8a7ab5" font-family="monospace" font-size="9" text-anchor="middle">AS_Idle</text>
+
+              <!-- RUN -->
+              <rect x="360" y="120" width="120" height="80" rx="12" fill="#0a3a44" stroke="#00d4ff" stroke-width="2"/>
+              <text x="420" y="155" fill="#67e8f9" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Run</text>
+              <text x="420" y="175" fill="#5a8a95" font-family="monospace" font-size="9" text-anchor="middle">AS_Run</text>
+
+              <!-- JUMP -->
+              <rect x="540" y="40" width="120" height="80" rx="12" fill="#3a3010" stroke="#f5c842" stroke-width="2"/>
+              <text x="600" y="75" fill="#fde68a" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Jump</text>
+              <text x="600" y="95" fill="#a59550" font-family="monospace" font-size="9" text-anchor="middle">AS_Jump</text>
+
+              <!-- FALL -->
+              <rect x="540" y="200" width="120" height="80" rx="12" fill="#3a1010" stroke="#ef4444" stroke-width="2"/>
+              <text x="600" y="235" fill="#fca5a5" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Fall</text>
+              <text x="600" y="255" fill="#b85555" font-family="monospace" font-size="9" text-anchor="middle">AS_Fall</text>
+
+              <!-- Entry -> Idle -->
+              <line x1="130" y1="160" x2="180" y2="160" stroke="#34d399" stroke-width="2"/>
+              <path d="M 180 160 L 172 156 L 172 164 Z" fill="#34d399"/>
+
+              <!-- Idle <-> Run -->
+              <line x1="300" y1="150" x2="360" y2="150" stroke="#a78bfa" stroke-width="2"/>
+              <path d="M 360 150 L 352 146 L 352 154 Z" fill="#a78bfa"/>
+              <text x="330" y="142" fill="#a78bfa" font-family="monospace" font-size="8" text-anchor="middle">Speed&gt;10</text>
+
+              <line x1="360" y1="170" x2="300" y2="170" stroke="#67e8f9" stroke-width="2"/>
+              <path d="M 300 170 L 308 166 L 308 174 Z" fill="#67e8f9"/>
+              <text x="330" y="190" fill="#67e8f9" font-family="monospace" font-size="8" text-anchor="middle">Speed&lt;10</text>
+
+              <!-- Run -> Jump -->
+              <line x1="480" y1="135" x2="540" y2="100" stroke="#f5c842" stroke-width="2"/>
+              <path d="M 540 100 L 530 100 L 535 108 Z" fill="#f5c842"/>
+              <text x="510" y="105" fill="#f5c842" font-family="monospace" font-size="8" text-anchor="middle">IsJumping</text>
+
+              <!-- Jump -> Fall -->
+              <line x1="600" y1="120" x2="600" y2="200" stroke="#fb923c" stroke-width="2" stroke-dasharray="4 3"/>
+              <path d="M 600 200 L 596 192 L 604 192 Z" fill="#fb923c"/>
+              <text x="650" y="160" fill="#fb923c" font-family="monospace" font-size="8" text-anchor="middle">Anim End</text>
+
+              <!-- Fall -> Idle -->
+              <path d="M 540 240 Q 360 280 240 200" fill="none" stroke="#ef4444" stroke-width="2"/>
+              <path d="M 245 203 L 240 200 L 242 207 Z" fill="#ef4444"/>
+              <text x="380" y="260" fill="#ef4444" font-family="monospace" font-size="8" text-anchor="middle">IsFalling=false</text>
+            </svg>
+          </div>
+        </div>
+
+        <h4>State Machine oluşturma</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Anim Graph'ta state machine ekle</div>
+              <p>ABP'nin Anim Graph'ında boş alana sağ tık → <strong>"Add New State Machine"</strong>. Çift tıkla, içine gir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">State'leri çiz</div>
+              <p>Sağ tık → <strong>Add State</strong>. State'ler oluştur: <code>Idle</code>, <code>Run</code>, <code>Jump</code>, <code>Fall</code>. Her birine çift tıklayıp içine bir animasyon (AS_Idle vs.) bağla.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Transition'lar çek</div>
+              <p>Bir state'in kenarından diğerine tel sürükle. Üzerinde bir <strong>↔</strong> işareti belirir — bu transition. Çift tıkla, içinde <strong>"Result"</strong> pinine bir bool sonuç bağla: <code>Speed &gt; 10</code> (Idle→Run koşulu).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Blend süresi</div>
+              <p>Transition'a tıkla, Details'te <strong>Duration</strong> ayarla (örn. 0.2 sn). Geçiş anlık olmaz, yumuşak blend edilir.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Nested State Machine</div>
+            <p>
+              Bir state'in içine başka bir state machine koyabilirsin. Örnek: "Locomotion" state'i içinde Walk/Run/Sprint geçişlerini yöneten ikinci bir machine. Bu, AAA seviyesi karakter animasyon sistemlerinin omurgasıdır — karmaşıklığı katmanlara böler.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.5 BLEND SPACE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.5</div>
+        <h2 class="topic-title">Blend Space — Hıza göre yumuşak geçiş</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          State Machine "ya Idle, ya Run" gibi keskin geçişler için iyidir. Ama gerçek karakter yürürken hızı arttıkça <strong>akıcı şekilde koşmaya</strong> geçer. Blend Space tam bunu yapar: birden çok animasyonu bir <strong>eksen üzerinde karıştırır</strong> (blend).
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-adjustments-horizontal"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Blend Space bir <strong>karıştırıcıdır.</strong> Bir ekseninde "yavaş ↔ hızlı" var. Sen "şu an hız 250" dediğinde, karakter Idle (0) ile Run (600) arasında doğru noktadaki blend'i oynatır — duruşla koşma arasında akıcı bir yürüyüş çıkar. Tek tek anim eklemeden, motor aralarındaki hareketleri akıcı kurar.
+            </p>
+          </div>
+        </div>
+
+        <h4>İki ana tip</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-arrows-horizontal"></i></div>
+            <h4>Blend Space 1D</h4>
+            <p>Tek eksen (örn. Speed). Idle (0) → Walk (200) → Run (600). En sık kullanılan tip.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-arrows-cross"></i></div>
+            <h4>Blend Space 2D</h4>
+            <p>İki eksen (örn. Speed × Direction). İleri, geri, sola, sağa stride'lı koşmalar için.</p>
+          </div>
+        </div>
+
+        <h4>Oluşturma</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Asset oluştur</div>
+              <p>Content Browser'da sağ tık → <strong>Animation → Blend Space 1D</strong>. Skeleton seç. İsim: <code>BS_Locomotion</code>.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Eksen ayarı</div>
+              <p>Çift tıkla. Soldaki <strong>Axis Settings</strong>: Horizontal Axis'in adını <code>Speed</code>, Min 0, Max 600 yap.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Animasyonları sürükle</div>
+              <p>Alttaki grafiğe AS_Idle'ı 0 noktasına, AS_Walk'ı 250 noktasına, AS_Run'u 600 noktasına sürükle. Yeşil noktayı oynatıp önizleme yap.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">ABP'de kullan</div>
+              <p>Anim Graph'ta veya bir State içinde <strong>Blend Space Player</strong> ekle, BS_Locomotion seç. Speed pin'ine ABP'nin <code>Speed</code> variable'ını bağla.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.6 MONTAGE -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.6</div>
+        <h2 class="topic-title">Animation Montage — Tek seferlik aksiyonlar</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Saldırı, yeniden yükleme, etkileşim — State Machine'in döngüsel akışına oturmayan, <strong>"şimdi bir kez oynat ve bitir"</strong> diyen aksiyonlar. Bunları <strong>Animation Montage</strong> ile oynatırsın. Karakterin mevcut animasyonunun üstüne <em>katman olarak</em> oynanır.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Montage oluştur</div>
+              <p>Bir animasyon dosyasına sağ tık → <strong>Create → Create AnimMontage</strong>. Veya boş Montage oluştur, sonra animasyonları ekle.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Slot seç</div>
+              <p>Montage'ın <strong>Slot</strong>'u olmalı (örn. <code>DefaultSlot</code> veya <code>UpperBody</code>). ABP'de Anim Graph'a <strong>Slot</strong> node eklersin — Montage o slot üzerinden oynar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Blueprint'ten oynat</div>
+              <p>Karakter Blueprint'inde: <strong>Play Anim Montage</strong> node'u çağır, Montage'ı seç, AnimInstance referansı ver (Get Mesh → Get Anim Instance). Sağ tık event ile tetikle.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Üst beden / alt beden ayrı</div>
+            <p>
+              UE5'in <strong>Layered Blend Per Bone</strong> node'u, vücudun belirli kemiklerinden itibaren farklı animasyon karıştırmana izin verir. "Karakter koşarken aynı anda silah yeniden yüklesin" — alt beden Locomotion State Machine, üst beden Reload Montage. Profesyonel FPS/TPS karakterlerin temeli budur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12.7 ROOT MOTION -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">12.7</div>
+        <h2 class="topic-title">Root Motion — Animasyon karakteri hareket ettirir</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Normal akışta karakteri <strong>kod hareket ettirir</strong> (Add Movement Input), animasyon onun üstüne çalınır — bazen senkron yakalanmaz (ayaklar kayar = "foot sliding"). <strong>Root Motion</strong>'da ise animasyonun kendisi karakteri taşır: animasyon ne kadar gittiyse karakter de o kadar gider.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Yön</th><th>Kod tabanlı hareket</th><th>Root Motion</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Kontrol</strong></td><td>Tam kontrol (kod)</td><td>Animasyon belirler</td></tr>
+            <tr><td><strong>Foot sliding</strong></td><td>Olabilir</td><td>Yok (mükemmel senkron)</td></tr>
+            <tr><td><strong>Ne için ideal?</strong></td><td>Gameplay (FPS, hızlı)</td><td>Saldırı, finisher, cinematic</td></tr>
+            <tr><td><strong>Multiplayer</strong></td><td>Kolay</td><td>Zor (replikasyon)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Ne zaman Root Motion kullan?</div>
+            <p>
+              Karakter sürekli koşan değil, bir <strong>tek seferlik aksiyon</strong> yapıyorsa (saldırı kombosu, finisher, parry) Root Motion'la animasyonun karakterle senkron olmasını garantilersin. Standart yürüyüş için ise klasik kod tabanlı hareket daha esnektir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Skeleton = kemikler, Skeletal Mesh = deri,</strong> Skinning ikisini bağlar.</li>
+        <li><strong>Aynı skeleton = aynı animasyonları paylaşır.</strong></li>
+        <li><strong>Animation Sequence:</strong> tek animasyon kaydı (AS_).</li>
+        <li><strong>Animation Blueprint (ABP):</strong> hangi anim ne zaman oynar — karar mekanizması.</li>
+        <li><strong>Event Graph "ne durumda?",</strong> Anim Graph "ne oyna?" sorularını cevaplar.</li>
+        <li><strong>State Machine:</strong> durumlar arası geçişler (Idle ↔ Run ↔ Jump).</li>
+        <li><strong>Transition Duration</strong> ile geçişler yumuşar — 0.1-0.3 sn ideal.</li>
+        <li><strong>Blend Space 1D:</strong> tek eksende (Speed) anim karışımı.</li>
+        <li><strong>Animation Montage:</strong> tek seferlik aksiyon, mevcut anim üstüne katman.</li>
+        <li><strong>Slot + Layered Blend Per Bone</strong> ile üst-alt beden ayrı animasyon olur.</li>
+        <li><strong>Root Motion:</strong> hareketi animasyon belirler, foot sliding yok.</li>
+        <li><strong>Loop tikini doğru ayarla</strong> — sürekli olanlar AÇIK, tek seferlik KAPALI.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Karakter animasyonunu adım adım kur</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span></div>
+            <div class="project-title">Proje 1: ABP'de Speed variable + Idle/Run state</div>
+            <p class="project-desc">Karakter projende ABP aç. Event Graph'ta <strong>Try Get Pawn Owner</strong> → <strong>Get Velocity</strong> → <strong>VectorLength</strong> → <code>Speed</code> variable'ına yaz. Anim Graph'ta State Machine ekle: 2 state (Idle ve Run), animasyonları bağla. Transition koşulu: Speed > 10 (Idle→Run), Speed &lt; 10 (Run→Idle).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Speed variable Update'te yazılıyor</li><li>State Machine kuruldu (Idle ↔ Run)</li><li>Transition koşulları doğru</li><li>Play'de WASD ile hareket → Run, dur → Idle</li><li>Geçiş yumuşak (Duration ayarlı)</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>ABP iş akışını ve State Machine mantığını ilk kez kurmak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~50 dk</span></div>
+            <div class="project-title">Proje 2: Blend Space + Jump/Fall</div>
+            <p class="project-desc">Önceki ABP'yi geliştir: Idle/Walk/Run yerine <strong>BS_Locomotion (Blend Space 1D)</strong> kullan. State Machine'e <strong>Jump</strong> ve <strong>Falling</strong> state'leri ekle. Karakter Blueprint'ten <strong>IsFalling</strong> ve <strong>IsJumping</strong> bool'lerini ABP'ye taşı (Character'dan al, ABP'de set'le). Transition koşullarını yaz: Locomotion→Jump (IsJumping), Jump→Falling (anim end), Falling→Locomotion (IsFalling=false).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Blend Space 1D oluşturuldu (Idle/Walk/Run)</li><li>State Machine'de en az 4 state var</li><li>IsFalling, IsJumping bool'leri ABP'de var</li><li>Zıplama ve düşüş animasyonları çalışıyor</li><li>Geri Locomotion'a dönüş düzgün</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Locomotion sisteminin tam halini kurmak — gerçek oyun karakter altyapısı.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~70 dk</span></div>
+            <div class="project-title">Proje 3: Montage'lı saldırı + üst beden katman</div>
+            <p class="project-desc">Bir saldırı animasyonundan <strong>AnimMontage</strong> üret. Montage'ta DefaultSlot ayarla. ABP'nin Anim Graph'ında State Machine'in üstüne <strong>Slot 'DefaultSlot'</strong> node ekle (mevcut output pose'a wrap). Karakter Blueprint'inde <strong>IA_Attack</strong> Input Action (mouse left) → <strong>Play Anim Montage</strong> çağır. Sol tıkla karakter koşarken bile saldırı animasyonu oynasın. Bonus: <strong>Layered Blend Per Bone</strong> ile sadece üst bedeni etkile (alt beden yürümeye devam etsin).</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>AnimMontage oluşturuldu</li><li>DefaultSlot Anim Graph'a eklendi</li><li>Play Anim Montage Blueprint'ten çağrılıyor</li><li>Sol tık ile saldırı çalışıyor</li><li>Koşarken bile saldırı görünüyor</li><li>Bonus: Üst beden saldırırken alt beden koşmaya devam ediyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Profesyonel karakter sisteminin tepesi: katmanlı animasyon ve eylem montajları.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q12-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Bir karakter Animation Blueprint'inin "hangi animasyon oynasın" kararını veren bölümü hangi graph'tır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q12-1')"><span class="quiz-option-key">A</span><span>Event Graph</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q12-1')"><span class="quiz-option-key">B</span><span>Anim Graph</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-1')"><span class="quiz-option-key">C</span><span>Construction Script</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-1')"><span class="quiz-option-key">D</span><span>Material Graph</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q12-1-ok">✓ Doğru! Anim Graph, durum değişkenlerini okuyup State Machine/Blend Space'leri sürer ve Output Pose'a aktarır.</div>
+        <div class="quiz-feedback fail" id="q12-1-fail">✗ Yanlış. Karar Anim Graph'ta verilir. Event Graph durumu okur, Anim Graph okunan duruma göre animasyon seçer.</div>
+      </div>
+
+      <div class="quiz-question" id="q12-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Idle → Walk → Run gibi hıza göre akıcı animasyon karışımı yapmak için en uygun yöntem hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q12-2')"><span class="quiz-option-key">A</span><span>Üç ayrı State + keskin transition</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q12-2')"><span class="quiz-option-key">B</span><span>Blend Space 1D (Speed eksenli)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-2')"><span class="quiz-option-key">C</span><span>Animation Montage</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-2')"><span class="quiz-option-key">D</span><span>Root Motion</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q12-2-ok">✓ Doğru! Blend Space, eksen değerine göre animasyonları akıcı şekilde karıştırır — yürüyüşten koşmaya geçişler için ideal.</div>
+        <div class="quiz-feedback fail" id="q12-2-fail">✗ Yanlış. Akıcı geçiş = Blend Space. State Machine geçişleri için iyidir ama hız değişimine göre akıcı karışım Blend Space'in işidir.</div>
+      </div>
+
+      <div class="quiz-question" id="q12-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Tek seferlik bir saldırı animasyonunu mevcut yürüme animasyonu üzerine katman olarak oynatmak için ne kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q12-3')"><span class="quiz-option-key">A</span><span>Yeni bir State Machine</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q12-3')"><span class="quiz-option-key">B</span><span>Animation Montage + Slot</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-3')"><span class="quiz-option-key">C</span><span>Blend Space 2D</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-3')"><span class="quiz-option-key">D</span><span>Loop tikini açmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q12-3-ok">✓ Doğru! Montage, mevcut anim akışının üstüne Slot üzerinden katman gibi oynatılır — tek seferlik aksiyonların standart yolu.</div>
+        <div class="quiz-feedback fail" id="q12-3-fail">✗ Yanlış. Tek seferlik aksiyon = Animation Montage. Slot üzerinden mevcut animasyon zincirine bindirilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q12-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Loop tikinin kapalı tutulması gereken animasyon türü hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q12-4')"><span class="quiz-option-key">A</span><span>Idle</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-4')"><span class="quiz-option-key">B</span><span>Run</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q12-4')"><span class="quiz-option-key">C</span><span>Zıplama (Jump)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-4')"><span class="quiz-option-key">D</span><span>Walk</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q12-4-ok">✓ Doğru! Zıplama tek seferlik bir aksiyondur, Loop AÇIK olursa karakter sürekli zıplamayı tekrar eder.</div>
+        <div class="quiz-feedback fail" id="q12-4-fail">✗ Yanlış. Loop KAPALI olmalı zıplamada — tek seferliktir. Idle/Walk/Run sürekli döndüğü için AÇIK olur.</div>
+      </div>
+
+      <div class="quiz-question" id="q12-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Karakter animasyonunda "foot sliding" (ayakların kayması) sorununu garantili çözmek için en doğru yaklaşım nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q12-5')"><span class="quiz-option-key">A</span><span>Karakter hızını sıfıra düşürmek</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q12-5')"><span class="quiz-option-key">B</span><span>Root Motion kullanmak (hareketi animasyon belirler)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-5')"><span class="quiz-option-key">C</span><span>Animasyonu daha hızlı oynatmak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q12-5')"><span class="quiz-option-key">D</span><span>Mesh ölçeğini büyütmek</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q12-5-ok">✓ Doğru! Root Motion'da karakter ile animasyon birebir senkrondur — animasyon ne kadar ilerlediyse karakter de o kadar gider, kayma olmaz.</div>
+        <div class="quiz-feedback fail" id="q12-5-fail">✗ Yanlış. Foot sliding'in garantili çözümü Root Motion'dur. Karakter-animasyon hız uyuşmazlığını ortadan kaldırır.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s12"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="11-icerik-yukleme.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 11</div><div class="page-nav-title">İçerik Yükleme</div></div>
+      </a>
+      <a href="13-modeling-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 13</div><div class="page-nav-title">Modeling Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

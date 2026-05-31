@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 09: HUD &amp; Arayüz — UnrealAkademi</title>
+  <meta name="description" content="UMG Widget Blueprint, HUD oluşturma, butonlar, text bind.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 09: HUD &amp; Arayüz — UnrealAkademi">
+  <meta property="og:description" content="UMG Widget Blueprint, HUD oluşturma, butonlar, text bind.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 09: HUD &amp; Arayüz — UnrealAkademi">
+  <meta name="twitter:description" content="UMG Widget Blueprint, HUD oluşturma, butonlar, text bind.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link active" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>Oyun Mekaniği</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">HUD & Arayüz</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 09</span>
+        <span class="page-category">Oyun Mekaniği</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 80 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">HUD & Arayüz — Ekran Üstü Bilgi</h1>
+      <p class="page-lead">
+        Oyuncunun canını, skorunu, mühimmatını nasıl görür? Ekranın üstüne çizilen bu bilgilere HUD denir.
+        UE5'in UMG (Unreal Motion Graphics) sistemiyle can barı, skor göstergesi ve menü tasarlamayı,
+        bunları canlı veriye bağlamayı öğreneceğiz.
+      </p>
+    </header>
+
+    <!-- 9.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.1</div>
+        <h2 class="topic-title">HUD ve UMG nedir?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          <strong>HUD</strong> (Heads-Up Display), oyun dünyasının <em>üstüne</em> çizilen 2D bilgi katmanıdır.
+          Can barı, skor, mini harita, nişangah... Oyun 3D'de devam ederken bu bilgiler ekranda sabit durur.
+          UE5'te HUD'ları <strong>UMG</strong> (Widget sistemi) ile tasarlarsın.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-windshield"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">HUD nedir?</div>
+            <p>
+              HUD, bir <strong>savaş uçağının cam göstergesi</strong> gibidir — pilot dışarı bakarken camın
+              üstünde hız, irtifa, hedef bilgisi görür. Oyunda da oyuncu dünyayı görürken ekranın üstünde
+              canını, skorunu görür. "Heads-Up" = "başını kaldırmadan" yani oyundan kopmadan bilgi.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Widget = arayüz parçası</div>
+            <p>
+              UMG'de her arayüz öğesine <strong>Widget</strong> denir: buton bir widget, yazı bir widget,
+              resim bir widget. Bunları bir <strong>Widget Blueprint</strong> içinde birleştirip ekrana
+              çizersin. Tüm menüler, HUD'lar, pop-up'lar Widget Blueprint'tir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.2 WIDGET OLUŞTURMA -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.2</div>
+        <h2 class="topic-title">İlk Widget'ını oluştur</h2>
+      </div>
+      <div class="topic-body">
+        <p>Widget Blueprint editörü iki moda ayrılır: <strong>Designer</strong> (görsel tasarım) ve <strong>Graph</strong> (mantık).</p>
+
+        <div class="ui-schematic">
+          <div class="ui-schematic-label">
+            <span><i class="ti ti-layout-2"></i> UMG Designer — Yerleşim</span>
+            <span>Şematik</span>
+          </div>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 780 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UMG editör şeması">
+              <rect x="0" y="0" width="780" height="380" rx="8" fill="#0d0d1a"/>
+
+              <!-- Palette (sol) -->
+              <rect x="8" y="8" width="150" height="364" rx="6" fill="#16161d" stroke="#00d4ff" stroke-width="1.5"/>
+              <text x="83" y="28" fill="#67e8f9" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">PALETTE</text>
+              <line x1="20" y1="38" x2="146" y2="38" stroke="#2a2a3e"/>
+              <text x="20" y="58" fill="#9898b0" font-family="monospace" font-size="9">▸ Text</text>
+              <text x="20" y="76" fill="#9898b0" font-family="monospace" font-size="9">▸ Button</text>
+              <text x="20" y="94" fill="#9898b0" font-family="monospace" font-size="9">▸ Image</text>
+              <text x="20" y="112" fill="#9898b0" font-family="monospace" font-size="9">▸ Progress Bar</text>
+              <text x="20" y="130" fill="#9898b0" font-family="monospace" font-size="9">▸ Vertical Box</text>
+              <text x="20" y="148" fill="#9898b0" font-family="monospace" font-size="9">▸ Canvas Panel</text>
+              <text x="83" y="200" fill="#5a5a72" font-family="sans-serif" font-size="8" text-anchor="middle">Sürükle →</text>
+
+              <!-- Canvas (orta) -->
+              <rect x="166" y="8" width="430" height="280" rx="6" fill="#0a0a14" stroke="#7c5cff" stroke-width="2"/>
+              <text x="381" y="26" fill="#7c5cff" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">DESIGNER CANVAS (Ekran önizleme)</text>
+              <!-- health bar -->
+              <rect x="190" y="44" width="160" height="20" rx="4" fill="#1a1a2e" stroke="#444"/>
+              <rect x="192" y="46" width="110" height="16" rx="3" fill="#10b981"/>
+              <text x="270" y="59" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle">HP</text>
+              <!-- score text -->
+              <text x="190" y="92" fill="#f5c842" font-family="monospace" font-size="14" font-weight="bold">Skor: 1250</text>
+              <!-- center button -->
+              <rect x="320" y="180" width="120" height="36" rx="6" fill="#3a2a6e" stroke="#7c5cff"/>
+              <text x="380" y="203" fill="#c4b5fd" font-family="sans-serif" font-size="11" text-anchor="middle">BAŞLA</text>
+
+              <!-- Details (sağ) -->
+              <rect x="604" y="8" width="168" height="280" rx="6" fill="#16161d" stroke="#fb923c" stroke-width="1.5"/>
+              <text x="688" y="28" fill="#fb923c" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">DETAILS</text>
+              <line x1="616" y1="38" x2="760" y2="38" stroke="#2a2a3e"/>
+              <text x="616" y="58" fill="#7a7a95" font-family="monospace" font-size="9">Seçili widget</text>
+              <text x="616" y="72" fill="#7a7a95" font-family="monospace" font-size="9">ayarları</text>
+              <rect x="616" y="84" width="144" height="16" rx="3" fill="#22222f"/>
+              <rect x="616" y="106" width="144" height="16" rx="3" fill="#22222f"/>
+              <rect x="616" y="128" width="144" height="16" rx="3" fill="#22222f"/>
+
+              <!-- Hierarchy (alt) -->
+              <rect x="166" y="296" width="606" height="76" rx="6" fill="#16161d" stroke="#34d399" stroke-width="1.5"/>
+              <text x="180" y="316" fill="#34d399" font-family="sans-serif" font-size="10" font-weight="bold">HIERARCHY</text>
+              <text x="180" y="334" fill="#9898b0" font-family="monospace" font-size="9">▸ Canvas Panel</text>
+              <text x="196" y="350" fill="#9898b0" font-family="monospace" font-size="9">▸ HealthBar (Progress Bar)</text>
+              <text x="196" y="364" fill="#9898b0" font-family="monospace" font-size="9">▸ ScoreText (Text)</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Widget Blueprint oluştur</div>
+              <p>Content Browser → sağ tık → <strong>User Interface → Widget Blueprint</strong>. İsim: <code>WBP_HUD</code>. Çift tıkla — Designer açılır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Öğeleri sürükle</div>
+              <p>Sol <strong>Palette</strong>'ten <strong>Progress Bar</strong> (can barı) ve <strong>Text</strong> (skor) öğelerini canvas'a sürükle. Konumlandır.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">İsimlendir (önemli!)</div>
+              <p>Her widget'a Details'ten anlamlı isim ver: <code>HealthBar</code>, <code>ScoreText</code>. Ayrıca <strong>"Is Variable"</strong> kutusunu işaretle — yoksa Graph'tan erişemezsin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.3 EKRANA EKLEME -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.3</div>
+        <h2 class="topic-title">Widget'ı ekrana çiz</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Widget'ı tasarladın ama henüz ekranda görünmüyor. Onu ekrana eklemen gerek. En yaygın yer:
+          karakterin veya Player Controller'ın BeginPlay'i.
+        </p>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">HUD'u ekrana ekle</div>
+          <div class="bp-flow">
+            <div class="bp-node event">
+              <div class="bp-node-title">BeginPlay</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>▸</span><span class="pin-triangle pin-exec"></span></div></div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Create Widget</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div>
+                <div class="bp-node-row input"><span class="pin pin-class"></span><span>Class: WBP_HUD</span></div>
+                <div class="bp-node-row output"><span>Return</span><span class="pin pin-object"></span></div>
+              </div>
+            </div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Add to Viewport</div>
+              <div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>ekle</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Create Widget</div>
+              <p>BeginPlay → <strong>Create Widget</strong> node'u. Class = WBP_HUD. Bu, widget'ın bir kopyasını bellekte oluşturur (henüz görünmez).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Add to Viewport</div>
+              <p>Create Widget'ın Return değerini → <strong>Add to Viewport</strong> node'una bağla. Artık ekranda görünür!</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Referansı sakla</div>
+              <p>Create Widget'ın Return'ünü bir variable'a (örn. <code>HUDRef</code>) Set et. Sonra HUD'u güncellemek istediğinde bu referansı kullanırsın.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.4 VERİ BAĞLAMA -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.4</div>
+        <h2 class="topic-title">Canlı veri bağlama — Can barı çalışsın</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          HUD görünüyor ama statik. Can azalınca barın da azalması lazım. Bunun iki yolu var:
+          <strong>Binding</strong> (otomatik) ve <strong>manuel güncelleme</strong> (event ile).
+        </p>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-refresh"></i></div>
+            <h4>Binding (Otomatik)</h4>
+            <p>Progress Bar'ın Percent'ine bir fonksiyon bağlarsın. Her kare otomatik çağrılır, güncel canı döner. Kolay ama her kare çalışır (performans).</p>
+            <span class="tag-small">Kolay · sürekli</span>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-hand-click"></i></div>
+            <h4>Manuel (Event)</h4>
+            <p>Sadece can <em>değiştiğinde</em> HUD'a "barı güncelle" dersin. Daha verimli, profesyonel yöntem. Set Percent node'unu çağırırsın.</p>
+            <span class="tag-small">Verimli · olay bazlı</span>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Can barı yüzdesi nasıl hesaplanır?</div>
+            <p>
+              Progress Bar 0-1 arası değer alır (0 = boş, 1 = dolu). Yüzde = <code>GüncelCan ÷ MaxCan</code>.
+              Örn. can 75, max 100 → 75÷100 = 0.75 → bar %75 dolu. Set Percent node'una bu float'ı verirsin.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Binding mı, Event mı?</div>
+            <p>
+              Binding kolaydır ama <strong>her kare çağrılır</strong> — 20 widget'ın hepsi her kare hesaplanırsa
+              performans düşer. Profesyoneller <strong>Event Dispatcher</strong> kullanır: can değişince bir
+              olay yayınlanır, HUD onu dinleyip sadece o an günceller. Çok daha verimli. Event Dispatcher'ları
+              Bölüm 25'te detaylı göreceğiz. Başlangıçta binding'le başla, sonra event tabanlıya geç.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.5 SKOR -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.5</div>
+        <h2 class="topic-title">Skor metnini güncelle</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Skor için Text widget'ını güncelleriz. Skor bir integer'dır, Text widget metin (Text) ister —
+          arada dönüşüm gerekir.
+        </p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Skor değişince</div>
+              <p>Skor arttığında (örn. altın toplama) HUD referansına eriş → ScoreText widget'ına ulaş.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Set Text + dönüşüm</div>
+              <p>ScoreText → <strong>Set Text (Text)</strong> node'u. Skor integer'ını <strong>ToText (Integer)</strong> ile çevir, sonuca "Skor: " metnini <strong>Append</strong> ile ekle.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Skor güncelleme akışı</div>
+          <div class="bp-flow">
+            <div class="bp-node variable">
+              <div class="bp-node-title">Get Score</div>
+              <div class="bp-node-body"><div class="bp-node-row output"><span>değer</span><span class="pin pin-int"></span></div></div>
+            </div>
+            <span class="bp-comment">→ ToText → "Skor: " ekle →</span>
+            <div class="bp-node function">
+              <div class="bp-node-title">Set Text (ScoreText)</div>
+              <div class="bp-node-body">
+                <div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div>
+                <div class="bp-node-row input"><span class="pin pin-text"></span><span>In Text</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.6 MENÜ VE INPUT MODU -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">9.6</div>
+        <h2 class="topic-title">Menü ve fare imleci</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Bir menü (örn. duraklatma) açtığında fare imlecinin görünmesi ve butonlara tıklanabilmesi gerekir.
+          Bunun için <strong>Input Mode</strong> ayarlanır.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Input Mode</th><th>Ne yapar?</th><th>Ne zaman?</th></tr></thead>
+          <tbody>
+            <tr><td><code>Game Only</code></td><td>Sadece oyun kontrolü, imleç gizli</td><td>Normal oynanış</td></tr>
+            <tr><td><code>UI Only</code></td><td>Sadece arayüz, imleç açık</td><td>Ana menü, tam ekran menü</td></tr>
+            <tr><td><code>Game and UI</code></td><td>İkisi birden, imleç açık</td><td>Envanter, kısmi menü</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-warn">
+          <div class="callout-icon"><i class="ti ti-alert-triangle"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İmleç görünmüyor / butona tıklanamıyor?</div>
+            <p>
+              Menü açtın ama fare yok veya butonlar tepki vermiyorsa: <strong>Set Input Mode UI Only</strong>
+              (veya Game and UI) çağır ve <strong>Set Show Mouse Cursor = true</strong> yap. Menüyü
+              kapatırken tersine <strong>Set Input Mode Game Only</strong> + imleci gizle.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>HUD = ekran üstü 2D bilgi</strong> (can, skor). UMG ile yapılır.</li>
+        <li><strong>Widget Blueprint:</strong> Designer (görsel) + Graph (mantık) iki modlu.</li>
+        <li><strong>"Is Variable" işaretle</strong> — yoksa widget'a Graph'tan erişemezsin.</li>
+        <li><strong>Create Widget → Add to Viewport</strong> ile ekrana çizilir.</li>
+        <li><strong>Widget referansını sakla</strong> (variable) — sonra güncellemek için.</li>
+        <li><strong>Progress Bar 0-1 arası;</strong> yüzde = GüncelCan ÷ MaxCan.</li>
+        <li><strong>Integer → ToText</strong> ile skor metne çevrilir.</li>
+        <li><strong>Binding = otomatik (her kare), Event = verimli</strong> (sadece değişince).</li>
+        <li><strong>Menüde imleç için Set Input Mode UI/Game and UI + Show Mouse Cursor.</strong></li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Oyununa arayüz kat</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span></div>
+            <div class="project-title">Proje 1: Skor göstergesi</div>
+            <p class="project-desc">WBP_HUD oluştur, bir Text widget koy (ScoreText). BeginPlay'de Create Widget + Add to Viewport. Altın topladıkça skoru artır ve Set Text ile ekrandaki yazıyı güncelle.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Widget Blueprint oluşturuldu</li><li>Text widget "Is Variable" işaretli</li><li>Ekrana eklendi (Add to Viewport)</li><li>Skor toplandıkça güncelleniyor</li><li>Integer→Text dönüşümü yapıldı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Widget oluşturma, ekrana ekleme, metin güncelleme.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Çalışan can barı</div>
+            <p class="project-desc">HUD'a bir Progress Bar (HealthBar) ekle. Karakterde Health (float, max 100) variable'ı olsun. Bir hasar tuşuyla (örn. H) canı 10 azalt. Can değişince barın Percent'ini GüncelCan÷MaxCan ile güncelle. Bar canla birlikte azalsın.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Progress Bar eklendi (HealthBar)</li><li>Health variable var (max 100)</li><li>Hasar alınca can azalıyor</li><li>Bar yüzdesi doğru hesaplanıyor (0-1)</li><li>Bar görsel olarak azalıyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Progress Bar'ı canlı veriye bağlamak.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: Duraklatma menüsü</div>
+            <p class="project-desc">Bir WBP_PauseMenu yap (Devam Et + Çıkış butonları). Esc tuşuna basınca: menüyü Create+AddToViewport, Set Game Paused = true, Input Mode UI Only, imleç göster. "Devam Et" butonu menüyü kapatıp oyunu sürdürsün (Remove from Parent, unpause, Game Only). Butonlara OnClicked event'i bağla.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Pause menü widget'ı 2 butonlu</li><li>Esc ile açılıyor, oyun duruyor (Set Game Paused)</li><li>Input Mode + imleç doğru ayarlandı</li><li>Butonların OnClicked'i çalışıyor</li><li>Devam Et menüyü kapatıp oyunu sürdürüyor</li><li>Çıkış oyunu kapatıyor (Quit Game)</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Tam işlevsel menü: pause, input mode, buton event'leri.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q9-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>UE5'te arayüz/HUD tasarlamak için kullanılan sistem hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q9-1')"><span class="quiz-option-key">A</span><span>Niagara</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q9-1')"><span class="quiz-option-key">B</span><span>UMG (Widget Blueprint)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-1')"><span class="quiz-option-key">C</span><span>Enhanced Input</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-1')"><span class="quiz-option-key">D</span><span>Lumen</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q9-1-ok">✓ Doğru! UMG (Unreal Motion Graphics), Widget Blueprint'lerle arayüz tasarlama sistemidir.</div>
+        <div class="quiz-feedback fail" id="q9-1-fail">✗ Yanlış. Arayüz = UMG/Widget Blueprint. Niagara efekt, Enhanced Input girdi, Lumen aydınlatma içindir.</div>
+      </div>
+
+      <div class="quiz-question" id="q9-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Bir widget'ı oluşturduktan sonra ekranda görünmesi için ne yaparsın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q9-2')"><span class="quiz-option-key">A</span><span>Sadece Create Widget yeterli</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q9-2')"><span class="quiz-option-key">B</span><span>Create Widget sonrası Add to Viewport çağırırım</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-2')"><span class="quiz-option-key">C</span><span>Spawn Actor kullanırım</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-2')"><span class="quiz-option-key">D</span><span>Print String çağırırım</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q9-2-ok">✓ Doğru! Create Widget bellekte oluşturur, Add to Viewport ekrana çizer. İkisi birlikte gerekir.</div>
+        <div class="quiz-feedback fail" id="q9-2-fail">✗ Yanlış. Create Widget tek başına görünmez yapar; Add to Viewport ile ekrana çizilir.</div>
+      </div>
+
+      <div class="quiz-question" id="q9-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Can 60, max can 80. Progress Bar'ın Percent değeri ne olmalı?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q9-3')"><span class="quiz-option-key">A</span><span>60</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-3')"><span class="quiz-option-key">B</span><span>80</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q9-3')"><span class="quiz-option-key">C</span><span>0.75 (60÷80)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-3')"><span class="quiz-option-key">D</span><span>1.33</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q9-3-ok">✓ Doğru! Progress Bar 0-1 arası ister. 60÷80 = 0.75, yani bar %75 dolu.</div>
+        <div class="quiz-feedback fail" id="q9-3-fail">✗ Yanlış. Bar 0-1 arası değer alır. Yüzde = GüncelCan÷MaxCan = 60÷80 = 0.75.</div>
+      </div>
+
+      <div class="quiz-question" id="q9-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Bir widget'a Graph'tan erişebilmek için Designer'da ne yapmalısın?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q9-4')"><span class="quiz-option-key">A</span><span>Compile etmek</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q9-4')"><span class="quiz-option-key">B</span><span>"Is Variable" kutusunu işaretlemek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-4')"><span class="quiz-option-key">C</span><span>Rengini değiştirmek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-4')"><span class="quiz-option-key">D</span><span>Silip yeniden eklemek</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q9-4-ok">✓ Doğru! "Is Variable" işaretli değilse widget Graph'ta görünmez, ona kod yazamazsın.</div>
+        <div class="quiz-feedback fail" id="q9-4-fail">✗ Yanlış. Graph erişimi için "Is Variable" işaretlenmeli. İşaretsiz widget'a Graph'tan ulaşılamaz.</div>
+      </div>
+
+      <div class="quiz-question" id="q9-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Menü açtın ama fare imleci görünmüyor ve butonlara tıklanamıyor. Çözüm?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q9-5')"><span class="quiz-option-key">A</span><span>Niagara efekti eklemek</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q9-5')"><span class="quiz-option-key">B</span><span>Set Input Mode UI Only + Set Show Mouse Cursor true</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-5')"><span class="quiz-option-key">C</span><span>Tick'e Print String koymak</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q9-5')"><span class="quiz-option-key">D</span><span>GameMode'u değiştirmek</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q9-5-ok">✓ Doğru! UI etkileşimi için Input Mode'u UI Only (veya Game and UI) yap ve imleci göster.</div>
+        <div class="quiz-feedback fail" id="q9-5-fail">✗ Yanlış. Çözüm: Set Input Mode UI Only/Game and UI + Show Mouse Cursor = true. Aksi halde tıklama oyuna gider.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s9"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="08-ses-vfx.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 08</div><div class="page-nav-title">Ses & VFX</div></div>
+      </a>
+      <a href="10-materyal.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 10</div><div class="page-nav-title">Materyal</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

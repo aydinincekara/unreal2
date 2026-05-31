@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 16: Fracture Mode — UnrealAkademi</title>
+  <meta name="description" content="Chaos Destruction, Voronoi kırma desenleri, Chaos Field.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 16: Fracture Mode — UnrealAkademi">
+  <meta property="og:description" content="Chaos Destruction, Voronoi kırma desenleri, Chaos Field.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 16: Fracture Mode — UnrealAkademi">
+  <meta name="twitter:description" content="Chaos Destruction, Voronoi kırma desenleri, Chaos Field.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link active" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>UE5 Modları</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Fracture Mode</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 16</span>
+        <span class="page-category">UE5 Modları</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 65 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Fracture Mode — Nesneleri Parçala</h1>
+      <p class="page-lead">
+        Bir duvarın patlayarak dağılması, bir vazonun yere düşüp kırılması, bir tahtanın testereyle kesilmesi... Bu efektlerin arkasında UE5'in <strong>Chaos Destruction</strong> sistemi vardır. Fracture Mode, bir mesh'i nasıl parçalayacağını tasarladığın yerdir.
+      </p>
+    </header>
+
+    <!-- 16.1 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.1</div>
+        <h2 class="topic-title">Chaos Destruction nedir?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          UE5'in tahribat sistemi <strong>Chaos</strong> adıyla gelir. Bir Static Mesh'i alır, parçalara böler, bu parçaları <strong>Geometry Collection</strong> denilen özel bir asset'e dönüştürür. Bu asset oyun anında fiziksel olarak parçalanabilir — patlayabilir, ezilebilir, çökebilir.
+        </p>
+
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-bomb"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Gerçek hayat benzetmesi</div>
+            <p>
+              Sahnede bir cam vazo düşün. Normal mesh'tir — yere düşse bile değişmez. Onu <strong>Fracture Mode</strong>'a alıp parçalarsan ve <strong>Geometry Collection</strong>'a çevirirsen, artık bir <em>kırılmayı bekleyen vazo</em>'dur. Vurursan, patlatırsan, çarpılırsa o anda gerçek zamanlı kırılır. Sen "nasıl kırılacağını" önceden tasarlarsın, oyun "ne zaman kırılacağına" karar verir.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Static Mesh</div><div class="info-item-value">Normal değişmez mesh</div></div>
+          <div class="info-item"><div class="info-item-label">Geometry Collection</div><div class="info-item-value">Parçalanabilir mesh asset'i</div></div>
+          <div class="info-item"><div class="info-item-label">Fracture Mode</div><div class="info-item-value">Parçalama deseni tasarımı</div></div>
+          <div class="info-item"><div class="info-item-label">Chaos Field</div><div class="info-item-value">Parçaları tetikleyen alan</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16.2 -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.2</div>
+        <h2 class="topic-title">Fracture Mode'a giriş</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Viewport sol üstündeki mod dropdown'undan <strong>"Fracture"</strong> seç (kısayol <kbd>Shift</kbd>+<kbd>6</kbd>). Sol panelde parçalama araçları açılır.
+        </p>
+
+        <h4>Tipik iş akışı (4 adım)</h4>
+        <div class="arrow-flow">
+          <div class="arrow-flow-step"><i class="ti ti-cube"></i><span>Static Mesh seç</span></div>
+          <span class="arrow-big">→</span>
+          <div class="arrow-flow-step"><i class="ti ti-plus"></i><span>New (Geometry Collection)</span></div>
+          <span class="arrow-big">→</span>
+          <div class="arrow-flow-step"><i class="ti ti-grid-dots"></i><span>Fracture (parça oluştur)</span></div>
+          <span class="arrow-big">→</span>
+          <div class="arrow-flow-step"><i class="ti ti-bomb"></i><span>Play + Chaos Field ile patlat</span></div>
+        </div>
+
+        <h4>Fracture Mode panelinin sekmeleri</h4>
+        <div class="concept-grid">
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-plus"></i></div>
+            <h4>Generate</h4>
+            <p>Static Mesh → Geometry Collection oluştur. "New" butonuna bas, asset oluşur.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-grid-dots"></i></div>
+            <h4>Fracture</h4>
+            <p>Asıl parçalama burada. Voronoi, Slice, Cluster gibi yöntemler.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-stack"></i></div>
+            <h4>Cluster</h4>
+            <p>Parçaları gruplara ayır — büyük blok → küçük parçalar hiyerarşisi.</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-edit"></i></div>
+            <h4>Edit</h4>
+            <p>Tek tek parçaları seç, birleştir, sil, yeniden düzenle.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16.3 PARÇALAMA YÖNTEMLERİ -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.3</div>
+        <h2 class="topic-title">Parçalama yöntemleri — Hangisi ne için?</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Fracture sekmesinde birden çok algoritma var. Her biri farklı bir kırılma deseni üretir. Doğrusunu seçmek görselin gerçekçiliğini belirler.
+        </p>
+
+        <table class="compare-table">
+          <thead><tr><th>Yöntem</th><th>Nasıl çalışır?</th><th>Ne için ideal?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Uniform Voronoi</strong></td><td>Rastgele noktalardan eşit hücreler üretir</td><td>Cam, taş, beton — doğal rastgele kırılma</td></tr>
+            <tr><td><strong>Clustered Voronoi</strong></td><td>Belli noktalar etrafında yoğunlaşmış parçalar</td><td>Etkin nokta etrafında çatlamalar</td></tr>
+            <tr><td><strong>Radial Voronoi</strong></td><td>Bir merkez noktasından radyal yayılan parçalar</td><td>Mermi deliği, patlama merkezi</td></tr>
+            <tr><td><strong>Planar (Slice)</strong></td><td>Düzlem boyunca keser</td><td>Bıçak/testere kesiği, dilim</td></tr>
+            <tr><td><strong>Mesh Cut</strong></td><td>Başka bir mesh ile şekilli kesim</td><td>Özel form kesimler, kalıp</td></tr>
+            <tr><td><strong>Brick</strong></td><td>Tuğla benzeri düzenli ızgara</td><td>Duvar, taş örme, beton blok</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">En sık kullanılan: Uniform Voronoi</div>
+            <p>
+              Yeni başlarken hep <strong>Uniform Voronoi</strong> dene. <em>Number of Voronoi Sites</em> değeri parça sayısıdır — 20-50 arası başla, ihtiyaca göre artır. Çok yüksek değer (500+) performansı kasar, çok düşük (5-10) gerçekçi durmaz.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16.4 ADIM ADIM -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.4</div>
+        <h2 class="topic-title">İlk parçalama — Adım adım</h2>
+      </div>
+      <div class="topic-body">
+        <p>Bir küpü parçalayalım ve oyunda patlatalım.</p>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Static Mesh seç + moda gir</div>
+              <p>Sahneye bir Cube koy. Seç. Sol üstte modu <strong>Fracture</strong>'a getir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Geometry Collection oluştur</div>
+              <p><strong>Generate</strong> sekmesinde <strong>New</strong>'a bas. İsim ver: <code>GC_KirilanKup</code>. Content Browser'da yeni bir asset oluşur, sahnedeki nesne ona dönüşür.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Parçala</div>
+              <p><strong>Fracture</strong> sekmesinde <strong>Uniform Voronoi</strong> seç, Sites = 30. <strong>Fracture</strong> butonuna bas. Mesh anında 30 parçaya bölünür, viewport'ta parça sınırlarını gör.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Simulate Physics aç</div>
+              <p>Çıkıp normal moda dön. Nesne seçili → Details panelinde <strong>Simulate Physics</strong>'i AÇIK yap. Bu olmadan parçalar düşmez.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">5</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Anchor — sabit nokta belirle (opsiyonel)</div>
+              <p>Bütün küpün düşmemesi için bazı parçaları "ankraj" yapabilirsin. Edit sekmesinde parçaları seç → <strong>Anchor</strong>. Bunlar sabit kalır, gerisi serbest düşer.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker"><div class="step-number">6</div><div class="step-line"></div></div>
+            <div class="step-body">
+              <div class="step-title">Test et</div>
+              <p><kbd>P</kbd> ile Play. Karakterin küpe çarpınca parçalar yere saçılır. Çarpışma kuvveti yetmezse Chaos Field gerekli (sonraki adım).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16.5 CHAOS FIELD -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.5</div>
+        <h2 class="topic-title">Chaos Field — Patlatıcı alan</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Doğal çarpışma çoğu zaman parçalamak için yetmez. <strong>Chaos Field</strong>, bir alana <em>kuvvet uygulayan</em> görünmez bir aktördür. Patlama, itme, çekme efektleri buradan tetiklenir.
+        </p>
+
+        <h4>Yaygın Field aktör türleri</h4>
+        <div class="info-grid">
+          <div class="info-item"><div class="info-item-label">Radial Falloff</div><div class="info-item-value">Merkezden uzaklaştıkça zayıflayan etki</div></div>
+          <div class="info-item"><div class="info-item-label">Radial Vector</div><div class="info-item-value">Patlatma — dışa doğru kuvvet</div></div>
+          <div class="info-item"><div class="info-item-label">Uniform Vector</div><div class="info-item-value">Tek yönde itme (rüzgar gibi)</div></div>
+          <div class="info-item"><div class="info-item-label">Box Falloff</div><div class="info-item-value">Kutu içinde değişen etki</div></div>
+        </div>
+
+        <h4>Blueprint'ten patlatma</h4>
+        <p>
+          Pratikte Field'ı bir Blueprint Actor içinde kurar, tetikle anında <strong>Apply Physics Field</strong> ile etkinleştirirsin. Örnek: bir patlama topu Actor'ında BeginPlay → Field aktif → 1 saniye sonra DestroyActor.
+        </p>
+
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">İleri seviye — Cluster + Damage Threshold</div>
+            <p>
+              Gerçekçi tahribat için <strong>Cluster</strong> kullan: küp önce 5 büyük parçaya, her büyük parça 10 küçüğe ayrılsın. Geometry Collection'ın Details'inde <strong>Damage Threshold</strong> ayarla: zayıf vuruşta sadece üst cluster kırılır, güçlü vuruşta alt'a iner. Profesyonel "kademeli kırılma" budur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16.6 PERFORMANS -->
+    <section class="topic">
+      <div class="topic-header">
+        <div class="topic-number">16.6</div>
+        <h2 class="topic-title">Performans — Acımasız uyarılar</h2>
+      </div>
+      <div class="topic-body">
+        <p>
+          Chaos Destruction güçlüdür ama <strong>pahalıdır</strong>. Düşüncesiz kullanım oyunu hızla kasar.
+        </p>
+
+        <div class="callout callout-danger">
+          <div class="callout-icon"><i class="ti ti-alert-octagon"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">3 altın kural</div>
+            <p>
+              <strong>1)</strong> Sahnede aynı anda çok sayıda Geometry Collection bulundurma — her biri fiziksel hesap demek.
+              <strong>2)</strong> Parçaları belirli süre sonra (örn. 10 sn) DestroyActor ile temizle — dünya parça çöplüğü olmasın.
+              <strong>3)</strong> Parça sayısı 30-80 arası ideal; gerçekçilik için artırmadan önce LOD ve Cluster düşün.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body">
+            <div class="callout-title">Sahte parçalama — Hybrid yaklaşım</div>
+            <p>
+              Büyük yıkımlarda gerçek Chaos yerine <strong>önceden parçalanmış mesh + Niagara dust + ses</strong> kombinasyonu yapabilirsin. Görsel olarak fark edilmez, performans 10x daha iyidir. Hollywood'un yaptığı da budur.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HAP -->
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>Chaos = UE5'in tahribat sistemi.</strong></li>
+        <li><strong>Static Mesh → Generate → Geometry Collection</strong> dönüşümüyle başlar.</li>
+        <li><strong>Uniform Voronoi</strong> = en yaygın parçalama yöntemi (doğal kırılma).</li>
+        <li><strong>Number of Sites</strong> = parça sayısı, 30-50 ideal.</li>
+        <li><strong>Brick</strong> yöntemi tuğla/duvar için, <strong>Planar</strong> kesim için ideal.</li>
+        <li><strong>Simulate Physics AÇIK</strong> olmadan parçalar düşmez.</li>
+        <li><strong>Anchor</strong> ile bazı parçalar sabit kalır — duvarın temeli yıkılmaz.</li>
+        <li><strong>Chaos Field</strong> = patlama/itme alanı (Radial Vector en yaygın).</li>
+        <li><strong>Cluster + Damage Threshold</strong> ile kademeli kırılma (gerçekçi).</li>
+        <li><strong>Performans:</strong> sahnede aynı anda az GC tut, parçaları temizle.</li>
+        <li><strong>Niagara + ses kombinasyonu</strong>, Chaos'tan ucuza benzer his verir.</li>
+      </ul>
+    </div>
+
+    <!-- PROJELER -->
+    <section class="projects">
+      <div class="projects-header">
+        <div class="projects-header-icon"><i class="ti ti-hammer"></i></div>
+        <div><h3>Pratik Projeler</h3><span>Parçalanan dünya kur</span></div>
+      </div>
+      <div class="project-list">
+        <div class="project-card lv-easy">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~25 dk</span></div>
+            <div class="project-title">Proje 1: Kırılan küp</div>
+            <p class="project-desc">Bir Cube'u Uniform Voronoi ile 30 parçaya böl, Geometry Collection'a çevir. Simulate Physics aç. Karakterinle çarp, parçalar yere saçılsın. Üst bölmedeki adımları birebir uygula.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>GC asset oluşturuldu</li><li>30 parça Voronoi ile yapıldı</li><li>Simulate Physics açık</li><li>Çarpma sonucu parçalar saçılıyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Fracture iş akışını ilk kez baştan sona deneyimlemek.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-medium">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~40 dk</span></div>
+            <div class="project-title">Proje 2: Tuğla duvarı + Anchor</div>
+            <p class="project-desc">Yassı bir küpü duvar gibi koy. <strong>Brick</strong> yöntemiyle tuğla şeklinde parçala. Alt sıradaki tuğlaları <strong>Anchor</strong> yap (sabit kalsın). Üst kısma patlama Chaos Field'lı bir Actor at — sadece üst kısım yıkılsın, temel ayakta kalsın.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Brick fracture düzenli görünüyor</li><li>Alt sıra Anchor olarak işaretlendi</li><li>Chaos Field Actor sahnede</li><li>Patlama sonrası alt sıra ayakta, üst kısım yıkıldı</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Cluster ve Anchor mantığını anlamak — gerçekçi tahribat.</span></div>
+          </div>
+        </div>
+        <div class="project-card lv-hard">
+          <div class="project-body">
+            <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~60 dk</span></div>
+            <div class="project-title">Proje 3: Patlayan varil + ses + temizlik</div>
+            <p class="project-desc">Bir varil mesh'i parçala (Clustered Voronoi). Bir <strong>BP_PatlayanVaril</strong> Actor yaz: oyuncu yaklaşınca/vurunca BeginOverlap → Chaos Field aktif (Radial Vector, 5000 strength) + ses çal + Niagara duman/ateş + 1 sn sonra Field'ı kapat + 10 sn sonra GC'yi DestroyActor ile temizle. Gerçek bir oyun varili davranışı kur.</p>
+            <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Geometry Collection cluster'lı kuruldu</li><li>BP'de Field tetikleme çalışıyor</li><li>Ses + Niagara senkron</li><li>Field süresi sınırlı (Delay ile)</li><li>10 sn sonra parçalar temizleniyor</li><li>Tekrar Play'de baştan başlıyor</li></ul></div>
+            <div class="project-goal"><i class="ti ti-target"></i><span>Chaos + Niagara + ses + performans yönetimi birlikte — profesyonel patlama sistemi.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🎮 GERÇEK OYUNLAR — FRACTURE -->
+    <aside class="real-world-box">
+      <div class="real-world-header">
+        <div class="real-world-icon"><i class="ti ti-device-gamepad"></i></div>
+        <h3 class="real-world-title">Chaos Destruction — Gerçek oyunlarda nerede görürsün?</h3>
+      </div>
+      <div class="real-world-grid">
+        <div class="real-world-item">
+          <div class="real-world-game">Fortnite</div>
+          <div class="real-world-where">Yapı yıkımı sistemi</div>
+          <p class="real-world-desc">Oyuncuların inşa ettiği duvarların patlamayla parçalanması — birebir Chaos. Epic Games kendi oyununda kullanıyor.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">The Matrix Awakens</div>
+          <div class="real-world-where">Şehir yıkım demosu</div>
+          <p class="real-world-desc">UE5'in tanıtım demosunda araba çarpışmalarında bina cepheleri Chaos ile parçalanır.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Senua's Saga: Hellblade II</div>
+          <div class="real-world-where">Çevresel hasar</div>
+          <p class="real-world-desc">Düşmanlarla çarpışmada kırılan ahşap engeller, taş bloklar — gerçek zamanlı Geometry Collection ile.</p>
+        </div>
+        <div class="real-world-item">
+          <div class="real-world-game">Senin oyunun için</div>
+          <div class="real-world-where">Patlayan variller, kırılan kapılar, çöken duvarlar</div>
+          <p class="real-world-desc">Bir BP_Patlayıcı + Chaos Field birleşimiyle ortalama bir aksiyon oyununun çekirdek mekaniği bende.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- QUIZ -->
+    <section class="quiz-card">
+      <div class="quiz-header">
+        <div class="quiz-header-icon"><i class="ti ti-help"></i></div>
+        <div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div>
+      </div>
+
+      <div class="quiz-question" id="q16-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>Bir Static Mesh'i parçalanabilir hale getirmek için onu hangi asset türüne çevirmelisin?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q16-1')"><span class="quiz-option-key">A</span><span>Skeletal Mesh</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q16-1')"><span class="quiz-option-key">B</span><span>Geometry Collection</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-1')"><span class="quiz-option-key">C</span><span>Niagara System</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-1')"><span class="quiz-option-key">D</span><span>Material Instance</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q16-1-ok">✓ Doğru! Geometry Collection, Chaos sisteminin parçalanabilir mesh asset türüdür.</div>
+        <div class="quiz-feedback fail" id="q16-1-fail">✗ Yanlış. Parçalanabilir mesh = Geometry Collection. Diğerleri animasyon/efekt/materyal için.</div>
+      </div>
+
+      <div class="quiz-question" id="q16-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Cam, beton gibi doğal rastgele kırılma için en uygun parçalama yöntemi hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q16-2')"><span class="quiz-option-key">A</span><span>Uniform Voronoi</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-2')"><span class="quiz-option-key">B</span><span>Brick</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-2')"><span class="quiz-option-key">C</span><span>Planar Slice</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-2')"><span class="quiz-option-key">D</span><span>Mesh Cut</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q16-2-ok">✓ Doğru! Uniform Voronoi rastgele hücreler üretir — cam/beton kırılmasının doğal görünümünü sağlar.</div>
+        <div class="quiz-feedback fail" id="q16-2-fail">✗ Yanlış. Doğal rastgele kırılma = Uniform Voronoi. Brick tuğla, Planar bıçak kesimi, Mesh Cut özel şekiller için.</div>
+      </div>
+
+      <div class="quiz-question" id="q16-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>Parçalanmış nesnenin alt kısmının yıkılmaması, sabit kalması için ne kullanılır?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q16-3')"><span class="quiz-option-key">A</span><span>Cluster</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q16-3')"><span class="quiz-option-key">B</span><span>Anchor</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-3')"><span class="quiz-option-key">C</span><span>Simulate Physics OFF</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-3')"><span class="quiz-option-key">D</span><span>Damage Threshold = 0</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q16-3-ok">✓ Doğru! Anchor olarak işaretlenen parçalar fizik etkilerinden bağımsız sabit kalır.</div>
+        <div class="quiz-feedback fail" id="q16-3-fail">✗ Yanlış. Sabit kalan parçalar = Anchor. Cluster parçaları gruplar, Simulate Physics fizik motorunu açar/kapatır.</div>
+      </div>
+
+      <div class="quiz-question" id="q16-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Patlama efekti yaratmak için hangi Chaos Field türü dışa doğru kuvvet uygular?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q16-4')"><span class="quiz-option-key">A</span><span>Box Falloff</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-4')"><span class="quiz-option-key">B</span><span>Uniform Vector</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q16-4')"><span class="quiz-option-key">C</span><span>Radial Vector</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-4')"><span class="quiz-option-key">D</span><span>Anchor Field</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q16-4-ok">✓ Doğru! Radial Vector merkezden dışa doğru kuvvet uygular — klasik patlama davranışı.</div>
+        <div class="quiz-feedback fail" id="q16-4-fail">✗ Yanlış. Patlama = Radial Vector. Uniform Vector tek yönde itme, Box Falloff kutu içinde değişen etki için.</div>
+      </div>
+
+      <div class="quiz-question" id="q16-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Performans için en doğru parçalanmış nesne yönetimi nedir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q16-5')"><span class="quiz-option-key">A</span><span>Parça sayısını 1000'in üstüne çıkarmak</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q16-5')"><span class="quiz-option-key">B</span><span>Parçaları belirli süre sonra DestroyActor ile temizlemek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-5')"><span class="quiz-option-key">C</span><span>Sahneye çok sayıda Geometry Collection eklemek</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q16-5')"><span class="quiz-option-key">D</span><span>Simulate Physics'i sürekli açık tutmak</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q16-5-ok">✓ Doğru! Parçalar dünyada birikmesin — bir süre sonra DestroyActor ile temizlemek performans için kritik.</div>
+        <div class="quiz-feedback fail" id="q16-5-fail">✗ Yanlış. Parçaları temizlemek (DestroyActor) performansın anahtarı. Çok parça/çok GC tam tersine kasma yaratır.</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s16"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="15-brush-mode.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 15</div><div class="page-nav-title">Brush Mode</div></div>
+      </a>
+      <a href="17-mesh-paint-mode.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 17</div><div class="page-nav-title">Mesh Paint Mode</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bölüm 08: Ses &amp; VFX — UnrealAkademi</title>
+  <meta name="description" content="Sound Cue, Niagara temelleri, partikül sistemleri.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="../manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Bölüm 08: Ses &amp; VFX — UnrealAkademi">
+  <meta property="og:description" content="Sound Cue, Niagara temelleri, partikül sistemleri.">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bölüm 08: Ses &amp; VFX — UnrealAkademi">
+  <meta name="twitter:description" content="Sound Cue, Niagara temelleri, partikül sistemleri.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/content.css">
+  <link rel="stylesheet" href="../css/visuals.css">
+  <link rel="stylesheet" href="../css/extras.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <a href="../index.html" class="brand-link" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </a>
+    </div>
+    <span class="brand-pill"><i class="ti ti-bolt"></i>Sıfırdan Ustaya</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/27</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1"><i class="ti ti-download"></i><span class="nav-link-text">Kurulum</span><span class="nav-link-num">01</span></a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2"><i class="ti ti-layout-dashboard"></i><span class="nav-link-text">Arayüz</span><span class="nav-link-num">02</span></a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3"><i class="ti ti-device-gamepad-2"></i><span class="nav-link-text">GameMode</span><span class="nav-link-num">03</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint Sistemi</span><span class="nav-link-num">04</span></a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5"><i class="ti ti-circle-plus"></i><span class="nav-link-text">Actor & Event</span><span class="nav-link-num">05</span></a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6"><i class="ti ti-variable"></i><span class="nav-link-text">Variable Türleri</span><span class="nav-link-num">06</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7"><i class="ti ti-keyboard"></i><span class="nav-link-text">Input & Hareket</span><span class="nav-link-num">07</span></a>
+      <a href="08-ses-vfx.html" class="nav-link active" data-section="s8"><i class="ti ti-volume"></i><span class="nav-link-text">Ses & VFX</span><span class="nav-link-num">08</span></a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9"><i class="ti ti-window"></i><span class="nav-link-text">HUD & Arayüz</span><span class="nav-link-num">09</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10"><i class="ti ti-palette"></i><span class="nav-link-text">Materyal</span><span class="nav-link-num">10</span></a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11"><i class="ti ti-upload"></i><span class="nav-link-text">İçerik Yükleme</span><span class="nav-link-num">11</span></a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12"><i class="ti ti-walk"></i><span class="nav-link-text">Animasyon</span><span class="nav-link-num">12</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13"><i class="ti ti-3d-cube-sphere"></i><span class="nav-link-text">Modeling</span><span class="nav-link-num">13</span></a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14"><i class="ti ti-clapperboard-play"></i><span class="nav-link-text">Animation Mode</span><span class="nav-link-num">14</span></a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15"><i class="ti ti-brush"></i><span class="nav-link-text">Brush</span><span class="nav-link-num">15</span></a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16"><i class="ti ti-shatter"></i><span class="nav-link-text">Fracture</span><span class="nav-link-num">16</span></a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17"><i class="ti ti-paint"></i><span class="nav-link-text">Mesh Paint</span><span class="nav-link-num">17</span></a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18"><i class="ti ti-mountain"></i><span class="nav-link-text">Landscape</span><span class="nav-link-num">18</span></a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19"><i class="ti ti-plant-2"></i><span class="nav-link-text">Foliage</span><span class="nav-link-num">19</span></a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20"><i class="ti ti-pointer"></i><span class="nav-link-text">Selection</span><span class="nav-link-num">20</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21"><i class="ti ti-bolt"></i><span class="nav-link-text">Lumen & Nanite</span><span class="nav-link-num">21</span></a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22"><i class="ti ti-keyboard"></i><span class="nav-link-text">Enhanced Input</span><span class="nav-link-num">22</span></a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23"><i class="ti ti-device-floppy"></i><span class="nav-link-text">Save & Menü</span><span class="nav-link-num">23</span></a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24"><i class="ti ti-package-export"></i><span class="nav-link-text">Yayınlama</span><span class="nav-link-num">24</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25"><i class="ti ti-circuit-changeover"></i><span class="nav-link-text">Blueprint İleri</span><span class="nav-link-num">25</span></a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26"><i class="ti ti-code"></i><span class="nav-link-text">C++ Giriş</span><span class="nav-link-num">26</span></a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27"><i class="ti ti-map-2"></i><span class="nav-link-text">Yol Haritası</span><span class="nav-link-num">27</span></a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk"><i class="ti ti-book-2"></i><span class="nav-link-text">Sözlük</span></a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet"><i class="ti ti-list-details"></i><span class="nav-link-text">Cheat Sheet</span></a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss"><i class="ti ti-help-circle"></i><span class="nav-link-text">SSS</span></a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama"><i class="ti ti-search"></i><span class="nav-link-text">Arama</span></a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika"><i class="ti ti-certificate"></i><span class="nav-link-text">Sertifika</span></a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn"><i class="ti ti-books"></i><span>Kaynaklar</span></a>
+    <a href="iletisim.html" class="sidebar-btn"><i class="ti ti-mail"></i><span>İletişim</span></a>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="main-content">
+    <nav class="breadcrumb">
+      <a href="../index.html"><i class="ti ti-home"></i> Ana Sayfa</a>
+      <i class="ti ti-chevron-right"></i><span>Oyun Mekaniği</span>
+      <i class="ti ti-chevron-right"></i><span style="color: var(--primary-light);">Ses & VFX</span>
+    </nav>
+
+    <header class="page-header">
+      <div class="page-meta">
+        <span class="page-num">BÖLÜM 08</span>
+        <span class="page-category">Oyun Mekaniği</span>
+        <span class="badge badge-warning"><i class="ti ti-clock"></i> 65 dakika</span>
+        <span class="difficulty difficulty-medium">Orta</span>
+      </div>
+      <h1 class="page-title">Ses & VFX — Oyunu Canlandır</h1>
+      <p class="page-lead">
+        Sessiz, efektsiz bir oyun ölü görünür. En basit etkileşim bile ses ve görsel efektle dolu hisseder.
+        Bu bölümde ses çalmayı (2D ve konuma bağlı 3D), Niagara ile parlak partikül efektleri yapmayı ve
+        bunları kendi mekaniklerine bağlamayı öğreneceksin.
+      </p>
+    </header>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.1</div><h2 class="topic-title">Ses neden önemli?</h2></div>
+      <div class="topic-body">
+        <p>Ses, oyuncunun fark etmeden hissettiği şeydir. Bir kapı açılma sesi yoksa kapı sahte gelir. Bir vuruş sesi yoksa hasar gerçek görünmez. Profesyonel oyunlar görselin yarısı kadar zamanı sese ayırır.</p>
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-movie"></i></div>
+          <div class="analogy-body">
+            <div class="analogy-label">Film örneği</div>
+            <p>Aynı film sahnesini sessiz izle, sonra müzikle izle — tamamen farklı hissedersin. Korku filminin korkutucu olması müzik+sestir, görsel sadece sahnedir. Oyun da aynı: aksiyon, gerilim, huzur — hepsini ses kurar.</p>
+          </div>
+        </div>
+        <h4>3 ses türü</h4>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-headphones"></i></div><h4>2D Ses</h4><p>Konum yok — her zaman aynı sesle duyulur. UI tıklaması, menü müziği, oyun arka plan müziği.</p></div>
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-map-pin"></i></div><h4>3D Ses (konuma bağlı)</h4><p>Sahnede bir konumdan gelir. Yaklaşınca yüksek, uzaklaşınca alçak. Kapı sesi, düşman ayak sesi.</p></div>
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(245,200,66,.12);color:#f5c842;"><i class="ti ti-volume-2"></i></div><h4>Component Sesi</h4><p>Bir Actor'a yapışık ses kaynağı. Hareket eden bir nesnenin sesi onunla gelir (motor, ateş).</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.2</div><h2 class="topic-title">Ses dosyasını projeye ekle</h2></div>
+      <div class="topic-body">
+        <p>UE5 <strong>.wav</strong> dosyalarını ses olarak kabul eder (mp3 değil!). Eklemek çok basit:</p>
+        <div class="steps">
+          <div class="step"><div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Ses dosyası hazırla</div><p>Bir .wav dosyası bul (StarterContent'te birkaç tane var, ya da freesound.org gibi sitelerden ücretsiz indir). mp3 ise Audacity gibi programla wav'a çevir.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Content Browser'a sürükle</div><p>.wav dosyasını Windows Gezgini'nden Content Browser'a sürükle bırak. UE5 otomatik <strong>Sound Wave</strong> asset'i oluşturur. Çift tıklayınca preview ile dinleyebilirsin.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Sound Cue (opsiyonel ama önerilen)</div><p>Sound Wave'e sağ tık → <strong>Create Cue</strong>. Sound Cue, sesin üzerine "akıllı kontrol" katmanıdır: rastgele varyasyon, ses yüksekliği, kademeli artma vs. ekleyebilirsin. Çoğu Blueprint'te Sound Cue kullanılır.</p></div></div>
+        </div>
+        <div class="callout callout-pro">
+          <div class="callout-icon"><i class="ti ti-user-star"></i></div>
+          <div class="callout-body"><div class="callout-title">İleri seviye — MetaSound</div><p>UE5'in yeni nesil ses sistemi <strong>MetaSound</strong>'dur. Sound Cue'nun çok daha güçlüsü — ses dosyalarını node tabanlı bir editörde anında manipüle edersin (pitch shift, fade, dinamik katman). Yeni projelerde MetaSound öneriliyor; Sound Cue eski projelerde hala sık kullanılıyor.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.3</div><h2 class="topic-title">Ses çalan node'lar</h2></div>
+      <div class="topic-body">
+        <p>Blueprint'te ses çalmak için 3 ana node kullanılır. Hangisini seçeceğin senaryoya bağlı:</p>
+        <table class="compare-table">
+          <thead><tr><th>Node</th><th>Ne yapar?</th><th>Ne zaman?</th></tr></thead>
+          <tbody>
+            <tr><td><code>Play Sound 2D</code></td><td>Konumsuz ses çalar</td><td>UI sesi, menü müziği</td></tr>
+            <tr><td><code>Play Sound at Location</code></td><td>Sahnede belirli bir konumdan tek seferlik çalar</td><td>Patlama, vuruş, kapı sesi</td></tr>
+            <tr><td><code>Spawn Sound Attached</code></td><td>Bir component'e bağlı ses başlatır (hareket eder)</td><td>Motor sesi, yürüyen düşman, alev</td></tr>
+          </tbody>
+        </table>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Örnek: Tuşa basınca ses çal</div>
+          <div class="bp-flow">
+            <div class="bp-node event"><div class="bp-node-title">F Key</div><div class="bp-node-body"><div class="bp-node-row output"><span>Pressed ▸</span><span class="pin-triangle pin-exec"></span></div></div></div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function"><div class="bp-node-title">Play Sound 2D</div><div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div><div class="bp-node-row input"><span class="pin pin-object"></span><span>Sound (Sound Cue)</span></div></div></div>
+          </div>
+        </div>
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-volume"></i></div>
+          <div class="callout-body"><div class="callout-title">Audio Component nedir?</div><p>Bir Actor'a sürekli ses kaynağı bağlamak istersen <strong>Audio Component</strong> ekle (Components → + Add → Audio). Sahneye konulduğu anda otomatik çalmaya başlar (veya Auto Activate'i kapatıp Blueprint'ten Play/Stop edersin). Sürekli motor sesi, yanan ateş ocağı bu yöntemle yapılır.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.4</div><h2 class="topic-title">3D Ses ayarı — Attenuation</h2></div>
+      <div class="topic-body">
+        <p>"Yaklaşınca yüksek, uzaklaşınca alçak" ses için <strong>Sound Attenuation</strong> asset'i gerekir. Bu, sesin uzaklığa göre nasıl azalacağını belirler.</p>
+        <div class="steps">
+          <div class="step"><div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Attenuation oluştur</div><p>Content Browser → sağ tık → <strong>Audio → Sound Attenuation</strong>. İsim: <code>SA_3DSes</code>.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Yarıçapları ayarla</div><p>Çift tıkla. <strong>Inner Radius</strong> = ses tam yüksekte duyulan mesafe (örn. 500). <strong>Falloff Distance</strong> = sesin kaybolana kadar olan mesafe (örn. 2000).</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Sese ata</div><p>Sound Cue'yu aç → Details → <strong>Sound Attenuation</strong> alanına SA_3DSes'i koy. Artık <code>Play Sound at Location</code> ile çaldığında uzaklığa göre alçalır.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.5</div><h2 class="topic-title">VFX nedir? — Niagara'ya merhaba</h2></div>
+      <div class="topic-body">
+        <p><strong>VFX</strong> (Visual Effects, görsel efektler), oyunda göze görünen ama "katı" olmayan şeylerdir: ateş, duman, kıvılcım, su sıçraması, patlama, sihir efekti, kar tanesi. UE5'in modern VFX sistemi <strong>Niagara</strong>'dır (eski sistem Cascade artık önerilmiyor).</p>
+        <div class="analogy">
+          <div class="analogy-icon"><i class="ti ti-snowflake"></i></div>
+          <div class="analogy-body"><div class="analogy-label">Partikül sistemi nedir?</div><p>Bir kar yağışını binlerce tane kar tanesini tek tek çizerek yapmazsın. Bir <strong>"emitter"</strong> (yayıcı) tanımlarsın: "saniyede 200 tane kar tanesi yap, her biri yavaş düşsün, bir süre sonra yok olsun". Niagara, bu kuralı saniyede binlerce parçacık için çok hızlı çalıştırır. Yağmur, ateş, duman — hepsi bu mantıkla.</p></div>
+        </div>
+        <h4>Niagara mimarisi — System, Emitter, Module</h4>
+        <div class="concept-grid">
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(124,92,255,.12);color:#a78bfa;"><i class="ti ti-package-2"></i></div><h4>Niagara System</h4><p>En dış kap. "Patlama efekti" → bir System. İçinde birden çok Emitter olabilir (alev + duman + kıvılcım birlikte).</p></div>
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(0,212,255,.12);color:#67e8f9;"><i class="ti ti-spark"></i></div><h4>Emitter</h4><p>Tek tip partikül üretici. "Alev emitter" sadece alevleri yayar. System'in alt birimi.</p></div>
+          <div class="concept-card"><div class="concept-icon" style="background:rgba(16,185,129,.12);color:#34d399;"><i class="ti ti-puzzle"></i></div><h4>Module</h4><p>Emitter'ın davranış kurallarını belirleyen küçük bloklar: doğum hızı, renk, hız, ömür. Lego parçası gibi.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.6</div><h2 class="topic-title">İlk Niagara efektini oluştur</h2></div>
+      <div class="topic-body">
+        <div class="steps">
+          <div class="step"><div class="step-marker"><div class="step-number">1</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Yeni Niagara System</div><p>Content Browser → sağ tık → <strong>FX → Niagara System</strong>. Açılan pencerede şablon seç: <strong>"New system from selected emitters"</strong> → <strong>"Fountain"</strong> (basit, eğitici).</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">2</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">İsim ver, aç</div><p>İsim: <code>NS_IlkEfekt</code>. Çift tıkla. Niagara editörü açılır — solda emitter listesi, ortada preview (efektin çalışır hali), sağda module ayarları.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">3</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Renk değiştir</div><p>Sol emitter listesinden ana emitter'ı seç. Stack'te <strong>"Particle Color"</strong> module'ünü bul, tıkla. Sağda <strong>Color</strong> alanını mavi yap. Preview anında değişir.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">4</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Hız ve doğum oranı oyna</div><p><strong>"Spawn Rate"</strong> (doğum hızı) module'ünü bul → 50 yap. <strong>"Add Velocity"</strong> module'ünde hızı artır. Her değişikliği canlı izlersin.</p></div></div>
+          <div class="step"><div class="step-marker"><div class="step-number">5</div><div class="step-line"></div></div><div class="step-body"><div class="step-title">Sahneye koy</div><p>NS_IlkEfekt'i Content Browser'dan viewport'a sürükle. Sahnede çalışan partikülleri gör. Kaydet.</p></div></div>
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-icon"><i class="ti ti-bulb"></i></div>
+          <div class="callout-body"><div class="callout-title">Hazır efektler</div><p>Sıfırdan başlamak yerine Marketplace'ten ücretsiz Niagara paketleri indirebilirsin — patlamalar, ateş, sihir, hava efektleri. Bunlar profesyonel kalitede ve içlerini açıp nasıl yapılmış inceleyebilirsin (öğrenmenin en hızlı yolu).</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic">
+      <div class="topic-header"><div class="topic-number">8.7</div><h2 class="topic-title">Blueprint'ten VFX tetikleme</h2></div>
+      <div class="topic-body">
+        <p>Efektini sahneye sabit koymak yerine olaya bağlı çağırmak istersin: "patladığında kıvılcım çık". Bunun için <code>Spawn System at Location</code> node'u kullanılır:</p>
+        <div class="bp-canvas">
+          <div class="bp-canvas-label">Örnek: Overlap'te patlama efekti + ses</div>
+          <div class="bp-flow">
+            <div class="bp-node event"><div class="bp-node-title">On Begin Overlap</div><div class="bp-node-body"><div class="bp-node-row output"><span>değince ▸</span><span class="pin-triangle pin-exec"></span></div></div></div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function"><div class="bp-node-title">Spawn System at Location</div><div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>exec</span></div><div class="bp-node-row input"><span class="pin pin-object"></span><span>Niagara System</span></div><div class="bp-node-row input"><span class="pin pin-vector"></span><span>Location</span></div></div></div>
+            <span class="bp-arrow exec"></span>
+            <div class="bp-node function"><div class="bp-node-title">Play Sound at Location</div><div class="bp-node-body"><div class="bp-node-row input"><span class="pin-triangle pin-exec"></span><span>patlama sesi</span></div></div></div>
+          </div>
+          <span class="bp-comment">// Location'a "Get Actor Location" bağla — efekt nesnenin konumunda çıksın</span>
+        </div>
+        <div class="callout callout-info">
+          <div class="callout-icon"><i class="ti ti-info-circle"></i></div>
+          <div class="callout-body"><div class="callout-title">Ses + VFX birlikte = inandırıcılık</div><p>Bir efekti sadece görsel veya sadece sesli vermek <em>yarım</em> hissettirir. İkisini birlikte ver: vuruşta hem kıvılcım hem ses, patlamada hem duman hem gürültü. Bu, oyuncunun fark etmeden "gerçek" hissetmesinin sırrıdır.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hap-box">
+      <div class="hap-header"><i class="ti ti-capsule"></i><h4>Hap Bilgiler</h4></div>
+      <ul class="hap-list">
+        <li><strong>UE5 .wav</strong> kabul eder, mp3 değil. Audacity ile çevir.</li>
+        <li><strong>Sound Wave</strong> = ham dosya. <strong>Sound Cue</strong> = üstünde akıllı kontrol katmanı.</li>
+        <li><strong>Play Sound 2D:</strong> konumsuz (menü/UI). <strong>Play Sound at Location:</strong> konumlu (patlama).</li>
+        <li><strong>Audio Component:</strong> Actor'a yapışık sürekli ses kaynağı.</li>
+        <li><strong>Sound Attenuation</strong> = 3D ses uzaklık ayarı (Inner Radius + Falloff).</li>
+        <li><strong>Niagara</strong> = modern VFX. Eski Cascade artık önerilmiyor.</li>
+        <li><strong>System → Emitter → Module</strong> hiyerarşisi (paket → yayıcı → kural).</li>
+        <li><strong>Spawn System at Location</strong> = Blueprint'ten efekt tetikleme.</li>
+        <li><strong>Ses + VFX birlikte</strong> = profesyonel his. Yarımı eksik kalır.</li>
+        <li><strong>Marketplace</strong>'ten ücretsiz Niagara paketi al — içini incele, öğren.</li>
+      </ul>
+    </div>
+
+    <section class="projects">
+      <div class="projects-header"><div class="projects-header-icon"><i class="ti ti-hammer"></i></div><div><h3>Pratik Projeler</h3><span>Sesi ve efekti gerçek mekaniğe bağla</span></div></div>
+      <div class="project-list">
+        <div class="project-card lv-easy"><div class="project-body">
+          <div class="project-meta"><span class="difficulty difficulty-easy"><i class="ti ti-leaf"></i> Kolay</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~15 dk</span></div>
+          <div class="project-title">Proje 1: Zıplama sesi</div>
+          <p class="project-desc">Karakter Blueprint'inde Space tuşu Pressed → önce Jump, sonra <strong>Play Sound 2D</strong> ile zıplama sesi (StarterContent → Audio'dan birini seç). Her zıplamada ses gelsin.</p>
+          <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Space tuşu hem Jump'a hem ses çalmaya bağlı</li><li>Sound asset seçildi</li><li>Her zıplamada ses geliyor</li><li>2D ses (her yerden eşit duyuluyor)</li></ul></div>
+          <div class="project-goal"><i class="ti ti-target"></i><span>Olaya bağlı temel ses tetikleme.</span></div>
+        </div></div>
+        <div class="project-card lv-medium"><div class="project-body">
+          <div class="project-meta"><span class="difficulty difficulty-medium"><i class="ti ti-flame"></i> Orta</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~35 dk</span></div>
+          <div class="project-title">Proje 2: Konuma bağlı şelale</div>
+          <p class="project-desc">Bir Niagara System (Fountain veya Marketplace'ten su efekti). Audio Component ile su sesi. Sound Attenuation asset'i yarat (Inner=500, Falloff=2500). Su sesini buna bağla. Sahneye 2 farklı yere kopyala — yaklaştıkça ses yükselsin, uzaklaştıkça alçalsın.</p>
+          <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Niagara efekt sahnede</li><li>Audio Component eklendi (auto activate)</li><li>Sound Attenuation oluşturuldu ve atandı</li><li>Yaklaşma/uzaklaşma sesi açıkça değiştiriyor</li><li>2 kopya farklı konumlarda</li></ul></div>
+          <div class="project-goal"><i class="ti ti-target"></i><span>3D ses + Niagara birlikte — atmosferik sahne.</span></div>
+        </div></div>
+        <div class="project-card lv-hard"><div class="project-body">
+          <div class="project-meta"><span class="difficulty difficulty-hard"><i class="ti ti-flame-filled"></i> İleri</span><span style="font-size:var(--fs-xs);color:var(--text-tertiary);">~55 dk</span></div>
+          <div class="project-title">Proje 3: Patlatılabilir varil</div>
+          <p class="project-desc">Bir Actor: Static Mesh (silindir = varil). Float <code>Health = 50</code>. Custom Event <strong>"Patla"</strong>: konuma Niagara System spawn (patlama, Marketplace'ten al), Play Sound at Location ile gürültü, 0.5 saniye Delay, DestroyActor. Box Collision overlap olduğunda Health -= 20. Health ≤ 0 → Patla() çağır. Karakter 3 kez değince patlasın.</p>
+          <div class="project-check"><div class="project-check-title">Tamamlama Kontrolü</div><ul><li>Health variable + her overlap'te azalıyor</li><li>Branch ile ≤ 0 kontrolü var</li><li>Custom Event "Patla" yazıldı</li><li>VFX (Niagara) doğru konumda spawn ediyor</li><li>Ses senkronize çalıyor</li><li>Delay + DestroyActor zinciri çalışıyor</li><li>3 vuruşta tam patlama oluyor</li></ul></div>
+          <div class="project-goal"><i class="ti ti-target"></i><span>Custom Event + VFX + ses + variable + Branch = tam mekanik.</span></div>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="quiz-card">
+      <div class="quiz-header"><div class="quiz-header-icon"><i class="ti ti-help"></i></div><div><h3>Bölüm Sonu Quiz</h3><span>5 soru</span></div></div>
+
+      <div class="quiz-question" id="q8-1">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">01.</span><span>UE5'e ses dosyası eklemek için hangi format desteklenir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q8-1')"><span class="quiz-option-key">A</span><span>mp3</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q8-1')"><span class="quiz-option-key">B</span><span>wav</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-1')"><span class="quiz-option-key">C</span><span>flac</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-1')"><span class="quiz-option-key">D</span><span>ogg</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q8-1-ok">✓ Doğru! UE5 .wav dosyalarını import eder. mp3 dosyalarını önce çevirmen gerekir.</div>
+        <div class="quiz-feedback fail" id="q8-1-fail">✗ Yanlış. UE5'in desteklediği format .wav'dır. mp3 olanları Audacity gibi araçla çevirmelisin.</div>
+      </div>
+
+      <div class="quiz-question" id="q8-2">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">02.</span><span>Bir kapıdan gelen ve uzaklaştıkça alçalan ses için hangi node uygundur?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q8-2')"><span class="quiz-option-key">A</span><span>Play Sound 2D</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q8-2')"><span class="quiz-option-key">B</span><span>Play Sound at Location (+ Attenuation)</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-2')"><span class="quiz-option-key">C</span><span>Print String</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-2')"><span class="quiz-option-key">D</span><span>Spawn Actor</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q8-2-ok">✓ Doğru! Play Sound at Location + Sound Attenuation ile uzaklığa göre alçalan 3D ses.</div>
+        <div class="quiz-feedback fail" id="q8-2-fail">✗ Yanlış. Konuma bağlı, uzaklıkla alçalan ses = Play Sound at Location + Attenuation. 2D ses uzaklıktan etkilenmez.</div>
+      </div>
+
+      <div class="quiz-question" id="q8-3">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">03.</span><span>UE5'in modern VFX (partikül) sistemi hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q8-3')"><span class="quiz-option-key">A</span><span>Cascade</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q8-3')"><span class="quiz-option-key">B</span><span>Niagara</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-3')"><span class="quiz-option-key">C</span><span>Sequencer</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-3')"><span class="quiz-option-key">D</span><span>Chaos</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q8-3-ok">✓ Doğru! Niagara, Cascade'in yerini almış modern VFX sistemidir. Yeni projelerde Niagara kullanılır.</div>
+        <div class="quiz-feedback fail" id="q8-3-fail">✗ Yanlış. Niagara modern sistem; Cascade eski (UE4) ve artık önerilmiyor. Sequencer sinematik için, Chaos fizik için.</div>
+      </div>
+
+      <div class="quiz-question" id="q8-4">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">04.</span><span>Niagara mimarisinde "tek tip partikül üretici" birimi hangisidir?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q8-4')"><span class="quiz-option-key">A</span><span>System</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q8-4')"><span class="quiz-option-key">B</span><span>Emitter</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-4')"><span class="quiz-option-key">C</span><span>Module</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-4')"><span class="quiz-option-key">D</span><span>Particle</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q8-4-ok">✓ Doğru! Emitter tek tip partikül yayar. System içinde birden çok Emitter olabilir. Module Emitter'ın davranış kurallarıdır.</div>
+        <div class="quiz-feedback fail" id="q8-4-fail">✗ Yanlış. Hiyerarşi: System (dış kap) → Emitter (tek tip üretici) → Module (kural blokları).</div>
+      </div>
+
+      <div class="quiz-question" id="q8-5">
+        <div class="quiz-prompt"><span class="quiz-prompt-num">05.</span><span>Hareket eden bir Actor'a sürekli yapışık ses (örn. motor sesi) için hangisi en uygun?</span></div>
+        <div class="quiz-options">
+          <div class="quiz-option" onclick="answer(this,false,'q8-5')"><span class="quiz-option-key">A</span><span>Play Sound 2D, Tick'te sürekli çağır</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-5')"><span class="quiz-option-key">B</span><span>Play Sound at Location, Tick'te</span></div>
+          <div class="quiz-option" data-correct="true" onclick="answer(this,true,'q8-5')"><span class="quiz-option-key">C</span><span>Actor'a Audio Component ekle</span></div>
+          <div class="quiz-option" onclick="answer(this,false,'q8-5')"><span class="quiz-option-key">D</span><span>Imkansız</span></div>
+        </div>
+        <div class="quiz-feedback ok" id="q8-5-ok">✓ Doğru! Audio Component Actor'a yapışıktır, hareketle gelir, sürekli çalar. Tick'te ses çağırmak performansı öldürür ve üst üste binme yapar.</div>
+        <div class="quiz-feedback fail" id="q8-5-fail">✗ Yanlış. Sürekli yapışık ses = Audio Component. Tick'te Play Sound çağırmak çok kötü pratiktir (üst üste çalar, kasar).</div>
+      </div>
+    </section>
+
+    <button class="btn-complete" data-section="s8"><i class="ti ti-flag-check"></i> Bu Bölümü Tamamladım</button>
+
+    <nav class="page-nav">
+      <a href="07-input-hareket.html" class="page-nav-link">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Önceki · 07</div><div class="page-nav-title">Input & Hareket</div></div>
+      </a>
+      <a href="09-hud-arayuz.html" class="page-nav-link next">
+        <div class="page-nav-arrow"><i class="ti ti-arrow-right"></i></div>
+        <div class="page-nav-body"><div class="page-nav-label">Sonraki · 09</div><div class="page-nav-title">HUD & Arayüz</div></div>
+      </a>
+    </nav>
+
+  </div>
+</main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<button class="back-to-top" id="back-to-top" aria-label="Yukarı dön">
+  <i class="ti ti-arrow-up"></i>
+</button>
+
+<script src="../js/progress.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/toc.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>
