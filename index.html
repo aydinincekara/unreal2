@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnrealAkademi — Türkçe Unreal Engine 5 Eğitim Platformu</title>
+  <meta name="description" content="Sıfırdan ileri düzeye Türkçe Unreal Engine 5 eğitim platformu. 27 bölüm, 81 pratik proje, 135 quiz sorusu — Blueprint, C++, materyal, Lumen, Nanite, tüm UE5 modları.">
+  <meta name="keywords" content="Unreal Engine 5, UE5, oyun geliştirme, Türkçe eğitim, Blueprint, C++, oyun motoru, Lumen, Nanite, animasyon, materyal">
+  <meta name="author" content="UnrealAkademi">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://unrealakademi.example/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unrealakademi.example/">
+  <meta property="og:title" content="UnrealAkademi — Türkçe Unreal Engine 5 Eğitim Platformu">
+  <meta property="og:description" content="27 bölüm, 81 pratik proje, 135 quiz — Sıfırdan ileri düzeye Türkçe UE5 eğitimi.">
+  <meta property="og:image" content="https://unrealakademi.example/og-image.svg">
+  <meta property="og:site_name" content="UnrealAkademi">
+  <meta property="og:locale" content="tr_TR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UnrealAkademi — Türkçe Unreal Engine 5 Eğitim Platformu">
+  <meta name="twitter:description" content="27 bölüm, 81 pratik proje, 135 quiz — Sıfırdan ileri düzeye Türkçe UE5 eğitimi.">
+  <meta name="twitter:image" content="https://unrealakademi.example/og-image.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/content.css">
+  <link rel="stylesheet" href="css/visuals.css">
+  <link rel="stylesheet" href="css/extras.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ═══════════════ SIDEBAR ═══════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-brand">
+      <div class="brand-row">
+        <div class="brand-mark"><i class="ti ti-flame"></i></div>
+        <div>
+          <div class="brand-name">UnrealAkademi</div>
+          <div class="brand-tag">Türkçe UE5 Eğitim</div>
+        </div>
+      </div>
+      <span class="brand-pill">
+        <i class="ti ti-bolt"></i>
+        Sıfırdan Ustaya
+      </span>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-header">
+        <span class="progress-label">İlerlemen</span>
+        <span class="progress-value" id="progress-value">0/28</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <div class="nav-group">
+        <div class="nav-group-title">Başlangıç</div>
+        <a href="index.html" class="nav-link active" data-section="s0">
+          <i class="ti ti-home"></i>
+          <span class="nav-link-text">Ana Sayfa</span>
+          <span class="nav-link-num">00</span>
+        </a>
+        <a href="pages/01-kurulum.html" class="nav-link" data-section="s1">
+          <i class="ti ti-download"></i>
+          <span class="nav-link-text">Kurulum</span>
+          <span class="nav-link-num">01</span>
+        </a>
+        <a href="pages/02-arayuz.html" class="nav-link" data-section="s2">
+          <i class="ti ti-layout-dashboard"></i>
+          <span class="nav-link-text">Arayüz Tanıma</span>
+          <span class="nav-link-num">02</span>
+        </a>
+        <a href="pages/03-gamemode.html" class="nav-link" data-section="s3">
+          <i class="ti ti-settings-2"></i>
+          <span class="nav-link-text">GameMode</span>
+          <span class="nav-link-num">03</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Blueprint Temelleri</div>
+        <a href="pages/04-blueprint-temelleri.html" class="nav-link" data-section="s4">
+          <i class="ti ti-code-dots"></i>
+          <span class="nav-link-text">Blueprint Sistemi</span>
+          <span class="nav-link-num">04</span>
+        </a>
+        <a href="pages/05-actor-event-function.html" class="nav-link" data-section="s5">
+          <i class="ti ti-cube"></i>
+          <span class="nav-link-text">Actor & Event</span>
+          <span class="nav-link-num">05</span>
+        </a>
+        <a href="pages/06-variable-turleri.html" class="nav-link" data-section="s6">
+          <i class="ti ti-variable"></i>
+          <span class="nav-link-text">Variable Türleri</span>
+          <span class="nav-link-num">06</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Oyun Mekaniği</div>
+        <a href="pages/07-input-hareket.html" class="nav-link" data-section="s7">
+          <i class="ti ti-run"></i>
+          <span class="nav-link-text">Input & Hareket</span>
+          <span class="nav-link-num">07</span>
+        </a>
+        <a href="pages/08-ses-vfx.html" class="nav-link" data-section="s8">
+          <i class="ti ti-volume"></i>
+          <span class="nav-link-text">Ses & VFX</span>
+          <span class="nav-link-num">08</span>
+        </a>
+        <a href="pages/09-hud-arayuz.html" class="nav-link" data-section="s9">
+          <i class="ti ti-layout-2"></i>
+          <span class="nav-link-text">HUD & Arayüz</span>
+          <span class="nav-link-num">09</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">İçerik & Görsel</div>
+        <a href="pages/10-materyal.html" class="nav-link" data-section="s10">
+          <i class="ti ti-palette"></i>
+          <span class="nav-link-text">Materyal</span>
+          <span class="nav-link-num">10</span>
+        </a>
+        <a href="pages/11-icerik-yukleme.html" class="nav-link" data-section="s11">
+          <i class="ti ti-upload"></i>
+          <span class="nav-link-text">İçerik Yükleme</span>
+          <span class="nav-link-num">11</span>
+        </a>
+        <a href="pages/12-animasyon.html" class="nav-link" data-section="s12">
+          <i class="ti ti-player-play"></i>
+          <span class="nav-link-text">Animasyon</span>
+          <span class="nav-link-num">12</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">UE5 Modları</div>
+        <a href="pages/13-modeling-mode.html" class="nav-link" data-section="s13">
+          <i class="ti ti-3d-cube-sphere"></i>
+          <span class="nav-link-text">Modeling Mode</span>
+          <span class="nav-link-num">13</span>
+        </a>
+        <a href="pages/14-animation-mode.html" class="nav-link" data-section="s14">
+          <i class="ti ti-walk"></i>
+          <span class="nav-link-text">Animation Mode</span>
+          <span class="nav-link-num">14</span>
+        </a>
+        <a href="pages/15-brush-mode.html" class="nav-link" data-section="s15">
+          <i class="ti ti-brush"></i>
+          <span class="nav-link-text">Brush Mode</span>
+          <span class="nav-link-num">15</span>
+        </a>
+        <a href="pages/16-fracture-mode.html" class="nav-link" data-section="s16">
+          <i class="ti ti-bomb"></i>
+          <span class="nav-link-text">Fracture Mode</span>
+          <span class="nav-link-num">16</span>
+        </a>
+        <a href="pages/17-mesh-paint-mode.html" class="nav-link" data-section="s17">
+          <i class="ti ti-spray"></i>
+          <span class="nav-link-text">Mesh Paint Mode</span>
+          <span class="nav-link-num">17</span>
+        </a>
+        <a href="pages/18-landscape-mode.html" class="nav-link" data-section="s18">
+          <i class="ti ti-mountain"></i>
+          <span class="nav-link-text">Landscape Mode</span>
+          <span class="nav-link-num">18</span>
+        </a>
+        <a href="pages/19-foliage-mode.html" class="nav-link" data-section="s19">
+          <i class="ti ti-tree"></i>
+          <span class="nav-link-text">Foliage Mode</span>
+          <span class="nav-link-num">19</span>
+        </a>
+        <a href="pages/20-selection-mode.html" class="nav-link" data-section="s20">
+          <i class="ti ti-click"></i>
+          <span class="nav-link-text">Selection Mode</span>
+          <span class="nav-link-num">20</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">UE5 İleri Seviye</div>
+        <a href="pages/21-lumen-nanite.html" class="nav-link" data-section="s21">
+          <i class="ti ti-sun"></i>
+          <span class="nav-link-text">Lumen & Nanite</span>
+          <span class="nav-link-num">21</span>
+        </a>
+        <a href="pages/22-enhanced-input.html" class="nav-link" data-section="s22">
+          <i class="ti ti-keyboard"></i>
+          <span class="nav-link-text">Enhanced Input</span>
+          <span class="nav-link-num">22</span>
+        </a>
+        <a href="pages/23-save-menu.html" class="nav-link" data-section="s23">
+          <i class="ti ti-device-floppy"></i>
+          <span class="nav-link-text">Save & Menü</span>
+          <span class="nav-link-num">23</span>
+        </a>
+        <a href="pages/24-yayinlama.html" class="nav-link" data-section="s24">
+          <i class="ti ti-package-export"></i>
+          <span class="nav-link-text">Yayınlama</span>
+          <span class="nav-link-num">24</span>
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">İleri Programlama</div>
+        <a href="pages/25-blueprint-ileri.html" class="nav-link" data-section="s25">
+          <i class="ti ti-circuit-changeover"></i>
+          <span class="nav-link-text">Blueprint İleri</span>
+          <span class="nav-link-num">25</span>
+        </a>
+        <a href="pages/26-cpp-giris.html" class="nav-link" data-section="s26">
+          <i class="ti ti-code"></i>
+          <span class="nav-link-text">C++ Giriş</span>
+          <span class="nav-link-num">26</span>
+        </a>
+        <a href="pages/27-yol-haritasi.html" class="nav-link" data-section="s27">
+          <i class="ti ti-map-2"></i>
+          <span class="nav-link-text">Yol Haritası</span>
+          <span class="nav-link-num">27</span>
+        </a>
+      </div>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="pages/kaynaklar.html" class="sidebar-btn">
+        <i class="ti ti-books"></i>
+        <span>Kaynaklar</span>
+      </a>
+      <a href="pages/iletisim.html" class="sidebar-btn">
+        <i class="ti ti-mail"></i>
+        <span>İletişim</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ═══════════════ MAIN ═══════════════ -->
+  <main class="main">
+    <div class="main-content">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-eyebrow">
+          <i class="ti ti-sparkles"></i>
+          Türkçe · Sıfır Bilgi Yeterli · 27 Bölüm
+        </div>
+
+        <h1>
+          Unreal Engine 5'i<br>
+          <span class="accent">sıfırdan</span> öğren.
+        </h1>
+
+        <p class="hero-lead">
+          Kod bilmeden, oyun deneyimi olmadan, video izlemek zorunda kalmadan —
+          sadece bu sayfaları okuyarak ve pratikleri yaparak kendi oyununu yapabileceksin.
+        </p>
+
+        <div class="hero-cta">
+          <a href="pages/01-kurulum.html" class="btn btn-primary btn-lg">
+            <i class="ti ti-rocket"></i>
+            Başla — Bölüm 01
+          </a>
+          <a href="#program" class="btn btn-secondary btn-lg">
+            <i class="ti ti-list"></i>
+            Müfredatı Gör
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number">27</div>
+            <div class="stat-label">Detaylı Bölüm</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">81</div>
+            <div class="stat-label">Pratik Proje</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">8</div>
+            <div class="stat-label">UE5 Modu</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">%100</div>
+            <div class="stat-label">Türkçe</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEDEN BU REHBER? -->
+      <section style="margin-top: var(--space-16);">
+        <div class="page-meta">
+          <span class="page-num">// HAKKINDA</span>
+          <span class="page-category">Bu Rehber Hakkında</span>
+        </div>
+        <h2 style="font-size: var(--fs-3xl); margin-bottom: var(--space-4); letter-spacing: var(--tracking-tight);">
+          Neden bu rehber farklı?
+        </h2>
+        <p style="font-size: var(--fs-lg); color: var(--text-secondary); line-height: var(--lh-relaxed); max-width: 720px; margin-bottom: var(--space-8);">
+          Çoğu UE5 kaynağı ya çok yüzeyseldir ya da videoya bağımlıdır. Bu rehberde her bölüm
+          <strong style="color: var(--text-primary)">kendine yetecek şekilde</strong> yazıldı —
+          algoritma temellerinden Blueprint pin renklerine, C++ syntax'ından ileri AI sistemlerine kadar.
+        </p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-eye"></i></div>
+            <h3>Önce Anla, Sonra Yap</h3>
+            <p>Her konu "neden var" sorusuyla başlar. Gerçek hayat benzetmeleri ile teknik kavramlar netleşir.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-photo"></i></div>
+            <h3>Görsel Destekli</h3>
+            <p>Blueprint node şemaları, pin renkleri, akış oklarıyla soyut kavramlar somutlaşır.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-hand-finger"></i></div>
+            <h3>Adım Adım El Tutarak</h3>
+            <p>"Tıkla → şunu gör → bunu yap" formatında hiçbir adım atlanmaz. Hiç bilmeyenler için.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-hammer"></i></div>
+            <h3>3 Seviyeli Projeler</h3>
+            <p>Her bölümde Kolay/Orta/İleri zorlukta mini projeler. Sadece okuma değil — yaparak öğren.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-help"></i></div>
+            <h3>İnteraktif Quiz</h3>
+            <p>Her bölüm sonunda quiz. Anında geri bildirim al, eksiklerini gör, geri dön.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-chart-bar"></i></div>
+            <h3>İlerleme Takibi</h3>
+            <p>Tamamladığın bölümler kaydedilir. Sol panelden ne kadar yol aldığını görürsün.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- KİMLER İÇİN? -->
+      <section style="margin-top: var(--space-16);">
+        <div class="highlight-box">
+          <div class="highlight-box-header">
+            <div class="highlight-box-icon"><i class="ti ti-users"></i></div>
+            <h4>Kimler için?</h4>
+          </div>
+          <p style="font-size: var(--fs-base); color: var(--text-secondary); line-height: var(--lh-relaxed); margin-bottom: var(--space-4);">
+            Bu rehber <strong style="color: var(--text-primary)">15-30 yaş arası</strong>, oyun geliştirmeye sıfırdan başlayanlardan
+            ileri seviye konuları öğrenmek isteyen meraklılara kadar herkes için yazıldı.
+          </p>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-item-label">Hiç Programlama Bilmeyenler</div>
+              <div class="info-item-value">✓ Sıfırdan başlanır</div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">UE5 Görmemiş Olanlar</div>
+              <div class="info-item-value">✓ Arayüz tanıtılır</div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">Blueprint Bilmeyenler</div>
+              <div class="info-item-value">✓ Detaylı anlatım</div>
+            </div>
+            <div class="info-item">
+              <div class="info-item-label">C++ Öğrenmek İsteyenler</div>
+              <div class="info-item-value">✓ Algoritma dahil</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MÜFREDAT -->
+      <section id="program" style="margin-top: var(--space-16);">
+        <div class="page-meta">
+          <span class="page-num">// 28 BÖLÜM</span>
+          <span class="page-category">Müfredat</span>
+        </div>
+        <h2 style="font-size: var(--fs-3xl); margin-bottom: var(--space-4);">Müfredat Haritası</h2>
+        <p style="font-size: var(--fs-lg); color: var(--text-secondary); line-height: var(--lh-relaxed); margin-bottom: var(--space-8); max-width: 720px;">
+          7 ana modülde 28 bölüm. Her bölüm önceki üzerine inşa edilir. Sıra ile gitmeni öneririz.
+        </p>
+
+        <div class="feature-grid">
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-flag"></i></div>
+            <h3>1. Başlangıç</h3>
+            <p>Kurulum, arayüz tanıma, GameMode kavramı. UE5'in iskeleti.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">3 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-code-dots"></i></div>
+            <h3>2. Blueprint Temelleri</h3>
+            <p>Görsel programlama, node renkleri, pin tipleri, Actor & Event sistemi, tüm Variable türleri.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">3 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-device-gamepad-2"></i></div>
+            <h3>3. Oyun Mekaniği</h3>
+            <p>Input sistemi, karakter hareketi, ses ve VFX, HUD ve arayüz tasarımı.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">3 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-palette"></i></div>
+            <h3>4. İçerik & Görsel</h3>
+            <p>PBR materyaller, asset import, animasyon sistemi.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">3 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-tools"></i></div>
+            <h3>5. UE5 Modları</h3>
+            <p>Modeling, Animation, Brush, Fracture, Mesh Paint, Landscape, Foliage, Selection — 8 mod detaylı.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">8 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-rocket"></i></div>
+            <h3>6. UE5 İleri Seviye</h3>
+            <p>Lumen & Nanite, Enhanced Input, Save sistemi & Menü, Yayınlama (.exe).</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">4 Bölüm</span>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="ti ti-code"></i></div>
+            <h3>7. İleri Programlama</h3>
+            <p>Profesyonel Blueprint mimarisi (Interface, Dispatcher, AI), C++ giriş (algoritma + syntax + UE5 makroları), yol haritası.</p>
+            <span class="badge badge-primary" style="margin-top: var(--space-3);">3 Bölüm · Pro</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- BAŞLA CTA -->
+      <section style="margin-top: var(--space-16); text-align: center;">
+        <div class="highlight-box" style="text-align: center; padding: var(--space-10) var(--space-6);">
+          <h3 style="font-size: var(--fs-2xl); margin-bottom: var(--space-4); color: var(--text-primary);">
+            Hazırsan, ilk adımı at.
+          </h3>
+          <p style="font-size: var(--fs-base); color: var(--text-secondary); margin-bottom: var(--space-6); max-width: 480px; margin-left: auto; margin-right: auto; line-height: var(--lh-relaxed);">
+            Düşünmeyi bırakıp denemeye başla. Bilmediğin her şey bu sayfalarda — sana sadece <strong style="color: var(--text-primary)">başlamak</strong> kaldı.
+          </p>
+          <a href="pages/01-kurulum.html" class="btn btn-primary btn-lg">
+            <i class="ti ti-arrow-right"></i>
+            Bölüm 01: Kurulum'a Geç
+          </a>
+        </div>
+      </section>
+
+      <!-- EK KAYNAKLAR -->
+      <section style="margin-top: var(--space-16);">
+        <div class="page-meta">
+          <span class="page-num">// EKSTRA</span>
+          <span class="page-category">Ek Kaynaklar</span>
+        </div>
+        <h2 style="font-size: var(--fs-3xl); margin-bottom: var(--space-4); letter-spacing: var(--tracking-tight);">
+          Sadece bölümler değil.
+        </h2>
+        <p style="font-size: var(--fs-lg); color: var(--text-secondary); margin-bottom: var(--space-8); max-width: 640px; line-height: var(--lh-relaxed);">
+          Aradığını bulmak, takıldığında hızla bakmak, sertifikanı almak için tasarlanmış destek sayfaları.
+        </p>
+
+        <div class="feature-grid">
+          <a href="pages/arama.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-search"></i></div>
+            <h3>Site İçi Arama</h3>
+            <p>27 bölümde geçen kavramı, sayfayı, konuyu saniyede bul. Anahtar kelime yaz, gerisi gelir.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">Hızlı erişim</span>
+          </a>
+
+          <a href="pages/sozluk.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-book"></i></div>
+            <h3>UE5 Sözlük</h3>
+            <p>80+ terim, Türkçe ve İngilizce karşılıkları. Actor, Pawn, Lumen, Nanite… Hepsi tek sayfada.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">80+ terim</span>
+          </a>
+
+          <a href="pages/cheatsheet.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-bolt"></i></div>
+            <h3>Cheat Sheet</h3>
+            <p>Kısayollar, prefix kuralları, PBR değerleri, en sık node'lar, konsol komutları. Tek sayfa, hızlı bakış.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">Hızlı başvuru</span>
+          </a>
+
+          <a href="pages/sss.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-help"></i></div>
+            <h3>Sık Sorulanlar</h3>
+            <p>"Blueprint mi C++ mı?", "Hangi PC?", "Marketplace ücretsizleri ticari?"… 20+ soru, doğrudan cevap.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">SSS</span>
+          </a>
+
+          <a href="pages/sertifika.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-certificate"></i></div>
+            <h3>Sertifika</h3>
+            <p>27/27 tamamladıysan adınla PDF sertifika al. Yerel olarak üretilir, paylaşmaya hazır.</p>
+            <span class="badge badge-primary" style="margin-top: var(--space-3);">Tamamlayıcılara</span>
+          </a>
+
+          <a href="pages/kaynaklar.html" class="feature-card" style="text-decoration: none; color: inherit; display: block;">
+            <div class="feature-icon"><i class="ti ti-books"></i></div>
+            <h3>Dış Kaynaklar</h3>
+            <p>Resmi UE dokümantasyonu, YouTube kanalları, Discord toplulukları, marketplace ipuçları.</p>
+            <span class="badge badge-accent" style="margin-top: var(--space-3);">Derleme</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- SITE FOOTER -->
+      <footer style="margin-top: var(--space-16); padding-top: var(--space-10); border-top: 1px solid var(--border); color: var(--text-secondary);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-8); margin-bottom: var(--space-8);">
+
+          <div>
+            <h4 style="color: var(--text-primary); font-size: var(--fs-base); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">UnrealAkademi</h4>
+            <p style="font-size: var(--fs-sm); line-height: var(--lh-relaxed); margin: 0;">
+              Türkçe, ücretsiz, reklamsız Unreal Engine 5 eğitim platformu.
+            </p>
+          </div>
+
+          <div>
+            <h4 style="color: var(--text-primary); font-size: var(--fs-base); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Eğitim</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--fs-sm); line-height: var(--lh-loose);">
+              <li><a href="pages/01-kurulum.html" style="color: var(--text-secondary); text-decoration: none;">Bölüm 01 — Başla</a></li>
+              <li><a href="pages/27-yol-haritasi.html" style="color: var(--text-secondary); text-decoration: none;">Yol Haritası</a></li>
+              <li><a href="pages/sertifika.html" style="color: var(--text-secondary); text-decoration: none;">Sertifika</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="color: var(--text-primary); font-size: var(--fs-base); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Yardımcı</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--fs-sm); line-height: var(--lh-loose);">
+              <li><a href="pages/arama.html" style="color: var(--text-secondary); text-decoration: none;">Arama</a></li>
+              <li><a href="pages/sozluk.html" style="color: var(--text-secondary); text-decoration: none;">Sözlük</a></li>
+              <li><a href="pages/cheatsheet.html" style="color: var(--text-secondary); text-decoration: none;">Cheat Sheet</a></li>
+              <li><a href="pages/sss.html" style="color: var(--text-secondary); text-decoration: none;">SSS</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="color: var(--text-primary); font-size: var(--fs-base); margin-bottom: var(--space-3); letter-spacing: var(--tracking-tight);">Hakkında</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; font-size: var(--fs-sm); line-height: var(--lh-loose);">
+              <li><a href="pages/hakkinda.html" style="color: var(--text-secondary); text-decoration: none;">Proje</a></li>
+              <li><a href="pages/kaynaklar.html" style="color: var(--text-secondary); text-decoration: none;">Kaynaklar</a></li>
+              <li><a href="pages/iletisim.html" style="color: var(--text-secondary); text-decoration: none;">İletişim</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div style="text-align: center; padding: var(--space-6) 0; border-top: 1px solid var(--border); font-size: var(--fs-sm);">
+          <p style="margin: 0;">
+            © 2026 UnrealAkademi · Türkçe UE5 Eğitimi · İçerik ücretsiz, yayma serbest, atıf önerilir.
+          </p>
+          <p style="margin-top: var(--space-2); font-size: var(--fs-xs); opacity: 0.7;">
+            Unreal Engine 5 ve UE5 logosu Epic Games Inc.'in tescilli markalarıdır. Bu site Epic Games ile bağlantılı değildir.
+          </p>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+
+</div>
+
+<button class="mobile-toggle" aria-label="Menüyü aç">
+  <i class="ti ti-menu-2"></i>
+</button>
+
+<script src="js/progress.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

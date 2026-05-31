@@ -1,0 +1,39 @@
+{
+  "name": "UnrealAkademi — Türkçe UE5 Eğitimi",
+  "short_name": "UnrealAkademi",
+  "description": "Sıfırdan Unreal Engine 5 öğreten ücretsiz Türkçe eğitim platformu. 27 bölüm, 81 proje, 135 quiz sorusu.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050510",
+  "theme_color": "#7c5cff",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "og-image.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bölüm 01 — Başla",
+      "url": "./pages/01-kurulum.html",
+      "description": "İlk bölümden başla"
+    },
+    {
+      "name": "Sözlük",
+      "url": "./pages/sozluk.html",
+      "description": "80+ UE5 terimi"
+    },
+    {
+      "name": "Arama",
+      "url": "./pages/arama.html",
+      "description": "Site içi arama"
+    }
+  ]
+}

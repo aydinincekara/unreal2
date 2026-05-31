@@ -1,0 +1,249 @@
+<!--
+═══════════════════════════════════════════════════════════
+  SIDEBAR PARTIAL — Tüm sayfalara kopyalanan sidebar şablonu
+  Kullanım: Her .html sayfasında <aside class="sidebar">...</aside>
+  bloğunu bununla değiştir.
+  
+  AKTİF BÖLÜM: data-section değeri ile mevcut sayfayı işaretle
+  Örn: pages/04-blueprint-temelleri.html için
+       .nav-link[data-section="s4"] sınıfına "active" ekle
+═══════════════════════════════════════════════════════════
+-->
+<aside class="sidebar" id="sidebar">
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-row">
+      <div class="brand-mark">
+        <i class="ti ti-flame"></i>
+      </div>
+      <div>
+        <div class="brand-name">UnrealAkademi</div>
+        <div class="brand-tag">Türkçe UE5 Eğitim</div>
+      </div>
+    </div>
+    <span class="brand-pill">
+      <i class="ti ti-bolt"></i>
+      Sıfırdan Ustaya
+    </span>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">İlerlemen</span>
+      <span class="progress-value" id="progress-value">0/28</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+
+    <div class="nav-group">
+      <div class="nav-group-title">Başlangıç</div>
+      <a href="../index.html" class="nav-link" data-section="s0">
+        <i class="ti ti-home"></i>
+        <span class="nav-link-text">Ana Sayfa</span>
+        <span class="nav-link-num">00</span>
+      </a>
+      <a href="01-kurulum.html" class="nav-link" data-section="s1">
+        <i class="ti ti-download"></i>
+        <span class="nav-link-text">Kurulum</span>
+        <span class="nav-link-num">01</span>
+      </a>
+      <a href="02-arayuz.html" class="nav-link" data-section="s2">
+        <i class="ti ti-layout-dashboard"></i>
+        <span class="nav-link-text">Arayüz Tanıma</span>
+        <span class="nav-link-num">02</span>
+      </a>
+      <a href="03-gamemode.html" class="nav-link" data-section="s3">
+        <i class="ti ti-settings-2"></i>
+        <span class="nav-link-text">GameMode</span>
+        <span class="nav-link-num">03</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Blueprint Temelleri</div>
+      <a href="04-blueprint-temelleri.html" class="nav-link" data-section="s4">
+        <i class="ti ti-code-dots"></i>
+        <span class="nav-link-text">Blueprint Sistemi</span>
+        <span class="nav-link-num">04</span>
+      </a>
+      <a href="05-actor-event-function.html" class="nav-link" data-section="s5">
+        <i class="ti ti-cube"></i>
+        <span class="nav-link-text">Actor & Event</span>
+        <span class="nav-link-num">05</span>
+      </a>
+      <a href="06-variable-turleri.html" class="nav-link" data-section="s6">
+        <i class="ti ti-variable"></i>
+        <span class="nav-link-text">Variable Türleri</span>
+        <span class="nav-link-num">06</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Oyun Mekaniği</div>
+      <a href="07-input-hareket.html" class="nav-link" data-section="s7">
+        <i class="ti ti-run"></i>
+        <span class="nav-link-text">Input & Hareket</span>
+        <span class="nav-link-num">07</span>
+      </a>
+      <a href="08-ses-vfx.html" class="nav-link" data-section="s8">
+        <i class="ti ti-volume"></i>
+        <span class="nav-link-text">Ses & VFX</span>
+        <span class="nav-link-num">08</span>
+      </a>
+      <a href="09-hud-arayuz.html" class="nav-link" data-section="s9">
+        <i class="ti ti-layout-2"></i>
+        <span class="nav-link-text">HUD & Arayüz</span>
+        <span class="nav-link-num">09</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">İçerik & Görsel</div>
+      <a href="10-materyal.html" class="nav-link" data-section="s10">
+        <i class="ti ti-palette"></i>
+        <span class="nav-link-text">Materyal</span>
+        <span class="nav-link-num">10</span>
+      </a>
+      <a href="11-icerik-yukleme.html" class="nav-link" data-section="s11">
+        <i class="ti ti-upload"></i>
+        <span class="nav-link-text">İçerik Yükleme</span>
+        <span class="nav-link-num">11</span>
+      </a>
+      <a href="12-animasyon.html" class="nav-link" data-section="s12">
+        <i class="ti ti-player-play"></i>
+        <span class="nav-link-text">Animasyon</span>
+        <span class="nav-link-num">12</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 Modları</div>
+      <a href="13-modeling-mode.html" class="nav-link" data-section="s13">
+        <i class="ti ti-3d-cube-sphere"></i>
+        <span class="nav-link-text">Modeling Mode</span>
+        <span class="nav-link-num">13</span>
+      </a>
+      <a href="14-animation-mode.html" class="nav-link" data-section="s14">
+        <i class="ti ti-walk"></i>
+        <span class="nav-link-text">Animation Mode</span>
+        <span class="nav-link-num">14</span>
+      </a>
+      <a href="15-brush-mode.html" class="nav-link" data-section="s15">
+        <i class="ti ti-brush"></i>
+        <span class="nav-link-text">Brush Mode</span>
+        <span class="nav-link-num">15</span>
+      </a>
+      <a href="16-fracture-mode.html" class="nav-link" data-section="s16">
+        <i class="ti ti-bomb"></i>
+        <span class="nav-link-text">Fracture Mode</span>
+        <span class="nav-link-num">16</span>
+      </a>
+      <a href="17-mesh-paint-mode.html" class="nav-link" data-section="s17">
+        <i class="ti ti-spray"></i>
+        <span class="nav-link-text">Mesh Paint Mode</span>
+        <span class="nav-link-num">17</span>
+      </a>
+      <a href="18-landscape-mode.html" class="nav-link" data-section="s18">
+        <i class="ti ti-mountain"></i>
+        <span class="nav-link-text">Landscape Mode</span>
+        <span class="nav-link-num">18</span>
+      </a>
+      <a href="19-foliage-mode.html" class="nav-link" data-section="s19">
+        <i class="ti ti-tree"></i>
+        <span class="nav-link-text">Foliage Mode</span>
+        <span class="nav-link-num">19</span>
+      </a>
+      <a href="20-selection-mode.html" class="nav-link" data-section="s20">
+        <i class="ti ti-click"></i>
+        <span class="nav-link-text">Selection Mode</span>
+        <span class="nav-link-num">20</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">UE5 İleri Seviye</div>
+      <a href="21-lumen-nanite.html" class="nav-link" data-section="s21">
+        <i class="ti ti-sun"></i>
+        <span class="nav-link-text">Lumen & Nanite</span>
+        <span class="nav-link-num">21</span>
+      </a>
+      <a href="22-enhanced-input.html" class="nav-link" data-section="s22">
+        <i class="ti ti-keyboard"></i>
+        <span class="nav-link-text">Enhanced Input</span>
+        <span class="nav-link-num">22</span>
+      </a>
+      <a href="23-save-menu.html" class="nav-link" data-section="s23">
+        <i class="ti ti-device-floppy"></i>
+        <span class="nav-link-text">Save & Menü</span>
+        <span class="nav-link-num">23</span>
+      </a>
+      <a href="24-yayinlama.html" class="nav-link" data-section="s24">
+        <i class="ti ti-package-export"></i>
+        <span class="nav-link-text">Yayınlama</span>
+        <span class="nav-link-num">24</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">İleri Programlama</div>
+      <a href="25-blueprint-ileri.html" class="nav-link" data-section="s25">
+        <i class="ti ti-circuit-changeover"></i>
+        <span class="nav-link-text">Blueprint İleri</span>
+        <span class="nav-link-num">25</span>
+      </a>
+      <a href="26-cpp-giris.html" class="nav-link" data-section="s26">
+        <i class="ti ti-code"></i>
+        <span class="nav-link-text">C++ Giriş</span>
+        <span class="nav-link-num">26</span>
+      </a>
+      <a href="27-yol-haritasi.html" class="nav-link" data-section="s27">
+        <i class="ti ti-map-2"></i>
+        <span class="nav-link-text">Yol Haritası</span>
+        <span class="nav-link-num">27</span>
+      </a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-title">Ek Kaynaklar</div>
+      <a href="sozluk.html" class="nav-link nav-link-extra" data-section="x-sozluk">
+        <i class="ti ti-book-2"></i>
+        <span class="nav-link-text">Sözlük</span>
+      </a>
+      <a href="cheatsheet.html" class="nav-link nav-link-extra" data-section="x-cheatsheet">
+        <i class="ti ti-list-details"></i>
+        <span class="nav-link-text">Cheat Sheet</span>
+      </a>
+      <a href="sss.html" class="nav-link nav-link-extra" data-section="x-sss">
+        <i class="ti ti-help-circle"></i>
+        <span class="nav-link-text">SSS</span>
+      </a>
+      <a href="arama.html" class="nav-link nav-link-extra" data-section="x-arama">
+        <i class="ti ti-search"></i>
+        <span class="nav-link-text">Arama</span>
+      </a>
+      <a href="sertifika.html" class="nav-link nav-link-extra" data-section="x-sertifika">
+        <i class="ti ti-certificate"></i>
+        <span class="nav-link-text">Sertifika</span>
+      </a>
+    </div>
+
+  </nav>
+
+  <!-- Footer Buttons -->
+  <div class="sidebar-footer">
+    <a href="kaynaklar.html" class="sidebar-btn">
+      <i class="ti ti-books"></i>
+      <span>Kaynaklar</span>
+    </a>
+    <a href="iletisim.html" class="sidebar-btn">
+      <i class="ti ti-mail"></i>
+      <span>İletişim</span>
+    </a>
+  </div>
+</aside>

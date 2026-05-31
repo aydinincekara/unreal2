@@ -1,0 +1,509 @@
+/* ========================================================
+   UnrealAkademi — Visuals
+   Blueprint node şemaları, pin'ler, yönlendirici görseller
+   ======================================================== */
+
+/* ────────── BLUEPRINT NODE DEMO ────────── */
+.bp-canvas {
+  background: 
+    linear-gradient(rgba(124, 92, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 92, 255, 0.04) 1px, transparent 1px),
+    #1a1a2e;
+  background-size: 20px 20px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin: var(--space-5) 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.bp-canvas-label {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-wide);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bp-canvas-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.bp-flow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  min-height: 60px;
+}
+
+.bp-flow + .bp-flow {
+  margin-top: var(--space-4);
+}
+
+/* Generic node base */
+.bp-node {
+  display: inline-flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  min-width: 130px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  position: relative;
+}
+
+.bp-node-title {
+  padding: 6px 12px;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  text-align: center;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.bp-node-body {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 24px;
+}
+
+.bp-node-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10px;
+  color: #ccc;
+}
+
+.bp-node-row.input {
+  justify-content: flex-start;
+}
+
+.bp-node-row.output {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* Node type colors */
+.bp-node.event .bp-node-title {
+  background: linear-gradient(180deg, #c91111, #8b0808);
+}
+
+.bp-node.function .bp-node-title {
+  background: linear-gradient(180deg, #2e5a99, #1e3a6b);
+}
+
+.bp-node.pure .bp-node-title {
+  background: linear-gradient(180deg, #267754, #155539);
+}
+
+.bp-node.flow .bp-node-title {
+  background: linear-gradient(180deg, #5a5a5a, #2a2a2a);
+}
+
+.bp-node.macro .bp-node-title {
+  background: linear-gradient(180deg, #2e8b8b, #1e5e5e);
+}
+
+.bp-node.variable .bp-node-title {
+  background: linear-gradient(180deg, #b8b800, #8b8b00);
+  color: #1a1a00;
+  text-shadow: none;
+}
+
+.bp-node.cast .bp-node-title {
+  background: linear-gradient(180deg, #6b5fb5, #4a4080);
+}
+
+/* PIN — pin yuvarlağı (giriş/çıkış noktası) */
+.pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pin-square {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.pin-triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Pin colors (UE5 gerçek renkleri) */
+.pin-exec { background: white; }
+.pin-exec.pin-triangle { border-left-color: white; background: transparent; }
+.pin-bool { background: var(--pin-bool); }
+.pin-int { background: var(--pin-int); }
+.pin-float { background: var(--pin-float); }
+.pin-string { background: var(--pin-string); }
+.pin-name { background: var(--pin-name); }
+.pin-text { background: var(--pin-text); }
+.pin-vector { background: var(--pin-vector); }
+.pin-rotator { background: var(--pin-rotator); }
+.pin-transform { background: var(--pin-transform); }
+.pin-object { background: var(--pin-object); }
+.pin-class { background: var(--pin-class); }
+.pin-struct { background: var(--pin-struct); }
+
+/* Array variant — outlined */
+.pin.array {
+  border-radius: 3px;
+  border: 2px solid;
+}
+
+/* Bağlantı oku (node arası) */
+.bp-arrow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.bp-arrow::after {
+  content: '→';
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 18px;
+  color: white;
+  opacity: 0.6;
+}
+
+.bp-arrow.exec::after {
+  color: white;
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+.bp-comment {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: #6b7280;
+  font-style: italic;
+  margin-left: var(--space-2);
+}
+
+/* ────────── PIN LEGEND TABLE ────────── */
+.pin-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-5) 0;
+  padding: var(--space-5);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.pin-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.pin-legend-item .pin,
+.pin-legend-item .pin-square,
+.pin-legend-item .pin-triangle {
+  flex-shrink: 0;
+}
+
+.pin-legend-item-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pin-legend-name {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.pin-legend-desc {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+/* ────────── DIRECTIONAL ARROWS (Yönlendiriciler) ────────── */
+.arrow-flow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+  flex-wrap: wrap;
+}
+
+.arrow-flow-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+}
+
+.arrow-flow-step i {
+  color: var(--primary-light);
+}
+
+.arrow-big {
+  color: var(--primary);
+  font-size: 24px;
+}
+
+/* ────────── NUMBERED MARKERS (görsel rehber) ────────── */
+.marker-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: white;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.marker-num.accent {
+  background: var(--gradient-accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ────────── UI MOCKUP SCHEMATIC ────────── */
+.ui-schematic {
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin: var(--space-5) 0;
+  position: relative;
+}
+
+.ui-schematic-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* SVG için container */
+.svg-wrap {
+  display: block;
+  margin: var(--space-5) auto;
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.svg-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ────────── COLOR SWATCH (Blueprint node renkleri için) ────────── */
+.color-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.color-swatch {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.swatch-color {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.swatch-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.swatch-name {
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.swatch-purpose {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ────────── HIGHLIGHT BOX (önemli kutu) ────────── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.08), rgba(0, 212, 255, 0.04));
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin: var(--space-6) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.highlight-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, var(--primary-glow), transparent);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.highlight-box-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.highlight-box-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: var(--shadow-glow);
+}
+
+.highlight-box h4 {
+  font-size: var(--fs-lg);
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ═══════════════════════════════════════════
+   VARIABLE KARTLARI (Bölüm 06)
+   ═══════════════════════════════════════════ */
+.var-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin: var(--space-4) 0;
+  overflow: hidden;
+  transition: border-color var(--duration-base) var(--ease-out);
+}
+.var-card:hover { border-color: var(--border-strong); }
+
+.var-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.var-card-head .pin,
+.var-card-head .pin-square {
+  flex-shrink: 0;
+  transform: scale(1.3);
+  margin: 0 4px;
+}
+.var-card-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: var(--text-primary);
+}
+.var-card-color {
+  margin-left: auto;
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+.var-card-body { padding: var(--space-4); }
+.var-card-body p { margin: 0 0 var(--space-2); font-size: var(--fs-sm); color: var(--text-secondary); line-height: var(--lh-relaxed); }
+.var-card-body p:last-of-type { margin-bottom: 0; }
+.var-card-body code {
+  background: var(--bg-deep);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85em;
+  color: var(--accent-light);
+}
+.var-card-tip {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(124,92,255,.08);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  line-height: var(--lh-normal);
+}
+.var-card-tip i { color: var(--primary-light); flex-shrink: 0; margin-top: 1px; }

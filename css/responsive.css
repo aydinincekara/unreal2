@@ -1,0 +1,226 @@
+/* ========================================================
+   UnrealAkademi — Responsive
+   Tablet & Mobile breakpoints
+   ======================================================== */
+
+/* ───── TABLET (1024px ve altı) ───── */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+
+  .main-content {
+    padding: var(--space-10) var(--space-6) var(--space-12);
+  }
+
+  .hero h1 {
+    font-size: var(--fs-4xl);
+  }
+
+  .page-title {
+    font-size: var(--fs-3xl);
+  }
+}
+
+/* ───── MOBILE (768px ve altı) ───── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--duration-base) var(--ease-out);
+    width: 280px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .mobile-toggle {
+    display: flex;
+  }
+
+  /* Backdrop when sidebar open */
+  body.sidebar-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: calc(var(--z-sidebar) - 1);
+    animation: fadeIn 200ms ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .main-content {
+    padding: var(--space-8) var(--space-4) var(--space-10);
+  }
+
+  .hero h1 {
+    font-size: var(--fs-3xl);
+  }
+
+  .hero-lead {
+    font-size: var(--fs-md);
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .stat-number {
+    font-size: var(--fs-2xl);
+  }
+
+  .page-title {
+    font-size: var(--fs-2xl);
+  }
+
+  .page-lead {
+    font-size: var(--fs-base);
+  }
+
+  .topic-title {
+    font-size: var(--fs-xl);
+  }
+
+  .topic-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  /* Concept grid */
+  .concept-grid,
+  .feature-grid,
+  .info-grid,
+  .color-swatch-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Page nav */
+  .page-nav {
+    grid-template-columns: 1fr;
+  }
+
+  /* Project card */
+  .project-card {
+    flex-direction: column;
+    padding: var(--space-4);
+  }
+
+  /* Compare table — horizontal scroll */
+  .compare-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Blueprint canvas — horizontal scroll */
+  .bp-canvas {
+    padding: var(--space-4);
+  }
+
+  .bp-flow {
+    flex-wrap: wrap;
+  }
+
+  .code-block {
+    padding: var(--space-4);
+    font-size: 12px;
+  }
+
+  .code-block pre {
+    font-size: 12px;
+  }
+
+  /* Steps */
+  .step-marker {
+    width: 36px;
+  }
+
+  .step-number {
+    width: 28px;
+    height: 28px;
+    font-size: var(--fs-xs);
+  }
+
+  /* Quiz */
+  .quiz-card {
+    padding: var(--space-4);
+  }
+}
+
+/* ───── SMALL MOBILE (480px ve altı) ───── */
+@media (max-width: 480px) {
+  .main-content {
+    padding: var(--space-6) var(--space-3) var(--space-8);
+  }
+
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  .page-title {
+    font-size: var(--fs-2xl);
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+  }
+
+  .mobile-toggle {
+    width: 48px;
+    height: 48px;
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+}
+
+/* ───── PRINT ───── */
+@media print {
+  .sidebar,
+  .mobile-toggle,
+  .page-nav,
+  .btn-complete {
+    display: none;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* ───── PREFERS REDUCED MOTION ───── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

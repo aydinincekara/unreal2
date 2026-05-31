@@ -1,0 +1,31 @@
+<!--
+═══════════════════════════════════════════════════════════
+  HEAD PARTIAL — Her sayfanın <head>'inde olması gerekenler
+  
+  Sayfa başlığını {{PAGE_TITLE}} yerine yaz
+  CSS path: pages/ klasöründen "../css/..." kullan
+  Ana index.html'de "css/..." kullan
+═══════════════════════════════════════════════════════════
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PAGE_TITLE}} — UnrealAkademi</title>
+<meta name="description" content="Türkçe Unreal Engine 5 eğitim platformu. Sıfırdan ileri düzeye, video gerektirmez.">
+<meta name="theme-color" content="#7c5cff">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+<!-- CSS (sıra önemli) -->
+<link rel="stylesheet" href="{{CSS_PATH}}variables.css">
+<link rel="stylesheet" href="{{CSS_PATH}}reset.css">
+<link rel="stylesheet" href="{{CSS_PATH}}layout.css">
+<link rel="stylesheet" href="{{CSS_PATH}}components.css">
+<link rel="stylesheet" href="{{CSS_PATH}}content.css">
+<link rel="stylesheet" href="{{CSS_PATH}}visuals.css">
+<link rel="stylesheet" href="{{CSS_PATH}}responsive.css">

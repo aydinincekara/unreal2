@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Sayfa Bulunamadı | UnrealAkademi</title>
+  <meta name="description" content="Aradığın sayfa burada değil. Ana sayfaya dön veya sözlük/arama'yı kullan.">
+  <meta name="theme-color" content="#7c5cff">
+  <link rel="manifest" href="manifest.json">
+  <meta name="robots" content="noindex,follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/extras.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 30%, rgba(124, 92, 255, 0.15), transparent 60%),
+                  var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      padding: 24px;
+    }
+    .err-wrap {
+      text-align: center;
+      max-width: 560px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .err-code {
+      font-size: clamp(96px, 20vw, 180px);
+      font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, #7c5cff, #00d4ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      margin-bottom: 16px;
+      letter-spacing: -0.04em;
+    }
+    .err-flame {
+      display: inline-block;
+      font-size: 64px;
+      color: var(--primary-light);
+      margin-bottom: 8px;
+      animation: flicker 2.5s ease-in-out infinite;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.95); }
+    }
+    .err-title {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .err-lead {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .err-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .err-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .err-btn-primary {
+      background: linear-gradient(135deg, #7c5cff, #6d4ce5);
+      color: white;
+      box-shadow: 0 8px 20px rgba(124, 92, 255, 0.35);
+    }
+    .err-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(124, 92, 255, 0.45);
+    }
+    .err-btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--text-primary);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .err-btn-ghost:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .err-suggest {
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+    .err-suggest a {
+      color: var(--accent-light);
+      text-decoration: none;
+      margin: 0 6px;
+    }
+    .err-suggest a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="err-wrap">
+    <div class="err-flame"><i class="ti ti-flame"></i></div>
+    <div class="err-code">404</div>
+    <h1 class="err-title">Aradığın sayfa burada değil</h1>
+    <p class="err-lead">
+      Yanlış bir bağlantıya tıklamış olabilirsin, ya da içerik taşındı.
+      Üzülme — ana sayfada 27 bölümün hepsi seni bekliyor.
+    </p>
+    <div class="err-actions">
+      <a href="index.html" class="err-btn err-btn-primary">
+        <i class="ti ti-home"></i> Ana Sayfa
+      </a>
+      <a href="pages/arama.html" class="err-btn err-btn-ghost">
+        <i class="ti ti-search"></i> Arama Yap
+      </a>
+    </div>
+    <div class="err-suggest">
+      Hızlı bağlantılar:
+      <a href="pages/01-kurulum.html">Kurulum</a> ·
+      <a href="pages/04-blueprint-temelleri.html">Blueprint</a> ·
+      <a href="pages/sozluk.html">Sözlük</a> ·
+      <a href="pages/cheatsheet.html">Cheat Sheet</a> ·
+      <a href="pages/sss.html">SSS</a>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>

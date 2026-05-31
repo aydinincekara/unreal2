@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, sans-serif">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="80%">
+      <stop offset="0%" stop-color="#1a1a3e"/>
+      <stop offset="60%" stop-color="#0a0a18"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </radialGradient>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7c5cff"/>
+      <stop offset="100%" stop-color="#00d4ff"/>
+    </linearGradient>
+    <linearGradient id="brand2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#67e8f9"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Decorative grid -->
+  <g stroke="#1f1f30" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Flame icon (sol) -->
+  <g transform="translate(120, 200)" filter="url(#glow)">
+    <circle cx="100" cy="100" r="90" fill="rgba(124,92,255,0.15)"/>
+    <path d="M 100 30 C 60 70, 50 110, 70 150 C 80 170, 95 175, 100 170 C 95 155, 100 140, 115 130 C 130 145, 140 160, 130 175 C 140 173, 155 165, 160 145 C 165 115, 140 80, 100 30 Z"
+          fill="url(#brand)"/>
+  </g>
+
+  <!-- Sağda metin -->
+  <g transform="translate(360, 0)">
+    <!-- Subtitle -->
+    <text x="0" y="200" fill="#a78bfa" font-size="22" font-weight="600" letter-spacing="3">
+      TÜRKÇE UNREAL ENGINE 5 EĞİTİMİ
+    </text>
+
+    <!-- Brand -->
+    <text x="0" y="290" fill="url(#brand)" font-size="84" font-weight="800" letter-spacing="-2">
+      UnrealAkademi
+    </text>
+
+    <!-- Tag -->
+    <text x="0" y="350" fill="#67e8f9" font-size="32" font-weight="500">
+      Sıfırdan Ustaya — 27 Bölüm
+    </text>
+
+    <!-- Stats -->
+    <g transform="translate(0, 420)">
+      <g>
+        <rect x="0" y="0" width="160" height="80" rx="12" fill="rgba(124,92,255,0.12)" stroke="rgba(124,92,255,0.3)"/>
+        <text x="80" y="35" fill="#a78bfa" font-size="36" font-weight="800" text-anchor="middle">27</text>
+        <text x="80" y="62" fill="#8a7ab5" font-size="14" text-anchor="middle">BÖLÜM</text>
+      </g>
+      <g transform="translate(180, 0)">
+        <rect x="0" y="0" width="160" height="80" rx="12" fill="rgba(0,212,255,0.12)" stroke="rgba(0,212,255,0.3)"/>
+        <text x="80" y="35" fill="#67e8f9" font-size="36" font-weight="800" text-anchor="middle">81</text>
+        <text x="80" y="62" fill="#5a8a95" font-size="14" text-anchor="middle">PROJE</text>
+      </g>
+      <g transform="translate(360, 0)">
+        <rect x="0" y="0" width="160" height="80" rx="12" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.3)"/>
+        <text x="80" y="35" fill="#34d399" font-size="36" font-weight="800" text-anchor="middle">135</text>
+        <text x="80" y="62" fill="#5a8f7a" font-size="14" text-anchor="middle">QUIZ</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Alt bant -->
+  <text x="600" y="580" fill="#5c5c7a" font-size="18" font-weight="500" text-anchor="middle" letter-spacing="2">
+    BLUEPRINT · MATERYAL · LUMEN · NANITE · C++
+  </text>
+</svg>

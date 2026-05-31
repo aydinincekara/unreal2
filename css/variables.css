@@ -1,0 +1,231 @@
+/* ========================================================
+   UnrealAkademi — Design Tokens
+   Tema: Unreal Engine güçlü dokusu + mor primary
+   ======================================================== */
+
+:root {
+  /* === BACKGROUND LAYERS === */
+  --bg-deep:       #050510;   /* En derin (body) */
+  --bg-base:       #0a0a18;   /* Ana arka plan */
+  --bg-surface:    #11111e;   /* Kart yüzeyi */
+  --bg-elevated:   #181826;   /* Yükseltilmiş kart */
+  --bg-overlay:    #1f1f30;   /* Hover yüzeyi */
+  --bg-input:      #0d0d1a;   /* Input/code zemini */
+
+  /* === BRAND - UE5 morumsu mor + cinematic mavi === */
+  --primary:       #7c5cff;   /* Ana mor — UE'nin imza tonu */
+  --primary-light: #a78bfa;   /* Açık mor */
+  --primary-dark:  #5b3fd9;   /* Koyu mor */
+  --primary-glow:  rgba(124, 92, 255, 0.4);
+
+  --accent:        #00d4ff;   /* UE5 imza cyan/mavi */
+  --accent-light:  #67e8f9;
+  --accent-glow:   rgba(0, 212, 255, 0.35);
+
+  /* === SEMANTIC === */
+  --success:       #10b981;
+  --success-light: #34d399;
+  --warning:       #f59e0b;
+  --warning-light: #fbbf24;
+  --danger:        #ef4444;
+  --danger-light:  #f87171;
+  --info:          #3b82f6;
+  --info-light:    #60a5fa;
+
+  /* === BLUEPRINT NODE COLORS (gerçek UE5 renkleri) === */
+  --bp-event:      #c91111;   /* Kırmızı — Event */
+  --bp-function:   #2e5a99;   /* Mavi — Function */
+  --bp-pure:       #267754;   /* Yeşil — Pure function */
+  --bp-flow:       #3a3a3a;   /* Gri — Flow control */
+  --bp-macro:      #2e8b8b;   /* Camgöbeği — Macro */
+  --bp-variable:   #b8b800;   /* Sarımsı — Variable get */
+  --bp-cast:       #4a4a8c;   /* Mor-mavi — Cast */
+  --bp-comment:    #ffd700;   /* Sarı — Comment */
+
+  /* === BLUEPRINT PIN COLORS (gerçek UE5 pin renkleri) === */
+  --pin-exec:      #ffffff;   /* Beyaz — Execution */
+  --pin-bool:      #c41010;   /* Kırmızı — Boolean */
+  --pin-int:       #00d4aa;   /* Camgöbeği — Integer */
+  --pin-float:     #a3d11a;   /* Açık yeşil — Float */
+  --pin-string:    #ff009d;   /* Pembe — String */
+  --pin-name:      #b876ff;   /* Lavanta — Name */
+  --pin-text:      #d489ff;   /* Açık leylak — Text */
+  --pin-vector:    #fcc419;   /* Sarı — Vector */
+  --pin-rotator:   #97c1ff;   /* Açık mavi — Rotator */
+  --pin-transform: #ff9d29;   /* Turuncu — Transform */
+  --pin-object:    #00b3ff;   /* Mavi — Object reference */
+  --pin-class:     #b576ff;   /* Mor — Class reference */
+  --pin-struct:    #00bfa5;   /* Yeşil-camgöbeği — Struct */
+  --pin-array:     #999999;   /* Gri (border) */
+
+  /* === TEXT === */
+  --text-primary:   #f0f0ff;   /* Ana metin */
+  --text-secondary: #b0b0c8;   /* İkincil metin */
+  --text-tertiary:  #7a7a95;   /* Üçüncül (caption) */
+  --text-muted:     #4a4a60;   /* Soluk */
+  --text-on-primary:#ffffff;   /* Primary üzerine */
+
+  /* === BORDERS & DIVIDERS === */
+  --border-subtle:  rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+  --border-accent:  rgba(124, 92, 255, 0.35);
+  --border-glow:    rgba(0, 212, 255, 0.25);
+
+  /* Backward-compat alias'lar (eski sayfalardaki kullanım için) */
+  --border: var(--border-default);
+  --text: var(--text-primary);
+
+  /* === GRADIENTS — Cinematic === */
+  --gradient-primary: linear-gradient(135deg, #7c5cff 0%, #5b3fd9 100%);
+  --gradient-accent:  linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  --gradient-hero:    linear-gradient(135deg, #050510 0%, #1a0d3d 40%, #050510 100%);
+  --gradient-card:    linear-gradient(180deg, rgba(124,92,255,0.05) 0%, transparent 100%);
+  --gradient-text:    linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00d4ff 100%);
+
+  /* === GRID PATTERN (UE5 sahne gridi) === */
+  --grid-color:    rgba(124, 92, 255, 0.08);
+  --grid-color-2:  rgba(0, 212, 255, 0.04);
+
+  /* === SHADOWS === */
+  --shadow-sm:     0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md:     0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg:     0 16px 48px rgba(0, 0, 0, 0.5);
+  --shadow-glow:   0 0 40px var(--primary-glow);
+  --shadow-glow-a: 0 0 30px var(--accent-glow);
+  --shadow-inset:  inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* === RADIUS === */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* === SPACING (8px grid) === */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* === TYPOGRAPHY === */
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body:    'Sora', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  --fs-xs:   11px;
+  --fs-sm:   12px;
+  --fs-base: 14px;
+  --fs-md:   15px;
+  --fs-lg:   17px;
+  --fs-xl:   20px;
+  --fs-2xl:  24px;
+  --fs-3xl:  32px;
+  --fs-4xl:  44px;
+  --fs-5xl:  64px;
+
+  --lh-tight:   1.2;
+  --lh-snug:    1.4;
+  --lh-normal:  1.6;
+  --lh-relaxed: 1.75;
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.1em;
+
+  /* === LAYOUT === */
+  --sidebar-width: 280px;
+  --header-height: 64px;
+  --content-max:   1100px;
+
+  /* === MOTION === */
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+
+  /* === Z-INDEX === */
+  --z-base:    1;
+  --z-dropdown: 100;
+  --z-sticky:  200;
+  --z-sidebar: 500;
+  --z-overlay: 1000;
+  --z-modal:   2000;
+  --z-tooltip: 3000;
+
+  /* === FONT SCALE (kullanıcı tarafından ayarlanabilir) === */
+  --font-scale: 1;
+}
+
+/* ========================================================
+   LIGHT MODE — Açık tema
+   data-theme="light" body'ye eklendiğinde devreye girer
+   ======================================================== */
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-deep:       #ecedf3;   /* En derin */
+  --bg-base:       #f6f7fb;   /* Ana arka plan */
+  --bg-surface:    #ffffff;   /* Kart yüzeyi */
+  --bg-elevated:   #ffffff;   /* Yükseltilmiş kart */
+  --bg-overlay:    #eef0f6;   /* Hover yüzeyi */
+  --bg-input:      #f1f2f7;   /* Input/code zemini */
+
+  /* Text */
+  --text-primary:   #14142b;
+  --text-secondary: #4a4a6a;
+  --text-tertiary:  #6a6a85;
+  --text-muted:     #a0a0b8;
+  --text-on-primary:#ffffff;
+
+  /* Borders */
+  --border-subtle:  rgba(20, 20, 43, 0.06);
+  --border-default: rgba(20, 20, 43, 0.12);
+  --border-strong:  rgba(20, 20, 43, 0.22);
+  --border-accent:  rgba(91, 63, 217, 0.4);
+  --border-glow:    rgba(0, 153, 204, 0.3);
+
+  /* Brand — biraz koyulaştırılmış (light bg'de daha okunaklı) */
+  --primary:       #6841e8;
+  --primary-light: #7c5cff;
+  --primary-dark:  #4a2bc4;
+  --primary-glow:  rgba(104, 65, 232, 0.22);
+
+  --accent:        #0099cc;
+  --accent-light:  #00b8e6;
+  --accent-glow:   rgba(0, 153, 204, 0.18);
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, #f6f7fb 0%, #e9e3ff 40%, #f6f7fb 100%);
+  --gradient-card: linear-gradient(180deg, rgba(104,65,232,0.04) 0%, transparent 100%);
+  --gradient-text: linear-gradient(135deg, #14142b 0%, #6841e8 50%, #0099cc 100%);
+
+  /* Grid pattern */
+  --grid-color:    rgba(104, 65, 232, 0.08);
+  --grid-color-2:  rgba(0, 153, 204, 0.05);
+
+  /* Shadows — light modda daha yumuşak */
+  --shadow-sm:     0 2px 8px rgba(20, 20, 43, 0.06);
+  --shadow-md:     0 8px 24px rgba(20, 20, 43, 0.08);
+  --shadow-lg:     0 16px 48px rgba(20, 20, 43, 0.12);
+  --shadow-inset:  inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Tema geçişi — yumuşak */
+html {
+  transition: background-color var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+}
+body {
+  transition: background-color var(--duration-base) var(--ease-out),
+              color var(--duration-base) var(--ease-out);
+}

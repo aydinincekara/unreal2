@@ -1,0 +1,767 @@
+/* ========================================================
+   UnrealAkademi — Content Styles
+   Topic blokları, kod, görsel, mini projeler
+   ======================================================== */
+
+/* ────────── TOPIC (Konu bloğu) ────────── */
+.topic {
+  margin-bottom: var(--space-12);
+}
+
+.topic-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.topic-number {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  color: white;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-glow);
+  letter-spacing: var(--tracking-wide);
+}
+
+.topic-title {
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-tight);
+  color: var(--text-primary);
+}
+
+.topic-body p {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.topic-body p strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.topic-body p em {
+  color: var(--primary-light);
+  font-style: normal;
+  font-weight: 500;
+}
+
+.topic-body ul {
+  margin: var(--space-3) 0 var(--space-5);
+  padding-left: var(--space-6);
+}
+
+.topic-body ul li {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-2);
+  list-style: disc;
+}
+
+.topic-body ul li::marker {
+  color: var(--primary);
+}
+
+.topic-body h4 {
+  font-size: var(--fs-lg);
+  color: var(--text-primary);
+  margin: var(--space-6) 0 var(--space-3);
+  font-weight: 600;
+}
+
+/* ────────── INLINE CODE & KEYBOARD ────────── */
+code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: rgba(124, 92, 255, 0.1);
+  color: var(--primary-light);
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  border: 1px solid rgba(124, 92, 255, 0.2);
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: linear-gradient(180deg, var(--bg-elevated), var(--bg-surface));
+  color: var(--text-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.4);
+  font-weight: 600;
+}
+
+mark {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning-light);
+  padding: 1px 4px;
+  border-radius: var(--radius-xs);
+}
+
+/* ────────── CODE BLOCK ────────── */
+.code-block {
+  background: var(--bg-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin: var(--space-4) 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.code-block-lang {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.code-block pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: #cbd5e1;
+  white-space: pre;
+  margin: 0;
+}
+
+.code-block .c-comment  { color: #64748b; font-style: italic; }
+.code-block .c-keyword  { color: #c084fc; }
+.code-block .c-type     { color: #67e8f9; }
+.code-block .c-string   { color: #fbbf24; }
+.code-block .c-number   { color: #f472b6; }
+.code-block .c-function { color: #60a5fa; }
+.code-block .c-macro    { color: #fb923c; font-weight: 600; }
+
+/* ────────── STEP-BY-STEP ────────── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-5) 0;
+}
+
+.step {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+
+.step-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.step-number {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 2px solid var(--primary);
+  color: var(--primary-light);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 0 4px var(--bg-deep), 0 0 12px var(--primary-glow);
+}
+
+.step-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(180deg, var(--primary), transparent);
+  margin: var(--space-2) 0;
+  min-height: 20px;
+  opacity: 0.4;
+}
+
+.step:last-child .step-line {
+  display: none;
+}
+
+.step-body {
+  flex: 1;
+  padding: 4px 0 var(--space-6) var(--space-4);
+}
+
+.step-title {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.step-body p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-2);
+}
+
+.step-body p strong {
+  color: var(--text-primary);
+}
+
+.step-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--info-light);
+}
+
+/* ────────── CONCEPT GRID (Kavram Kartları) ────────── */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.concept-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: all var(--duration-base) var(--ease-out);
+  position: relative;
+}
+
+.concept-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-md);
+}
+
+.concept-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+  font-size: 18px;
+}
+
+.concept-card h4 {
+  font-size: var(--fs-md);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+  font-weight: 600;
+}
+
+.concept-card p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+
+.concept-card .tag-small {
+  display: inline-block;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-3);
+  font-weight: 600;
+}
+
+/* ────────── COMPARE TABLE ────────── */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-5) 0;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-default);
+}
+
+.compare-table th {
+  background: var(--bg-elevated);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-default);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.compare-table td {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  line-height: var(--lh-normal);
+}
+
+.compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.compare-table td strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.compare-table td code {
+  font-size: 0.85em;
+}
+
+/* ────────── KEYBOARD SHORTCUTS GRID ────────── */
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-5) 0;
+}
+
+.shortcut {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  transition: all var(--duration-fast);
+}
+
+.shortcut:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-elevated);
+}
+
+.shortcut .keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.shortcut .keys span {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+/* ────────── PRO TIPS LIST ────────── */
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.tip-item {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast);
+}
+
+.tip-item:hover {
+  border-color: var(--border-accent);
+}
+
+.tip-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.tip-item p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+
+.tip-item p strong {
+  color: var(--text-primary);
+}
+
+/* ────────── MINI PROJECTS ────────── */
+.projects {
+  margin-top: var(--space-10);
+}
+
+.projects-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.projects-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
+  color: var(--warning-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.projects-header h3 {
+  font-size: var(--fs-xl);
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+
+.projects-header span {
+  font-size: var(--fs-sm);
+  color: var(--text-tertiary);
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.project-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  position: relative;
+  transition: all var(--duration-base);
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+.project-card.lv-easy::before { background: var(--success); }
+.project-card.lv-medium::before { background: var(--warning); }
+.project-card.lv-hard::before { background: var(--danger); }
+
+.project-card:hover {
+  border-color: var(--border-accent);
+  transform: translateX(2px);
+}
+
+.project-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.project-title {
+  font-size: var(--fs-md);
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.project-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+.project-goal {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+}
+
+.project-goal i {
+  color: var(--primary-light);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.project-check {
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(124, 92, 255, 0.05);
+  border: 1px solid rgba(124, 92, 255, 0.15);
+  border-radius: var(--radius-md);
+}
+
+.project-check-title {
+  font-size: var(--fs-xs);
+  color: var(--primary-light);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+.project-check ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-check li {
+  padding: 4px 0 4px var(--space-6);
+  position: relative;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-normal);
+}
+
+.project-check li::before {
+  content: '☐';
+  position: absolute;
+  left: 0;
+  color: var(--primary-light);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ────────── SECTION DIVIDER ────────── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+  margin: var(--space-10) 0;
+}
+
+/* ────────── INFO GRID (key-value listesi) ────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-5) 0;
+}
+
+.info-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.info-item-label {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: var(--space-2);
+}
+
+.info-item-value {
+  font-size: var(--fs-base);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════
+   MINI-CHECKPOINT (özet kutu — uzun bölümlerde her birkaç topic'te bir)
+   ═══════════════════════════════════════════════ */
+.checkpoint {
+  margin: var(--space-10) 0;
+  padding: var(--space-6) var(--space-6) var(--space-6) var(--space-8);
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.10), rgba(0, 212, 255, 0.06));
+  border: 1px solid rgba(124, 92, 255, 0.3);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.checkpoint::before {
+  content: "✓ CHECKPOINT";
+  position: absolute;
+  top: -10px;
+  left: var(--space-6);
+  background: var(--primary);
+  color: white;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wider);
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.checkpoint-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-3) 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+.checkpoint-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checkpoint-list li {
+  padding: var(--space-2) 0 var(--space-2) var(--space-6);
+  position: relative;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+.checkpoint-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.checkpoint-list li strong {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   ILLUSTRATION (özet SVG diyagram kutusu)
+   ═══════════════════════════════════════════════ */
+.illustration {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.illustration svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto var(--space-4);
+}
+
+.illustration-caption {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+/* ═══════════════════════════════════════════════
+   REAL-WORLD EXAMPLE (gerçek hayat örnek kutusu)
+   ═══════════════════════════════════════════════ */
+.real-example {
+  margin: var(--space-8) 0;
+  padding: var(--space-6);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(124, 92, 255, 0.04));
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+}
+
+.real-example-label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.real-example-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-3) 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+.real-example p {
+  margin: 0 0 var(--space-3) 0;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+.real-example p:last-child {
+  margin-bottom: 0;
+}
+
+.real-example strong {
+  color: var(--text-primary);
+}
